@@ -178,90 +178,74 @@ export default function ServicesPage() {
     {/* =======================================================
         HERO CONTENT
     ======================================================= */}
-    <div className="grid flex-1 items-center gap-12 py-16 lg:grid-cols-12 lg:gap-8">
-      {/* LEFT — EDITORIAL COPY */}
-      <div className="lg:col-span-8 xl:col-span-7">
-        {/* Eyebrow */}
-        <div className="mb-8 flex items-center gap-4">
-          <span className="font-display text-sm text-copper-400">
-            01
-          </span>
+ <div className="relative flex flex-1 items-center py-20 md:py-24 lg:py-28">
+  <div className="w-full max-w-[1100px]">
+    {/* =================================================
+        INTRO
+    ================================================== */}
 
-          <span className="h-px w-10 bg-copper-400/70" />
-
-          <span className="text-[11px] font-medium uppercase tracking-[0.26em] text-copper-100/60">
-            Services
-          </span>
-        </div>
-
-        {/* Main heading */}
-        <h1 className="max-w-5xl font-display text-[clamp(4rem,9vw,9.5rem)] font-medium leading-[0.84] tracking-[-0.065em] text-white">
-          Designed,
-          <br />
-          installed,
-          <br />
-          <span className="text-copper-400">
-            answered for.
-          </span>
-        </h1>
-
-        {/* Rule */}
-        <div className="mt-10 flex items-center gap-4">
-          <span className="h-px w-20 bg-copper-400/80" />
-
-          <span className="size-1.5 rotate-45 border border-copper-400/80" />
-
-          <span className="h-px w-8 bg-white/20" />
-        </div>
-
-        {/* Lead */}
-        <p className="mt-8 max-w-xl text-base leading-8 text-white/60 md:text-lg md:leading-9">
-          We don't sell boxes of heating mat. We deliver warm floors —
-          surveyed, engineered, installed by our own crews and supported
-          for decades.
+    <Reveal delay={0.12}>
+      <div className="mb-8 max-w-[460px]">
+        <p className="font-sans text-[10px] font-medium uppercase tracking-[0.3em] text-[#fffff]">
+          Designed around the space.
         </p>
+      </div>
+    </Reveal>
 
-        {/* Actions */}
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-          <Button asChild size="lg" className="group">
-            <Link href="/contact">
-              Book a Site Survey
-              <ArrowRight
-                aria-hidden
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </Link>
-          </Button>
+    {/* =================================================
+        MAIN HEADING
+    ================================================== */}
 
-          <Button
-            asChild
-            size="lg"
-            variant="outline-light"
-            className="group border-white/20 bg-white/[0.03] backdrop-blur-sm hover:bg-white/[0.08]"
-          >
-            <Link href="/projects">
-              Explore Our Work
-              <ArrowRight
-                aria-hidden
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </Link>
-          </Button>
+    <Reveal delay={0.18}>
+      <h1
+        className="
+          font-serif
+          text-[clamp(4.5rem,11vw,10.5rem)]
+          font-light
+          leading-[0.78]
+          tracking-[-0.065em]
+        "
+      >
+        <span className="block text-[#F4F1EA]">
+          Designed
+        </span>
+
+        <span className="ml-[8vw] block text-[#F4F1EA]/95">
+          for
+        </span>
+
+        <span className="ml-[16vw] block italic text-[#F2B84B]">
+          warmth.
+        </span>
+      </h1>
+    </Reveal>
+
+    {/* =================================================
+        DESCRIPTION + SIDE DETAIL
+    ================================================== */}
+
+    <Reveal delay={0.28}>
+      <div className="mt-12 grid max-w-[760px] gap-10 lg:ml-[8vw] lg:grid-cols-[1fr_auto] lg:items-end">
+       
+
+        <div className="hidden border-l border-[#F4F1EA]/20 pl-5 lg:block">
+          <p className="font-sans text-[9px] uppercase tracking-[0.25em] text-[#fffff]/45">
+            Our work
+          </p>
+
+          <p className="mt-2 font-serif text-xl text-[#F4F1EA]">
+            From floor to finish.
+          </p>
         </div>
       </div>
+    </Reveal>
+  </div>
 
-      {/* RIGHT — TECHNICAL MARKER */}
-      <div className="hidden lg:col-span-4 lg:flex lg:justify-end">
-        <div className="relative w-[250px]">
-          {/* vertical line */}
-          <div className="absolute -left-6 top-0 h-full w-px bg-white/10" />
+  {/* =================================================
+      SERVICE MARKER
+  ================================================== */}
 
-        
-
-          
-        </div>
-      </div>
-    </div>
+</div>
 
     {/* =======================================================
         BOTTOM FEATURE STRIP
@@ -348,11 +332,6 @@ export default function ServicesPage() {
           className="mt-14"
         />
       </section>
-
-      
-
-      {/* 5. How we run the job */}
-      <Process />
 
       <FinalCta />
     </>

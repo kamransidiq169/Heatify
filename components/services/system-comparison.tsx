@@ -1,71 +1,3 @@
-// import { Reveal } from "@/components/motion/reveal";
-// import { SectionHeading } from "@/components/section-heading";
-
-// const columns = [
-//   {
-//     name: "Electric",
-//     rows: [
-//       { label: "Best for", value: "Single rooms, renovations, bathrooms & kitchens" },
-//       { label: "Heat-up time", value: "15–30 minutes to temperature" },
-//       { label: "Install disruption", value: "Low — no boiler or manifold work" },
-//       { label: "Warranty", value: "10 years" },
-//     ],
-//   },
-//   {
-//     name: "Hydronic",
-//     rows: [
-//       { label: "Best for", value: "Whole-home, new builds, large open-plan areas" },
-//       { label: "Heat-up time", value: "1–2 hours, holds heat far longer" },
-//       { label: "Install disruption", value: "Higher — manifold and heat-source sizing" },
-//       { label: "Warranty", value: "25 years on pipework" },
-//     ],
-//   },
-// ];
-
-// /**
-//  * Two columns, one dividing rule down the centre — read as a spec sheet
-//  * someone's actually deciding between, not a pair of marketing cards.
-//  */
-// export function SystemComparison() {
-//   return (
-//     <section className="bg-cream-50 py-24 md:py-32">
-//       <div className="container-site">
-//         <SectionHeading
-//           eyebrow="Choosing a system"
-//           title="Electric, or hydronic?"
-//           lead="Both outperform any surface heater. The right one depends on how much of the home you're heating, and how it's built."
-//         />
-
-//         <div className="mt-16 grid gap-12 md:grid-cols-2 md:gap-0 md:divide-x md:divide-charcoal-900/10">
-//           {columns.map((col, ci) => (
-//             <Reveal key={col.name} delay={ci * 0.08}>
-//               <div className={ci === 0 ? "md:pr-14" : "md:pl-14"}>
-//                 <h3 className="font-display text-2xl text-charcoal-900">
-//                   {col.name}
-//                 </h3>
-//                 <dl className="mt-8 space-y-6">
-//                   {col.rows.map((row) => (
-//                     <div key={row.label} className="border-t border-charcoal-900/10 pt-4">
-//                       <dt className="text-sm text-charcoal-400">{row.label}</dt>
-//                       <dd className="mt-1.5 text-charcoal-800">{row.value}</dd>
-//                     </div>
-//                   ))}
-//                 </dl>
-//               </div>
-//             </Reveal>
-//           ))}
-//         </div>
-
-//         <p className="mt-14 max-w-md text-charcoal-500">
-//           Not sure yet? That's exactly what the free survey settles —
-//           no guessing, no upsell either way.
-//         </p>
-//       </div>
-//     </section>
-//   );
-// }
-
-
 import { Reveal } from "@/components/motion/reveal";
 
 const columns = [
@@ -119,240 +51,466 @@ const columns = [
 
 export function SystemComparison() {
   return (
-    <section className="relative overflow-hidden bg-cream-50 py-24 md:py-32">
+    <section className="relative overflow-hidden bg-[#F4F1EA] text-[#11100E]">
       {/* =====================================================
-          ARCHITECTURAL GRID
-      ===================================================== */}
+          ATMOSPHERE
+      ====================================================== */}
 
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.035]"
-        style={{
-          backgroundImage: `
-            linear-gradient(
-              to right,
-              rgba(196, 98, 42, 1) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              to bottom,
-              rgba(196, 98, 42, 1) 1px,
-              transparent 1px
-            )
-          `,
-          backgroundSize: "80px 80px",
-        }}
-      />
+        className="pointer-events-none absolute inset-0"
+      >
+        <div
+          className="absolute left-[18%] top-[18%] size-[500px] rounded-full blur-[170px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(242,184,75,.075) 0%, rgba(242,184,75,.025) 45%, transparent 72%)",
+          }}
+        />
 
-      {/* Subtle central atmosphere */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[42%] size-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-copper-500/[0.035] blur-[140px]"
-      />
+        <div
+          className="absolute right-[8%] bottom-[10%] size-[420px] rounded-full blur-[170px]"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(185,133,32,.055) 0%, transparent 70%)",
+          }}
+        />
 
-      <div className="container-site relative z-10">
-        {/* ===================================================
-            SECTION INTRO
-        =================================================== */}
+        <div
+          className="absolute inset-0 opacity-[0.025]"
+          style={{
+            backgroundImage: `
+              linear-gradient(
+                to right,
+                rgba(17,16,14,.7) 1px,
+                transparent 1px
+              ),
+              linear-gradient(
+                to bottom,
+                rgba(17,16,14,.7) 1px,
+                transparent 1px
+              )
+            `,
+            backgroundSize: "120px 120px",
+          }}
+        />
+      </div>
+
+      <div className="container-site relative z-10 py-24 md:py-32">
+        {/* =====================================================
+            HEADER
+        ====================================================== */}
 
         <Reveal>
-          <div className="mb-16 flex items-end justify-between border-b border-charcoal-900/10 pb-8">
+          <div className="flex items-center justify-between border-b border-black/[0.10] pb-5">
             <div className="flex items-center gap-3">
-              <span className="font-display text-sm text-copper-500">
-                03
-              </span>
+              <span className="h-px w-10 bg-[#B98520]" />
 
-              <span className="h-px w-8 bg-copper-500/60" />
-
-              <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-charcoal-900/45">
+              <span className="font-sans text-[9px] font-medium uppercase tracking-[0.3em] text-[#11100E]/50">
                 Choosing a system
               </span>
             </div>
 
-            <span className="hidden text-[10px] uppercase tracking-[0.22em] text-charcoal-900/30 md:block">
-              Technical comparison / 01—02
+            <span className="hidden font-mono text-[9px] tracking-[0.22em] text-[#11100E]/30 md:block">
+              SYSTEMS / COMPARISON 03
             </span>
           </div>
         </Reveal>
 
-        {/* ===================================================
-            HERO HEADING
-        =================================================== */}
+        {/* =====================================================
+            INTRO
+        ====================================================== */}
 
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-8">
-            <Reveal>
-              <h2 className="font-display text-[clamp(3.2rem,7vw,7.5rem)] font-medium leading-[0.86] tracking-[-0.06em] text-charcoal-950">
-                Electric,
-                <br />
-                <span className="text-copper-500/65">
-                  or hydronic?
+        <div className="grid gap-12 pb-20 pt-16 md:pb-28 md:pt-20 lg:grid-cols-[1.2fr_.8fr] lg:gap-20">
+          <Reveal>
+            <div>
+              <div className="mb-7 flex items-center gap-3">
+                <span className="font-mono text-[9px] tracking-[0.2em] text-[#B98520]">
+                  03
+                </span>
+
+                <span className="h-px w-8 bg-[#B98520]/60" />
+
+                <span className="font-sans text-[9px] uppercase tracking-[0.28em] text-[#11100E]/40">
+                  Heating systems
+                </span>
+              </div>
+
+              <h2
+                className="
+                  max-w-[900px]
+                  font-display
+                  text-[clamp(4rem,8vw,8.5rem)]
+                  font-normal
+                  leading-[0.78]
+                  tracking-[-0.065em]
+                "
+              >
+                <span className="block">Two ways</span>
+                <span className="ml-[8vw] block">to bring</span>
+                <span className="ml-[16vw] block italic text-[#F2B84B]">
+                  warmth.
                 </span>
               </h2>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
 
-          <div className="flex items-end lg:col-span-4">
-            <Reveal>
-              <div className="max-w-sm border-l border-copper-500/30 pl-6">
-                <p className="text-base leading-8 text-charcoal-900/55 md:text-lg">
-                  Both deliver radiant warmth from below. The right
-                  system depends on the size of the space, the building
-                  and how you plan to use it.
+          <Reveal delay={0.12}>
+            <div className="flex items-end">
+              <div className="max-w-[400px] border-l border-[#11100E]/15 pl-6 lg:mb-2">
+                <p className="font-sans text-[14px] leading-[1.9] text-[#11100E]/55 md:text-[15px]">
+                  Electric and hydronic systems both deliver radiant warmth
+                  from below. The difference is how they create, distribute
+                  and respond to heat.
                 </p>
+
+                <div className="mt-8 flex items-center gap-4">
+                  <span className="font-display text-4xl tracking-[-0.04em]">
+                    02
+                  </span>
+
+                  <span className="h-px w-10 bg-[#B98520]/60" />
+
+                  <span className="font-sans text-[8px] uppercase leading-[1.7] tracking-[0.25em] text-[#11100E]/35">
+                    Heating
+                    <br />
+                    architectures
+                  </span>
+                </div>
               </div>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </div>
 
-        {/* ===================================================
-            COMPARISON
-        =================================================== */}
+        {/* =====================================================
+            SYSTEM SPLIT
+        ====================================================== */}
 
-        <div className="relative mt-20">
-          {/* Centre axis */}
+        <div className="relative">
+          {/* Central axis */}
+
           <div
             aria-hidden
-            className="absolute bottom-0 left-1/2 top-0 hidden w-px -translate-x-1/2 bg-charcoal-900/10 md:block"
+            className="absolute bottom-0 left-1/2 top-0 hidden w-px -translate-x-1/2 bg-black/[0.10] lg:block"
           />
 
-          {/* centre marker */}
+          {/* Central diamond */}
+
           <div
             aria-hidden
-            className="absolute left-1/2 top-0 hidden size-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border border-copper-500/60 bg-cream-50 md:block"
+            className="
+              absolute
+              left-1/2
+              top-0
+              z-20
+              hidden
+              size-3
+              -translate-x-1/2
+              -translate-y-1/2
+              rotate-45
+              border
+              border-[#B98520]
+              bg-[#F4F1EA]
+              lg:block
+            "
           />
 
-          <div className="grid md:grid-cols-2">
-            {columns.map((column, ci) => (
-              <Reveal
-                key={column.name}
-                delay={ci * 0.08}
-              >
-                <article
-                  className={[
-                    "group relative",
-                    ci === 0
-                      ? "md:pr-16 lg:pr-20"
-                      : "mt-16 md:mt-0 md:pl-16 lg:pl-20",
-                  ].join(" ")}
+          <div className="grid lg:grid-cols-2">
+            {columns.map((column, index) => {
+              const isElectric = index === 0;
+
+              return (
+                <Reveal
+                  key={column.name}
+                  delay={index * 0.1}
                 >
-                  {/* =================================================
-                      SYSTEM HEADER
-                  ================================================= */}
+                  <article
+                    className={`
+                      relative
+                      ${
+                        isElectric
+                          ? "lg:pr-16 xl:pr-24"
+                          : "mt-16 lg:mt-0 lg:pl-16 xl:pl-24"
+                      }
+                    `}
+                  >
+                    {/* =================================================
+                        SYSTEM INTRO
+                    ================================================== */}
 
-                  <div className="relative border-t border-charcoal-900/15 pt-7">
-                    {/* copper active line */}
-                    <div
-                      aria-hidden
-                      className="absolute left-0 top-[-1px] h-px w-16 bg-copper-500 transition-all duration-500 group-hover:w-28"
-                    />
+                    <div className="relative border-t border-black/[0.12] pt-8">
+                      {/* Active top line */}
 
-                    <div className="flex items-start justify-between gap-6">
-                      <div>
-                        <div className="mb-4 flex items-center gap-3">
-                          <span className="font-display text-sm text-copper-500">
-                            {column.number}
-                          </span>
+                      <div
+                        className={`
+                          absolute
+                          left-0
+                          top-[-1px]
+                          h-px
+                          transition-all
+                          duration-700
+                          group-hover:w-32
+                          ${
+                            isElectric
+                              ? "w-24 bg-[#F2B84B]"
+                              : "w-16 bg-[#B98520]/70"
+                          }
+                        `}
+                      />
 
-                          <span className="h-px w-6 bg-copper-500/30" />
+                      <div className="flex items-start justify-between gap-8">
+                        <div>
+                          <div className="mb-5 flex items-center gap-3">
+                            <span className="font-mono text-[9px] tracking-[0.15em] text-[#B98520]">
+                              {column.number}
+                            </span>
 
-                          <span className="text-[9px] uppercase tracking-[0.22em] text-charcoal-900/35">
-                            Heating system
-                          </span>
+                            <span className="h-px w-7 bg-[#B98520]/50" />
+
+                            <span className="font-sans text-[8px] uppercase tracking-[0.25em] text-[#11100E]/35">
+                              {isElectric
+                                ? "Electrical system"
+                                : "Water-based system"}
+                            </span>
+                          </div>
+
+                          <h3
+                            className="
+                              font-display
+                              text-[clamp(3.2rem,5vw,5.5rem)]
+                              font-normal
+                              leading-[0.82]
+                              tracking-[-0.055em]
+                            "
+                          >
+                            {column.name}
+                            <span className="text-[#F2B84B]">.</span>
+                          </h3>
+
+                          <p className="mt-5 max-w-[330px] font-display text-lg italic leading-[1.35] text-[#11100E]/55">
+                            {column.descriptor}
+                          </p>
                         </div>
 
-                        <h3 className="font-display text-[clamp(2.4rem,4vw,4.5rem)] font-medium leading-none tracking-[-0.045em] text-charcoal-950">
-                          {column.name}
-                        </h3>
+                        {/* Technical symbol */}
 
-                        <p className="mt-4 max-w-xs font-display text-base leading-6 text-copper-600/65">
-                          {column.descriptor}
-                        </p>
+                        <div
+                          className={`
+                            relative
+                            mt-1
+                            hidden
+                            size-16
+                            shrink-0
+                            items-center
+                            justify-center
+                            rounded-full
+                            sm:flex
+                            ${
+                              isElectric
+                                ? "border border-[#F2B84B]/60"
+                                : "border border-[#B98520]/40"
+                            }
+                          `}
+                        >
+                          <span
+                            className={`
+                              absolute
+                              inset-2
+                              rounded-full
+                              border
+                              ${
+                                isElectric
+                                  ? "border-[#F2B84B]/25"
+                                  : "border-[#B98520]/20"
+                              }
+                            `}
+                          />
+
+                          <span className="font-mono text-[8px] tracking-[0.12em] text-[#11100E]/35">
+                            {column.number}
+                          </span>
+                        </div>
                       </div>
+                    </div>
 
-                      {/* technical circle */}
-                      <div className="hidden size-14 shrink-0 items-center justify-center rounded-full border border-charcoal-900/10 sm:flex">
-                        <span className="text-[9px] uppercase tracking-[0.15em] text-charcoal-900/35">
-                          {column.number}
+                    {/* =================================================
+                        VISUAL SYSTEM MARKER
+                    ================================================== */}
+
+                    <div className="relative my-10 h-[110px] overflow-hidden border-y border-black/[0.08]">
+                      {/* horizontal construction lines */}
+
+                      <span className="absolute left-0 right-0 top-1/2 h-px bg-black/[0.08]" />
+
+                      <span className="absolute left-0 right-0 top-[28%] h-px bg-black/[0.045]" />
+
+                      <span className="absolute left-0 right-0 top-[72%] h-px bg-black/[0.045]" />
+
+                      {isElectric ? (
+                        <>
+                          {/* Electric cable pattern */}
+
+                          <div className="absolute inset-x-[7%] top-1/2 h-[42px] -translate-y-1/2">
+                            <div className="absolute inset-x-0 top-1/2 h-px bg-[#B98520]/45" />
+
+                            {[0, 1, 2, 3, 4, 5, 6].map((item) => (
+                              <span
+                                key={item}
+                                className="absolute top-1/2 size-5 -translate-y-1/2 rounded-full border border-[#F2B84B]/60"
+                                style={{
+                                  left: `${item * 16}%`,
+                                }}
+                              />
+                            ))}
+                          </div>
+
+                          <span className="absolute right-4 top-4 font-mono text-[7px] uppercase tracking-[0.2em] text-[#B98520]">
+                            Resistive element
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          {/* Hydronic pipe pattern */}
+
+                          <div className="absolute inset-x-[7%] top-1/2 h-[48px] -translate-y-1/2">
+                            <div className="absolute inset-0 rounded-full border border-[#B98520]/45" />
+
+                            <div className="absolute inset-x-[15%] inset-y-[7px] rounded-full border border-[#B98520]/35" />
+
+                            <div className="absolute inset-x-[30%] inset-y-[14px] rounded-full border border-[#B98520]/30" />
+                          </div>
+
+                          <span className="absolute right-4 top-4 font-mono text-[7px] uppercase tracking-[0.2em] text-[#B98520]">
+                            Pipe circuit
+                          </span>
+                        </>
+                      )}
+
+                      <span className="absolute bottom-3 left-4 font-mono text-[7px] uppercase tracking-[0.2em] text-[#11100E]/25">
+                        Underfloor distribution
+                      </span>
+                    </div>
+
+                    {/* =================================================
+                        SPECIFICATIONS
+                    ================================================== */}
+
+                    <div>
+                      {column.rows.map((row, rowIndex) => (
+                        <div
+                          key={row.label}
+                          className="
+                            group/row
+                            grid
+                            gap-3
+                            border-t
+                            border-black/[0.10]
+                            py-6
+                            sm:grid-cols-[120px_1fr]
+                          "
+                        >
+                          <div className="flex items-start gap-2">
+                            <span className="mt-[5px] size-1 rotate-45 bg-[#B98520]/60" />
+
+                            <p className="font-sans text-[8px] uppercase tracking-[0.22em] text-[#11100E]/35">
+                              {row.label}
+                            </p>
+                          </div>
+
+                          <p className="max-w-[400px] font-sans text-[13px] leading-[1.8] text-[#11100E]/60 transition-colors duration-300 group-hover/row:text-[#11100E] md:text-[14px]">
+                            {row.value}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* =================================================
+                        SYSTEM FOOTER
+                    ================================================== */}
+
+                    <div className="mt-2 flex items-center justify-between border-t border-black/[0.10] pt-5">
+                      <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
+                        System {column.number}
+                      </span>
+
+                      <div className="flex items-center gap-3">
+                        <span className="h-px w-8 bg-[#B98520]/50" />
+
+                        <span className="font-sans text-[8px] uppercase tracking-[0.22em] text-[#B98520]">
+                          {isElectric ? "Fast response" : "Long retention"}
                         </span>
                       </div>
                     </div>
-                  </div>
-
-                  {/* =================================================
-                      SPECIFICATION ROWS
-                  ================================================= */}
-
-                  <dl className="mt-10">
-                    {column.rows.map((row, rowIndex) => (
-                      <div
-                        key={row.label}
-                        className="group/row grid gap-3 border-t border-charcoal-900/10 py-6 sm:grid-cols-[130px_1fr]"
-                      >
-                        {/* label */}
-                        <dt className="text-[9px] font-medium uppercase tracking-[0.2em] text-charcoal-900/35">
-                          {row.label}
-                        </dt>
-
-                        {/* value */}
-                        <dd className="max-w-md text-sm leading-6 text-charcoal-900/70 transition-colors duration-300 group-hover/row:text-charcoal-950 md:text-[15px]">
-                          {row.value}
-                        </dd>
-
-                        {/* row marker */}
-                        <div
-                          aria-hidden
-                          className="absolute"
-                        />
-                      </div>
-                    ))}
-                  </dl>
-
-                  {/* Bottom system marker */}
-                  <div className="mt-2 flex items-center justify-between border-t border-charcoal-900/10 pt-5">
-                    <span className="text-[9px] uppercase tracking-[0.2em] text-charcoal-900/25">
-                      Specification {column.number}
-                    </span>
-
-                    <span className="size-1.5 rotate-45 bg-copper-500/50 transition-transform duration-300 group-hover:rotate-90" />
-                  </div>
-                </article>
-              </Reveal>
-            ))}
+                  </article>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
 
-        {/* ===================================================
-            DECISION NOTE
-        =================================================== */}
+        {/* =====================================================
+            DECISION SECTION
+        ====================================================== */}
 
-        <Reveal>
-          <div className="mt-20 border-t border-charcoal-900/10 pt-8 md:mt-24">
-            <div className="grid gap-8 md:grid-cols-12 md:items-start">
-              <div className="md:col-span-3">
+        <Reveal delay={0.2}>
+          <div className="mt-20 border-t border-black/[0.10] pt-8 md:mt-28">
+            <div className="grid gap-8 md:grid-cols-[.55fr_1.45fr] md:items-center">
+              <div>
                 <div className="flex items-center gap-3">
-                  <span className="size-2 rotate-45 border border-copper-500" />
+                  <span className="size-2 rotate-45 bg-[#F2B84B]" />
 
-                  <span className="text-[9px] font-medium uppercase tracking-[0.22em] text-copper-600">
-                    Need a decision?
+                  <span className="font-sans text-[8px] uppercase tracking-[0.28em] text-[#B98520]">
+                    Let the space decide
                   </span>
                 </div>
               </div>
 
-              <div className="md:col-span-7">
-                <p className="font-display text-xl leading-8 tracking-[-0.015em] text-charcoal-900/70 md:text-2xl">
-                  Not sure which system belongs in your home? That's
-                  exactly what the free survey settles — no guessing,
-                  and no upsell either way.
+              <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+                <p className="max-w-[720px] font-display text-[clamp(1.5rem,2.5vw,2.3rem)] leading-[1.25] tracking-[-0.025em] text-[#11100E]/70">
+                  The right system isn't about choosing the most powerful
+                  option. It's about matching the heating architecture to
+                  the building, the room and the way you live in it.
                 </p>
-              </div>
 
-              <div className="hidden justify-end md:col-span-2 md:flex">
-                <span className="font-display text-[10px] uppercase tracking-[0.18em] text-charcoal-900/25">
-                  Measure first
-                </span>
+                <div className="hidden text-right md:block">
+                  <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
+                    Survey
+                  </span>
+
+                  <br />
+
+                  <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
+                    → Design
+                  </span>
+
+                  <br />
+
+                  <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
+                    → Install
+                  </span>
+                </div>
               </div>
             </div>
+          </div>
+        </Reveal>
+
+        {/* =====================================================
+            FOOTER MARKER
+        ====================================================== */}
+
+        <Reveal delay={0.25}>
+          <div className="mt-16 flex items-center justify-between border-t border-black/[0.10] pt-5 md:mt-20">
+            <div className="flex items-center gap-3">
+              <span className="h-px w-10 bg-[#B98520]" />
+
+              <span className="font-sans text-[8px] uppercase tracking-[0.28em] text-[#11100E]/40">
+                Choose according to the architecture
+              </span>
+            </div>
+
+            <span className="hidden font-mono text-[8px] tracking-[0.2em] text-[#11100E]/25 sm:block">
+              HEATIFY / SYSTEMS 03
+            </span>
           </div>
         </Reveal>
       </div>

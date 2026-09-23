@@ -1,34 +1,49 @@
+
+
 import type { Metadata } from "next";
-import { Hero } from "@/components/home/hero";
 
-import { ProductShowcase } from "@/components/home/product-showcase";
-
-import { Benefits } from "@/components/home/benefits";
-
+import HeatifyLoader from "@/components/home/hero";
 import { Projects } from "@/components/home/projects";
+import { ProductShowcase } from "@/components/home/product-showcase";
 import { Process } from "@/components/home/process";
 import { Testimonials } from "@/components/home/testimonials";
 import { FinalCta } from "@/components/home/final-cta";
 
 export const metadata: Metadata = {
-  title: "Premium Heating Technology — Comfort, engineered into every surface",
+  title:
+    "Premium Heating Technology — Comfort, engineered into every surface",
+
   description:
-    "WowTherm designs and installs premium heating systems for modern homes, hospitality spaces and architectural interiors. Invisible warmth, precise control.",
+    "WOWTHERM designs and installs premium heating systems for modern homes, hospitality spaces and architectural interiors. Invisible warmth, precise control.",
 };
 
 export default function HomePage() {
   return (
-    <>
-      <Hero />
-      <div id="next">
+    <main className="relative w-full overflow-x-clip bg-[#11100E]">
+      {/* =========================================================
+          HEATIFY INTRO
+          
+          Normal document-flow section.
+          It is NOT fixed and does NOT cover the sections below.
+      ========================================================= */}
+
+      <HeatifyLoader />
+
+      {/* =========================================================
+          HOMEPAGE CONTENT
+      ========================================================= */}
+
+      <div className="relative z-10 w-full">
         <Projects />
-        <Benefits />
+
         <ProductShowcase />
-        
+
         <Process />
+
         <Testimonials />
+
         <FinalCta />
       </div>
-    </>
+    </main>
   );
 }

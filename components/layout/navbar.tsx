@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import Image from "next/image";
@@ -9,13 +8,11 @@ import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  ArrowRight,
   ArrowUpRight,
   Menu,
   X,
 } from "lucide-react";
 
-import { Magnetic } from "@/components/motion/magnetic";
 import { navLinks, siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -30,70 +27,92 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
+  /* ---------------------------------------------------------------------- */
+  /* Scroll state                                                           */
+  /* ---------------------------------------------------------------------- */
+
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 28);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 24);
     };
 
-    onScroll();
+    handleScroll();
 
-    window.addEventListener("scroll", onScroll, {
+    window.addEventListener("scroll", handleScroll, {
       passive: true,
     });
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  /* ---------------------------------------------------------------------- */
+  /* Close mobile navigation on route change                                */
+  /* ---------------------------------------------------------------------- */
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
+  /* ---------------------------------------------------------------------- */
+  /* Lock page scroll while mobile drawer is open                           */
+  /* ---------------------------------------------------------------------- */
+
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
   const closeMenu = () => setOpen(false);
 
   return (
-    <header className="pointer-events-none absolute inset-x-0 top-0 z-50">
-      {/* ================================================================
-          SKIP LINK
-      ================================================================ */}
-
-      <a
-        href="#main"
-        className="pointer-events-auto absolute left-6 -top-14 z-[100] rounded-full bg-copper-500 px-4 py-2 text-sm font-medium text-white shadow-lg transition-[top] focus-visible:top-4"
-      >
-        Skip to content
-      </a>
-
-      {/* ================================================================
-          NAVBAR
-      ================================================================ */}
+    <header className="pointer-events-none absolute inset-x-0 top-0 z-[100]">
+      {/* ================================================================== */}
+      {/* DESKTOP / MOBILE NAV                                               */}
+      {/* ================================================================== */}
 
       <nav
         aria-label="Main navigation"
         className={cn(
-          "pointer-events-auto relative mx-auto flex items-center justify-between",
-          "px-5 py-4 md:px-8 md:py-5 lg:px-10",
+          "pointer-events-auto relative mx-auto",
+          "flex h-[78px] items-center",
+          "border-b border-black/[0.10]",
+          "px-5 sm:px-7 md:px-9 lg:px-11",
           "transition-all duration-500",
-          "ease-(--ease-out-quart)",
+          "ease-[cubic-bezier(0.22,1,0.36,1)]",
+
+          /* -------------------------------------------------------------- */
+          /* Always-visible premium surface                                  */
+          /* -------------------------------------------------------------- */
+
+          "bg-[#F4F1EA]/[0.94]",
+          "backdrop-blur-xl",
+
+          /* -------------------------------------------------------------- */
+          /* Slight elevation after scroll                                  */
+          /* -------------------------------------------------------------- */
+
           scrolled
             ? [
-                "mx-3 mt-3 rounded-2xl",
-                "border border-charcoal-900/[0.07]",
-                "bg-ivory-100/90",
-                "shadow-[0_12px_45px_-25px_rgba(20,18,16,0.28)]",
-                "backdrop-blur-2xl",
-                "md:mx-5 md:mt-4",
-              ].join(" ")
+                "shadow-[0_12px_40px_rgba(17,16,14,0.08)]",
+                "bg-[#F4F1EA]/[0.97]",
+              ]
             : [
-                "border-b border-white/[0.08]",
-                "bg-linear-to-b from-black/35 via-black/10 to-transparent",
-              ].join(" "),
+                "shadow-[0_4px_25px_rgba(17,16,14,0.025)]",
+              ],
         )}
       >
-        {/* ================================================================
-            LOGO
-        ================================================================ */}
+        {/* ================================================================== */}
+        {/* LEFT — LOGO                                                        */}
+        {/* ================================================================== */}
 
         <Link
           href="/"
@@ -101,137 +120,133 @@ export function Navbar() {
           className="group relative z-20 flex shrink-0 items-center"
         >
           <Image
-            src="/logo.png"
+            src="/logo1.png"
             alt="WOWTHERM"
-            width={160}
-            height={46}
+            width={180}
+            height={52}
             priority
             className={cn(
-              "h-auto w-[122px] object-contain",
-              "transition-transform duration-500 ease-(--ease-out-quart)",
-              "group-hover:scale-[1.025]",
-              "sm:w-[132px] lg:w-[142px]",
+              "h-auto w-[124px] object-contain",
+              "transition-all duration-500",
+              "group-hover:scale-[1.015]",
+              "sm:w-[132px]",
+              "lg:w-[142px]",
             )}
           />
         </Link>
 
-        {/* ================================================================
-            DESKTOP NAVIGATION
-        ================================================================ */}
+        {/* ================================================================== */}
+        {/* CENTER — DESKTOP NAV                                               */}
+        {/* ================================================================== */}
 
-        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-7 lg:flex xl:gap-9">
-          {navLinks.map((link) => {
-            const active = isActive(link.href, pathname);
+        <div className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
+          <ul className="flex items-center gap-8 xl:gap-10">
+            {navLinks.map((link) => {
+              const active = isActive(link.href, pathname);
 
-            return (
-              <li
-                key={link.href}
-                className="relative flex items-center"
-              >
-                <Link
-                  href={link.href}
-                  aria-current={active ? "page" : undefined}
-                  className={cn(
-                    "relative px-1 py-3",
-                    "text-[10px] font-medium uppercase tracking-[0.22em]",
-                    "transition-colors duration-300",
-                    active
-                      ? scrolled
-                        ? "text-charcoal-950"
-                        : "text-white"
-                      : scrolled
-                        ? "text-charcoal-500 hover:text-charcoal-950"
-                        : "text-white/55 hover:text-white",
-                  )}
+              return (
+                <li
+                  key={link.href}
+                  className="group relative"
                 >
-                  {link.label}
-
-                  {/* Animated underline */}
-                  <span
-                    aria-hidden
+                  <Link
+                    href={link.href}
+                    aria-current={active ? "page" : undefined}
                     className={cn(
-                      "absolute bottom-1 left-1/2 h-px -translate-x-1/2",
-                      "bg-copper-500",
-                      "transition-all duration-400 ease-(--ease-out-quart)",
+                      "relative flex items-center",
+                      "py-3",
+                      "font-sans text-[9px] font-medium uppercase",
+                      "tracking-[0.26em]",
+                      "transition-colors duration-300",
+
                       active
-                        ? "w-full opacity-100"
-                        : "w-0 opacity-0 group-hover:w-full",
+                        ? "text-[#B98520]"
+                        : "text-[#11100E]/65 hover:text-[#11100E]",
                     )}
-                  />
-                </Link>
+                  >
+                    {link.label}
 
-                {/* Active marker */}
-                <motion.span
-                  aria-hidden
-                  initial={false}
-                  animate={{
-                    scale: active ? 1 : 0,
-                    opacity: active ? 1 : 0,
-                  }}
-                  transition={{
-                    duration: 0.3,
-                    ease: EASE,
-                  }}
-                  className="absolute -bottom-0.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-copper-500"
-                />
-              </li>
-            );
-          })}
-        </ul>
+                    {/* ---------------------------------------------------- */}
+                    {/* Editorial active indicator                           */}
+                    {/* ---------------------------------------------------- */}
 
-        {/* ================================================================
-            RIGHT ACTIONS
-        ================================================================ */}
+                    <span
+                      aria-hidden
+                      className={cn(
+                        "absolute -bottom-[1px] left-1/2",
+                        "-translate-x-1/2",
+                        "h-px",
+                        "bg-[#F2B84B]",
+                        "transition-all duration-500",
+                        "ease-[cubic-bezier(0.22,1,0.36,1)]",
 
-        <div className="relative z-20 flex items-center gap-2.5">
-          {/* Desktop CTA */}
-          <Magnetic className="hidden lg:block">
-            <Link
-              href="/contact"
+                        active
+                          ? "w-full"
+                          : "w-0 group-hover:w-full",
+                      )}
+                    />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {/* ================================================================== */}
+        {/* RIGHT — CTA + MOBILE                                               */}
+        {/* ================================================================== */}
+
+        <div className="ml-auto flex items-center">
+          {/* ---------------------------------------------------------------- */}
+          {/* Desktop CTA                                                      */}
+          {/* ---------------------------------------------------------------- */}
+
+          <Link
+            href="/contact"
+            className={cn(
+              "group hidden lg:flex",
+              "h-[42px]",
+              "items-center",
+              "gap-6",
+              "border border-[#11100E]/15",
+              "px-5 xl:px-6",
+              "transition-all duration-500",
+              "hover:border-[#B98520]",
+              "hover:bg-[#F2B84B]",
+            )}
+          >
+            <span
               className={cn(
-                "group relative inline-flex h-11 items-center gap-3 overflow-hidden rounded-full px-5",
-                "text-[10px] font-semibold uppercase tracking-[0.16em]",
-                "transition-all duration-400",
-                scrolled
-                  ? "bg-charcoal-950 text-white hover:bg-charcoal-800"
-                  : "border border-white/20 bg-white/[0.08] text-white backdrop-blur-md hover:border-white/30 hover:bg-white/[0.14]",
+                "font-sans text-[9px] font-medium uppercase",
+                "tracking-[0.22em]",
+                "text-[#11100E]/80",
+                "transition-colors duration-300",
+                "group-hover:text-[#11100E]",
               )}
             >
-              <span className="relative z-10">
-                Start a Project
-              </span>
+              Start a Project
+            </span>
 
-              <span className="relative z-10 flex size-6 items-center justify-center rounded-full bg-copper-500 transition-transform duration-300 group-hover:translate-x-0.5">
-                <ArrowUpRight
-                  className="size-3"
-                  strokeWidth={1.8}
-                  aria-hidden
-                />
-              </span>
-
-              {/* Copper sweep */}
-              <span
+            <span
+              className={cn(
+                "flex size-5 items-center justify-center",
+                "text-[#11100E]/65",
+                "transition-all duration-300",
+                "group-hover:translate-x-0.5",
+                "group-hover:text-[#11100E]",
+              )}
+            >
+              <ArrowUpRight
+                className="size-[13px]"
+                strokeWidth={1.4}
                 aria-hidden
-                className="absolute inset-0 -translate-x-full bg-copper-500 transition-transform duration-500 ease-(--ease-out-quart) group-hover:translate-x-0"
               />
+            </span>
+          </Link>
 
-              <span className="absolute inset-0 z-10 flex items-center justify-center gap-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                <span>Start a Project</span>
-
-                <span className="flex size-6 items-center justify-center rounded-full bg-white/15">
-                  <ArrowUpRight
-                    className="size-3"
-                    strokeWidth={1.8}
-                    aria-hidden
-                  />
-                </span>
-              </span>
-            </Link>
-          </Magnetic>
-
-          {/* ============================================================
-              MOBILE MENU
-          ============================================================ */}
+          {/* ---------------------------------------------------------------- */}
+          {/* Mobile menu                                                      */}
+          {/* ---------------------------------------------------------------- */}
 
           <Dialog.Root
             open={open}
@@ -242,17 +257,18 @@ export function Navbar() {
                 type="button"
                 aria-label="Open navigation menu"
                 className={cn(
-                  "group relative flex size-11 items-center justify-center rounded-full",
-                  "border transition-all duration-300",
+                  "group flex size-10 items-center justify-center",
+                  "border border-[#11100E]/15",
+                  "text-[#11100E]/75",
+                  "transition-all duration-300",
+                  "hover:border-[#B98520]",
+                  "hover:text-[#11100E]",
                   "lg:hidden",
-                  scrolled
-                    ? "border-charcoal-900/10 bg-white/60 text-charcoal-950 hover:border-charcoal-900/20"
-                    : "border-white/20 bg-white/[0.06] text-white backdrop-blur-md hover:border-white/35 hover:bg-white/[0.1]",
                 )}
               >
                 <Menu
                   className="size-[17px] transition-transform duration-300 group-hover:scale-90"
-                  strokeWidth={1.6}
+                  strokeWidth={1.35}
                   aria-hidden
                 />
               </button>
@@ -261,61 +277,63 @@ export function Navbar() {
             <AnimatePresence>
               {open && (
                 <Dialog.Portal forceMount>
-                  {/* Overlay */}
+                  {/* ====================================================== */}
+                  {/* OVERLAY                                                 */}
+                  {/* ====================================================== */}
+
                   <Dialog.Overlay asChild forceMount>
                     <motion.div
-                      className="fixed inset-0 z-[60] bg-charcoal-950/65 backdrop-blur-md"
+                      className="fixed inset-0 z-[150] bg-[#11100E]/45 backdrop-blur-sm"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{
-                        duration: 0.35,
-                      }}
+                      transition={{ duration: 0.3 }}
                     />
                   </Dialog.Overlay>
 
-                  {/* Drawer */}
+                  {/* ====================================================== */}
+                  {/* DRAWER                                                  */}
+                  {/* ====================================================== */}
+
                   <Dialog.Content
                     asChild
                     forceMount
                     aria-describedby={undefined}
                   >
                     <motion.aside
-                      initial={{
-                        x: "100%",
-                      }}
-                      animate={{
-                        x: 0,
-                      }}
-                      exit={{
-                        x: "100%",
-                      }}
+                      initial={{ x: "100%" }}
+                      animate={{ x: 0 }}
+                      exit={{ x: "100%" }}
                       transition={{
                         duration: 0.55,
                         ease: EASE,
                       }}
                       className={cn(
-                        "fixed inset-y-0 right-0 z-[70]",
+                        "fixed inset-y-0 right-0 z-[160]",
                         "flex w-full max-w-[430px] flex-col",
                         "overflow-hidden",
-                        "bg-charcoal-950 text-white",
-                        "shadow-[-20px_0_80px_-35px_rgba(0,0,0,0.8)]",
+                        "bg-[#F4F1EA]",
+                        "text-[#11100E]",
+                        "shadow-[-30px_0_80px_-35px_rgba(0,0,0,0.35)]",
                       )}
                     >
-                      {/* Decorative architecture */}
+                      {/* ================================================== */}
+                      {/* DRAWER ATMOSPHERE                                   */}
+                      {/* ================================================== */}
+
                       <div
                         aria-hidden
-                        className="pointer-events-none absolute inset-0 opacity-[0.035]"
+                        className="pointer-events-none absolute inset-0 opacity-[0.045]"
                         style={{
                           backgroundImage: `
                             linear-gradient(
                               to right,
-                              rgba(255,255,255,0.9) 1px,
+                              rgba(17,16,14,0.8) 1px,
                               transparent 1px
                             ),
                             linear-gradient(
                               to bottom,
-                              rgba(255,255,255,0.9) 1px,
+                              rgba(17,16,14,0.8) 1px,
                               transparent 1px
                             )
                           `,
@@ -323,23 +341,24 @@ export function Navbar() {
                         }}
                       />
 
-                      {/* Copper atmosphere */}
                       <div
                         aria-hidden
-                        className="pointer-events-none absolute -right-32 -top-32 size-80 rounded-full bg-copper-500/[0.12] blur-[100px]"
+                        className="pointer-events-none absolute -right-32 -top-32 size-80 rounded-full blur-[110px]"
+                        style={{
+                          background:
+                            "radial-gradient(circle, rgba(242,184,75,.14) 0%, transparent 70%)",
+                        }}
                       />
 
-                      <div
-                        aria-hidden
-                        className="pointer-events-none absolute -bottom-40 -left-40 size-96 rounded-full bg-copper-500/[0.05] blur-[120px]"
-                      />
+                      {/* ================================================== */}
+                      {/* DRAWER HEADER                                       */}
+                      {/* ================================================== */}
 
-                      {/* Drawer header */}
-                      <div className="relative flex items-center justify-between border-b border-white/10 px-6 py-5 sm:px-8">
+                      <div className="relative flex h-[78px] shrink-0 items-center justify-between border-b border-[#11100E]/10 px-6 sm:px-8">
                         <div className="flex items-center gap-3">
-                          <span className="h-px w-7 bg-copper-400" />
+                          <span className="h-px w-7 bg-[#F2B84B]" />
 
-                          <Dialog.Title className="text-[9px] font-medium uppercase tracking-[0.28em] text-white/40">
+                          <Dialog.Title className="font-sans text-[9px] font-medium uppercase tracking-[0.27em] text-[#11100E]/45">
                             Navigation
                           </Dialog.Title>
                         </div>
@@ -348,32 +367,41 @@ export function Navbar() {
                           <button
                             type="button"
                             aria-label="Close navigation menu"
-                            className="group flex size-11 items-center justify-center rounded-full border border-white/10 transition-all duration-300 hover:border-copper-400/50 hover:bg-white/5"
+                            className="group flex size-10 items-center justify-center border border-[#11100E]/10 transition-all duration-300 hover:border-[#B98520]"
                           >
                             <X
-                              className="size-5 text-white/70 transition-transform duration-300 group-hover:rotate-90 group-hover:text-white"
-                              strokeWidth={1.5}
+                              className="size-[17px] text-[#11100E]/55 transition-all duration-300 group-hover:rotate-90 group-hover:text-[#11100E]"
+                              strokeWidth={1.35}
                               aria-hidden
                             />
                           </button>
                         </Dialog.Close>
                       </div>
 
-                      {/* Navigation */}
+                      {/* ================================================== */}
+                      {/* MOBILE CONTENT                                      */}
+                      {/* ================================================== */}
+
                       <div className="relative flex flex-1 flex-col px-6 pt-10 sm:px-8">
+                        {/* Small header */}
+
                         <div className="mb-8 flex items-center justify-between">
-                          <span className="text-[9px] uppercase tracking-[0.25em] text-white/25">
+                          <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-[#11100E]/25">
                             WOWTHERM
                           </span>
 
-                          <span className="text-[9px] uppercase tracking-[0.2em] text-copper-400">
-                            01 — 05
+                          <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#B98520]">
+                            MENU
                           </span>
                         </div>
 
+                        {/* ------------------------------------------------ */}
+                        {/* Links                                             */}
+                        {/* ------------------------------------------------ */}
+
                         <nav aria-label="Mobile navigation">
-                          <ul className="flex flex-col">
-                            {navLinks.map((link, i) => {
+                          <ul>
+                            {navLinks.map((link, index) => {
                               const active = isActive(
                                 link.href,
                                 pathname,
@@ -384,15 +412,15 @@ export function Navbar() {
                                   key={link.href}
                                   initial={{
                                     opacity: 0,
-                                    x: 35,
+                                    x: 24,
                                   }}
                                   animate={{
                                     opacity: 1,
                                     x: 0,
                                   }}
                                   transition={{
-                                    delay: 0.1 + i * 0.055,
-                                    duration: 0.5,
+                                    delay: 0.08 + index * 0.06,
+                                    duration: 0.45,
                                     ease: EASE,
                                   }}
                                 >
@@ -401,36 +429,53 @@ export function Navbar() {
                                     onClick={closeMenu}
                                     className={cn(
                                       "group flex items-center justify-between",
-                                      "border-b border-white/[0.08]",
+                                      "border-b border-[#11100E]/10",
                                       "py-5",
                                       "transition-colors duration-300",
+
                                       active
-                                        ? "text-copper-400"
-                                        : "text-white/70 hover:text-white",
+                                        ? "text-[#B98520]"
+                                        : "text-[#11100E]/65 hover:text-[#11100E]",
                                     )}
                                   >
-                                    <div className="flex items-baseline gap-5">
-                                      <span className="font-mono text-[9px] text-white/20">
-                                        {String(i + 1).padStart(2, "0")}
+                                    <div className="flex items-center gap-5">
+                                      <span className="font-mono text-[8px] text-[#11100E]/20">
+                                        {String(index + 1).padStart(
+                                          2,
+                                          "0",
+                                        )}
                                       </span>
 
-                                      <span className="font-display text-[2rem] leading-none tracking-[-0.035em]">
+                                      <span
+                                        className={cn(
+                                          "font-display text-[2rem]",
+                                          "leading-none",
+                                          "tracking-[-0.035em]",
+                                          "transition-transform duration-500",
+                                          "group-hover:translate-x-1",
+                                        )}
+                                      >
                                         {link.label}
                                       </span>
                                     </div>
 
-                                    <motion.span
-                                      animate={{
-                                        x: active ? 0 : -5,
-                                        opacity: active ? 1 : 0,
-                                      }}
-                                      className="flex size-9 items-center justify-center rounded-full border border-copper-400/30 bg-copper-400/10"
+                                    <span
+                                      className={cn(
+                                        "flex size-8 items-center justify-center",
+                                        "border border-[#11100E]/10",
+                                        "transition-all duration-300",
+
+                                        active
+                                          ? "border-[#F2B84B] bg-[#F2B84B] text-[#11100E]"
+                                          : "opacity-0 group-hover:opacity-100",
+                                      )}
                                     >
                                       <ArrowUpRight
-                                        className="size-4"
+                                        className="size-3.5"
+                                        strokeWidth={1.35}
                                         aria-hidden
                                       />
-                                    </motion.span>
+                                    </span>
                                   </Link>
                                 </motion.li>
                               );
@@ -438,41 +483,48 @@ export function Navbar() {
                           </ul>
                         </nav>
 
-                        {/* Bottom */}
+                        {/* ================================================== */}
+                        {/* BOTTOM CTA                                         */}
+                        {/* ================================================== */}
+
                         <div className="relative mt-auto pb-7 pt-10">
                           <Link
                             href="/contact"
                             onClick={closeMenu}
-                            className="group relative flex h-14 w-full items-center justify-between overflow-hidden bg-copper-500 px-5 text-[10px] font-semibold uppercase tracking-[0.17em] text-white"
+                            className="group flex h-14 items-center justify-between bg-[#11100E] px-5 text-[#F4F1EA] transition-colors duration-500 hover:bg-[#F2B84B] hover:text-[#11100E]"
                           >
-                            <span>
+                            <span className="font-sans text-[9px] font-semibold uppercase tracking-[0.18em]">
                               Start a Project
                             </span>
 
-                            <span className="flex size-8 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 group-hover:translate-x-1">
-                              <ArrowRight
-                                className="size-4"
+                            <span className="flex size-7 items-center justify-center border border-white/15 transition-transform duration-300 group-hover:translate-x-1 group-hover:border-[#11100E]/20">
+                              <ArrowUpRight
+                                className="size-3.5"
+                                strokeWidth={1.35}
                                 aria-hidden
                               />
                             </span>
                           </Link>
 
-                          <div className="mt-5 flex items-center justify-between">
-                            <span className="text-[9px] uppercase tracking-[0.2em] text-white/20">
+                          <div className="mt-5 flex items-center justify-between border-t border-[#11100E]/10 pt-4">
+                            <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
                               Engineered warmth
                             </span>
 
-                            <span className="text-xs text-white/45">
+                            <span className="font-sans text-[10px] text-[#11100E]/45">
                               {siteConfig.phone}
                             </span>
                           </div>
                         </div>
                       </div>
 
-                      {/* Corner detail */}
+                      {/* ================================================== */}
+                      {/* CORNER DETAIL                                       */}
+                      {/* ================================================== */}
+
                       <div
                         aria-hidden
-                        className="absolute bottom-0 right-0 size-24 border-b border-r border-copper-400/20"
+                        className="absolute bottom-0 right-0 size-24 border-b border-r border-[#B98520]/25"
                       />
                     </motion.aside>
                   </Dialog.Content>
@@ -485,3 +537,5 @@ export function Navbar() {
     </header>
   );
 }
+
+export default Navbar;

@@ -2,498 +2,715 @@
 
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDownRight, ArrowUpRight, Plus } from "lucide-react";
-
-import { products, categories, type ProductCategory } from "@/lib/products";
-import { cn } from "@/lib/utils";
+import { useMemo, useRef, useState } from "react";
 import {
-  Reveal,
-  RevealGroup,
-  RevealItem,
-} from "@/components/motion/reveal";
+  motion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+import {
+  products,
+  categories,
+  type ProductCategory,
+} from "@/lib/products";
 
-const PRODUCT_NUMBERS = [
-  "01",
-  "02",
-  "03",
-  "04",
-  "05",
-  "06",
-  "07",
-  "08",
-];
+import { cn } from "@/lib/utils";
+import { Reveal } from "@/components/motion/reveal";
+import FinalCta from "@/components/home/final-cta";
+
+/* -------------------------------------------------------------------------- */
+/* Product helpers                                                            */
+/* -------------------------------------------------------------------------- */
+
+type ProductItem = (typeof products)[number];
+
+function getCategoryKey(category: unknown, index = 0): string {
+  if (typeof category === "string") {
+    return category;
+  }
+
+  if (
+    category &&
+    typeof category === "object" &&
+    "slug" in category &&
+    typeof category.slug === "string"
+  ) {
+    return category.slug;
+  }
+
+  if (
+    category &&
+    typeof category === "object" &&
+    "id" in category &&
+    typeof category.id === "string"
+  ) {
+    return category.id;
+  }
+
+  if (
+    category &&
+    typeof category === "object" &&
+    "name" in category &&
+    typeof category.name === "string"
+  ) {
+    return category.name;
+  }
+
+  return `category-${index}`;
+}
+
+function getCategoryLabel(category: unknown, index = 0): string {
+  if (typeof category === "string") {
+    return category;
+  }
+
+  if (
+    category &&
+    typeof category === "object" &&
+    "name" in category &&
+    typeof category.name === "string"
+  ) {
+    return category.name;
+  }
+
+  if (
+    category &&
+    typeof category === "object" &&
+    "label" in category &&
+    typeof category.label === "string"
+  ) {
+    return category.label;
+  }
+
+  if (
+    category &&
+    typeof category === "object" &&
+    "slug" in category &&
+    typeof category.slug === "string"
+  ) {
+    return category.slug;
+  }
+
+  return `Category ${index + 1}`;
+}
+
+function getProductCategoryKey(product: ProductItem): string {
+  return getCategoryKey(product.category);
+}
+
+function getProductTagline(product: ProductItem): string {
+  if (
+    "tagline" in product &&
+    typeof product.tagline === "string" &&
+    product.tagline.length > 0
+  ) {
+    return product.tagline;
+  }
+
+  return "Engineered radiant heating for considered spaces.";
+}
+
+/* -------------------------------------------------------------------------- */
+/* Product slide                                                             */
+/* -------------------------------------------------------------------------- */
+
+function ProductSlide({
+  product,
+  index,
+  total,
+  number,
+  progress,
+}: {
+  product: ProductItem;
+  index: number;
+  total: number;
+  number: string;
+  progress: MotionValue<number>;
+}) {
+  const start = index / total;
+  const center = (index + 0.5) / total;
+  const end = (index + 1) / total;
+
+  const opacity = useTransform(
+    progress,
+    [start, center, end],
+    index === 0
+      ? [1, 1, 0]
+      : index === total - 1
+        ? [0, 1, 1]
+        : [0, 1, 0],
+  );
+
+  const imageScale = useTransform(
+    progress,
+    [start, center, end],
+    [1.07, 1, 0.96],
+  );
+
+  const imageX = useTransform(
+    progress,
+    [start, center, end],
+    index % 2 === 0 ? ["2%", "0%", "-2%"] : ["-2%", "0%", "2%"],
+  );
+
+  const contentY = useTransform(
+    progress,
+    [start, center, end],
+    [35, 0, -30],
+  );
+
+  const contentOpacity = useTransform(
+    progress,
+    [start, center, end],
+    [0, 1, 0],
+  );
+
+  const blur = useTransform(
+    progress,
+    [start, center, end],
+    ["4px", "0px", "3px"],
+  );
+
+  const tagline = getProductTagline(product);
+
+  return (
+    <motion.article
+      aria-hidden={false}
+      style={{ opacity }}
+      className="absolute inset-0"
+    >
+      {/* ------------------------------------------------------------------ */}
+      {/* Image                                                               */}
+      {/* ------------------------------------------------------------------ */}
+
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          scale: imageScale,
+          x: imageX,
+          filter: blur,
+        }}
+      >
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          priority={index === 0}
+          quality={100}
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </motion.div>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Cinematic overlays                                                  */}
+      {/* ------------------------------------------------------------------ */}
+
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[#11100E]/10"
+      />
+
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-r from-[#11100E]/90 via-[#11100E]/35 to-transparent"
+      />
+
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-t from-[#11100E]/85 via-transparent to-[#11100E]/20"
+      />
+
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(17,16,14,.35) 0%, transparent 45%, rgba(17,16,14,.08) 100%)",
+        }}
+      />
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Architectural frame                                                */}
+      {/* ------------------------------------------------------------------ */}
+
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-6 border border-[#F4F1EA]/15 md:inset-8 lg:inset-10"
+      />
+
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-10 top-10 h-12 w-12 border-l border-t border-[#F2B84B]/70 md:left-12 md:top-12 lg:left-16 lg:top-16"
+      />
+
+      <div
+        aria-hidden
+        className="pointer-events-none absolute bottom-10 right-10 h-12 w-12 border-b border-r border-[#F2B84B]/40 md:bottom-12 md:right-12 lg:bottom-16 lg:right-16"
+      />
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Content                                                             */}
+      {/* ------------------------------------------------------------------ */}
+
+      <motion.div
+        style={{
+          y: contentY,
+          opacity: contentOpacity,
+        }}
+        className="absolute inset-x-0 bottom-0 z-20"
+      >
+        <div className="mx-auto max-w-[1500px] px-8 pb-12 md:px-12 md:pb-14 lg:px-16 lg:pb-16">
+          <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
+            {/* Main information */}
+
+            <div className="max-w-[900px]">
+              <div className="mb-6 flex items-center gap-4">
+                <span className="h-px w-12 bg-[#F2B84B]" />
+
+                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#F4F1EA]/60">
+                  WOWTHERM / {number}
+                </span>
+              </div>
+
+              <h2 className="font-display text-[clamp(4rem,10vw,10rem)] font-normal leading-[0.78] tracking-[-0.07em] text-[#F4F1EA]">
+                {product.name}
+                <span className="text-[#F2B84B]">.</span>
+              </h2>
+
+              <div className="mt-8 flex max-w-[700px] flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                <p className="max-w-[480px] font-sans text-sm leading-7 text-[#F4F1EA]/65 md:text-[15px]">
+                  {tagline}
+                </p>
+
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="group inline-flex w-fit items-center gap-4 border-b border-[#F4F1EA]/30 pb-2 font-sans text-[9px] font-medium uppercase tracking-[0.24em] text-[#F4F1EA] transition-colors duration-300 hover:border-[#F2B84B]"
+                >
+                  Explore product
+                  <ArrowUpRight className="size-3.5 text-[#F2B84B] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Technical information */}
+
+            <div className="hidden w-[230px] border-l border-[#F4F1EA]/20 pl-7 lg:block">
+              <div className="flex items-center justify-between border-b border-[#F4F1EA]/15 py-3">
+                <span className="font-sans text-[8px] uppercase tracking-[0.22em] text-[#F4F1EA]/40">
+                  System
+                </span>
+
+                <span className="font-mono text-[8px] uppercase tracking-[0.15em] text-[#F4F1EA]/70">
+                  WOWTHERM
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between border-b border-[#F4F1EA]/15 py-3">
+                <span className="font-sans text-[8px] uppercase tracking-[0.22em] text-[#F4F1EA]/40">
+                  Category
+                </span>
+
+                <span className="font-mono text-[8px] uppercase tracking-[0.15em] text-[#F2B84B]">
+                  {getProductCategoryKey(product)}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between py-3">
+                <span className="font-sans text-[8px] uppercase tracking-[0.22em] text-[#F4F1EA]/40">
+                  Product
+                </span>
+
+                <span className="font-mono text-[8px] tracking-[0.15em] text-[#F4F1EA]/70">
+                  {number} / {String(total).padStart(2, "0")}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.article>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Page                                                                       */
+/* -------------------------------------------------------------------------- */
 
 export default function ProductsPage() {
   const [active, setActive] = useState<ProductCategory | "all">("all");
 
-  const filtered =
-    active === "all"
-      ? products
-      : products.filter((product) => product.category === active);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const categoryOptions = useMemo(() => {
+    const seen = new Set<string>();
+
+    return categories
+      .map((category, index) => {
+        const key = getCategoryKey(category, index);
+        const label = getCategoryLabel(category, index);
+
+        return {
+          key,
+          label,
+        };
+      })
+      .filter((category) => {
+        if (seen.has(category.key)) {
+          return false;
+        }
+
+        seen.add(category.key);
+        return true;
+      });
+  }, []);
+
+  const filtered = useMemo(() => {
+    if (active === "all") {
+      return products;
+    }
+
+    return products.filter(
+      (product) => getProductCategoryKey(product) === String(active),
+    );
+  }, [active]);
+
+  const total = Math.max(filtered.length, 1);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+
+  const progressScale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, 1],
+  );
 
   return (
-    <main className="overflow-hidden bg-[#f6f2eb] text-charcoal-950">
-      {/* =====================================================
-          HERO
-      ===================================================== */}
+    <main className="bg-[#F4F1EA] text-[#11100E]">
+      {/* ================================================================== */}
+      {/* HERO                                                               */}
+      {/* ================================================================== */}
 
-      <section className="relative isolate min-h-[88svh] overflow-hidden bg-charcoal-950 text-white">
-        {/* architectural grid */}
-      <div
-  aria-hidden
-  className="absolute inset-0"
->
-  <Image
-    src="/product.png"
-    alt=""
-    fill
-    priority
-    sizes="100vw"
-    className="object-cover object-center"
-  />
+      <section className="relative isolate min-h-[88svh] overflow-hidden bg-[#11100E] text-[#F4F1EA]">
+        <div className="absolute inset-0">
+          <Image
+            src="/pro1.png"
+            alt="WOWTHERM heating systems"
+            fill
+            priority
+            quality={100}
+            sizes="100vw"
+            className="object-cover object-center"
+          />
 
-  {/* dark editorial overlay */}
-  <div className="absolute inset-0 bg-charcoal-950/55" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#11100E]/90 via-[#11100E]/55 to-transparent" />
 
-  {/* left-side gradient for typography */}
-  <div
-    className="absolute inset-0"
-    style={{
-      background: `
-        linear-gradient(
-          90deg,
-          rgba(17,16,15,0.92) 0%,
-          rgba(17,16,15,0.72) 30%,
-          rgba(17,16,15,0.30) 62%,
-          rgba(17,16,15,0.12) 100%
-        )
-      `,
-    }}
-  />
+          <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#11100E]/70 to-transparent" />
+        </div>
 
-  {/* subtle copper atmosphere */}
-  <div className="absolute inset-0 bg-copper-500/[0.035]" />
-</div>
+        <div className="relative z-10 mx-auto flex min-h-[88svh] max-w-[1400px] items-center px-8 py-24 md:px-12 lg:px-16">
+          <div className="w-full">
+            <Reveal delay={0.1}>
+              <p className="mb-8 font-sans text-[10px] font-medium uppercase tracking-[0.3em] text-[#F4F1EA]/60">
+                Radiant heating, engineered beneath.
+              </p>
+            </Reveal>
 
-        {/* copper atmosphere */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-[10%] top-[15%] size-[650px] rounded-full bg-copper-500/[0.08] blur-[160px]"
-        />
+            <Reveal delay={0.16}>
+              <h1 className="max-w-[1100px] font-serif text-[clamp(4.5rem,11vw,10.5rem)] font-light leading-[0.78] tracking-[-0.065em]">
+                <span className="block">Products</span>
 
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -left-[15%] bottom-[-20%] size-[500px] rounded-full bg-copper-500/[0.045] blur-[140px]"
-        />
+                <span className="ml-[7vw] block text-[#F4F1EA]/90">
+                  made for
+                </span>
 
-        {/* architectural vertical guides */}
-        <div
-          aria-hidden
-          className="absolute bottom-0 left-[7.5%] top-0 hidden w-px bg-white/[0.07] md:block"
-        />
-
-        <div
-          aria-hidden
-          className="absolute bottom-0 right-[7.5%] top-0 hidden w-px bg-white/[0.07] md:block"
-        />
-
-        <div className="container-site relative flex min-h-[88svh] flex-col justify-between pb-10 pt-32 md:pt-40">
-          {/* top metadata */}
-          <Reveal>
-            <div className="flex items-center gap-4">
-              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-copper-400">
-                05
-              </span>
-
-              <span className="h-px w-10 bg-copper-500/60" />
-
-              <span className="text-[9px] font-medium uppercase tracking-[0.28em] text-white/40">
-                Product catalogue
-              </span>
-            </div>
-          </Reveal>
-
-          {/* main heading */}
-          <div className="relative mt-20">
-            <Reveal delay={0.08}>
-              <h1 className="max-w-[1150px] font-display text-[clamp(4rem,9vw,10.5rem)] font-medium leading-[0.82] tracking-[-0.075em]">
-                Engineered
-                <br />
-                <span className="text-copper-400/90">beneath.</span>
+                <span className="ml-[14vw] block italic text-[#F2B84B]">
+                  warmth.
+                </span>
               </h1>
             </Reveal>
 
-            <div className="mt-12 grid gap-8 md:grid-cols-[1fr_1fr] md:items-end">
-              <Reveal delay={0.16}>
-                <div className="h-px w-20 bg-copper-500" />
-              </Reveal>
-
-              <Reveal delay={0.22}>
-                <p className="max-w-[520px] text-sm leading-7 text-white/45 md:text-base md:leading-8">
-                  Heating systems designed to disappear beneath the
-                  architecture — precise, efficient and built around the way
-                  each space is used.
+            <Reveal delay={0.24}>
+              <div className="mt-12 ml-[7vw] max-w-[560px] border-l border-[#F4F1EA]/25 pl-6">
+                <p className="font-sans text-sm leading-7 text-[#F4F1EA]/55 md:text-[15px]">
+                  Heating elements, controls and systems designed to work
+                  quietly beneath the architecture — precise where it matters,
+                  invisible when complete.
                 </p>
-              </Reveal>
-            </div>
-          </div>
-
-          {/* bottom information */}
-          <Reveal delay={0.3}>
-            <div className="mt-20 flex flex-col justify-between gap-6 border-t border-white/[0.10] pt-5 md:flex-row md:items-center">
-              <span className="text-[9px] uppercase tracking-[0.24em] text-white/30">
-                Electric / Hydronic / Controls / Insulation
-              </span>
-
-              <div className="flex items-center gap-3">
-                <ArrowDownRight
-                  className="size-4 text-copper-400"
-                  strokeWidth={1.25}
-                  aria-hidden
-                />
-
-                <span className="text-[9px] uppercase tracking-[0.24em] text-white/30">
-                  Explore the collection
-                </span>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
+        </div>
+
+        <div className="absolute bottom-10 left-8 z-20 md:left-12 lg:left-16">
+          <div className="flex items-center gap-4">
+            <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-[#F4F1EA]/40">
+              Product collection
+            </span>
+
+            <span className="h-px w-10 bg-[#F2B84B]/70" />
+          </div>
         </div>
       </section>
 
-      {/* =====================================================
-          CATALOGUE INTRO + FILTER
-      ===================================================== */}
+      {/* ================================================================== */}
+      {/* COLLECTION INTRO                                                    */}
+      {/* ================================================================== */}
 
-      <section className="relative bg-[#f6f2eb] py-24 md:py-32">
-        {/* subtle grid */}
+      <section className="relative overflow-hidden bg-[#F4F1EA] py-28 md:py-36 lg:py-44">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.025]"
-          style={{
-            backgroundImage: `
-              linear-gradient(
-                to right,
-                rgba(0,0,0,0.8) 1px,
-                transparent 1px
-              )
-            `,
-            backgroundSize: "100px 100%",
-          }}
-        />
+          className="pointer-events-none absolute inset-0"
+        >
+          <div className="absolute inset-y-0 left-[8%] w-px bg-[#11100E]/[0.055]" />
+
+          <div className="absolute inset-y-0 right-[8%] w-px bg-[#11100E]/[0.055]" />
+
+          <div className="absolute left-0 right-0 top-[18%] h-px bg-[#11100E]/[0.045]" />
+
+          <div className="absolute -right-[10%] top-[5%] size-[500px] rounded-full bg-[#F2B84B]/[0.045] blur-[150px]" />
+        </div>
 
         <div className="container-site relative">
-          <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-24">
-            {/* section marker */}
-            <Reveal>
-              <div className="flex items-start gap-4">
-                <span className="font-mono text-[9px] text-copper-600">
+          <Reveal>
+            <div className="flex items-center justify-between border-b border-[#11100E]/[0.10] pb-5">
+              <div className="flex items-center gap-4">
+                <span className="font-mono text-[9px] tracking-[0.16em] text-[#B98520]">
                   01
                 </span>
 
-                <div>
-                  <div className="flex items-center gap-3">
-                    <span className="h-px w-8 bg-copper-500" />
+                <span className="h-px w-10 bg-[#B98520]/70" />
 
-                    <span className="text-[9px] uppercase tracking-[0.26em] text-charcoal-950/35">
-                      The collection
-                    </span>
-                  </div>
-
-                  <p className="mt-5 max-w-[190px] text-xs leading-6 text-charcoal-950/40">
-                    Systems selected to work quietly beneath exceptional
-                    interiors.
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-
-            {/* catalogue heading */}
-            <Reveal delay={0.1}>
-              <div>
-                <h2 className="max-w-[900px] font-display text-[clamp(3rem,6vw,7rem)] font-medium leading-[0.86] tracking-[-0.065em]">
-                  Every layer has
-                  <br />
-                  <span className="text-copper-500/75">
-                    a purpose.
-                  </span>
-                </h2>
-
-               
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================
-          PRODUCTS
-      ===================================================== */}
-
-      <section className="relative bg-[#f6f2eb] pb-28 md:pb-44">
-        <div className="container-site">
-          <RevealGroup className="border-t border-charcoal-950/[0.10]">
-            {filtered.map((product, index) => {
-              const number =
-                PRODUCT_NUMBERS[index] ??
-                String(index + 1).padStart(2, "0");
-
-              const reverse = index % 2 === 1;
-
-              return (
-                <RevealItem key={product.slug}>
-                  <article
-                    className={cn(
-                      "group relative border-b border-charcoal-950/[0.10]",
-                      "grid min-h-[650px] items-center gap-12 py-20 md:py-28 lg:min-h-[720px] lg:grid-cols-2 lg:gap-24",
-                    )}
-                  >
-                    {/* =================================================
-                        IMAGE
-                    ================================================= */}
-
-                    <Link
-                      href={`/products/${product.slug}`}
-                      className={cn(
-                        "relative block aspect-[4/3] overflow-hidden bg-[#eae4da]",
-                        reverse ? "lg:order-2" : "lg:order-1",
-                      )}
-                    >
-                      {/* image */}
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.035]"
-                      />
-
-                      {/* image treatment */}
-                      <div
-                        aria-hidden
-                        className="absolute inset-0 bg-gradient-to-t from-charcoal-950/20 via-transparent to-transparent opacity-70"
-                      />
-
-                      {/* image code */}
-                      <div className="absolute left-5 top-5 flex items-center gap-3">
-                        <span className="bg-[#f6f2eb] px-3 py-2 font-mono text-[9px] tracking-[0.16em] text-charcoal-950">
-                          WT / {number}
-                        </span>
-                      </div>
-
-                      {/* image arrow */}
-                      <div className="absolute bottom-5 right-5 flex size-12 items-center justify-center bg-[#f6f2eb] text-charcoal-950 transition-all duration-500 group-hover:bg-copper-500 group-hover:text-white">
-                        <ArrowUpRight
-                          className="size-4 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                          aria-hidden
-                        />
-                      </div>
-                    </Link>
-
-                    {/* =================================================
-                        CONTENT
-                    ================================================= */}
-
-                    <div
-                      className={cn(
-                        "relative",
-                        reverse ? "lg:order-1" : "lg:order-2",
-                      )}
-                    >
-                      {/* huge background number */}
-                      <span
-                        aria-hidden
-                        className={cn(
-                          "pointer-events-none absolute -top-20 select-none font-display text-[clamp(8rem,15vw,14rem)] leading-none tracking-[-0.12em] text-copper-500/[0.055]",
-                          reverse ? "right-0" : "left-0",
-                        )}
-                      >
-                        {number}
-                      </span>
-
-                      {/* category */}
-                      <div className="relative flex items-center gap-4">
-                        <span className="font-mono text-[9px] text-copper-600">
-                          {number}
-                        </span>
-
-                        <span className="h-px w-8 bg-copper-500/60" />
-
-                        <span className="text-[9px] uppercase tracking-[0.24em] text-charcoal-950/35">
-                          {product.category}
-                        </span>
-                      </div>
-
-                      {/* product name */}
-                      <h3 className="relative mt-8 max-w-[680px] font-display text-[clamp(2.8rem,5vw,6rem)] font-medium leading-[0.88] tracking-[-0.06em] text-charcoal-950">
-                        {product.name}
-                      </h3>
-
-                      {/* tagline */}
-                      <p className="relative mt-8 max-w-[500px] text-base leading-8 text-charcoal-950/50 md:text-lg">
-                        {product.tagline}
-                      </p>
-
-                      {/* specification line */}
-                      <div className="relative mt-12 max-w-[520px] border-t border-charcoal-950/[0.10]">
-                        <div className="flex items-center justify-between py-5">
-                          <span className="text-[8px] uppercase tracking-[0.22em] text-charcoal-950/30">
-                            System
-                          </span>
-
-                          <span className="text-[9px] uppercase tracking-[0.14em] text-charcoal-950/55">
-                            WOWTHERM
-                          </span>
-                        </div>
-
-                        <div className="flex items-center justify-between border-t border-charcoal-950/[0.08] py-5">
-                          <span className="text-[8px] uppercase tracking-[0.22em] text-charcoal-950/30">
-                            Application
-                          </span>
-
-                          <span className="text-right text-[9px] uppercase tracking-[0.14em] text-charcoal-950/55">
-                            {product.category}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* CTA */}
-                      <Link
-                        href={`/products/${product.slug}`}
-                        className="group/link relative mt-10 inline-flex items-center gap-5"
-                      >
-                        <span className="relative text-[9px] font-medium uppercase tracking-[0.24em] text-charcoal-950/60">
-                          View product
-
-                          <span className="absolute -bottom-2 left-0 h-px w-full origin-left scale-x-0 bg-copper-500 transition-transform duration-500 group-hover/link:scale-x-100" />
-                        </span>
-
-                        <span className="flex size-11 items-center justify-center border border-charcoal-950/[0.15] transition-all duration-500 group-hover/link:border-copper-500 group-hover/link:bg-copper-500 group-hover/link:text-white">
-                          <ArrowUpRight
-                            className="size-4 transition-transform duration-500 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
-                            aria-hidden
-                          />
-                        </span>
-                      </Link>
-                    </div>
-                  </article>
-                </RevealItem>
-              );
-            })}
-          </RevealGroup>
-
-          {/* =====================================================
-              EMPTY STATE
-          ===================================================== */}
-
-          {filtered.length === 0 && (
-            <div className="border-b border-charcoal-950/[0.10] py-32 text-center">
-              <p className="font-display text-3xl text-charcoal-950/50">
-                No products in this category.
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* =====================================================
-          CLOSING
-      ===================================================== */}
-
-      <section className="relative overflow-hidden bg-charcoal-950 py-28 text-white md:py-40">
-        {/* grid */}
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `
-              linear-gradient(
-                to right,
-                rgba(255,255,255,0.8) 1px,
-                transparent 1px
-              ),
-              linear-gradient(
-                to bottom,
-                rgba(255,255,255,0.8) 1px,
-                transparent 1px
-              )
-            `,
-            backgroundSize: "90px 90px",
-          }}
-        />
-
-        <div
-          aria-hidden
-          className="absolute -right-[10%] top-1/2 size-[500px] -translate-y-1/2 rounded-full bg-copper-500/[0.07] blur-[140px]"
-        />
-
-        <div className="container-site relative">
-          <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
-            <Reveal>
-              <div className="flex items-start gap-4">
-                <Plus
-                  className="size-4 text-copper-400"
-                  strokeWidth={1}
-                  aria-hidden
-                />
-
-                <span className="text-[9px] uppercase tracking-[0.25em] text-white/30">
-                  Beyond the product
+                <span className="font-sans text-[9px] font-medium uppercase tracking-[0.28em] text-[#11100E]/40">
+                  The collection
                 </span>
               </div>
+
+              <span className="hidden font-mono text-[8px] uppercase tracking-[0.18em] text-[#11100E]/25 md:block">
+                WT / Catalogue
+              </span>
+            </div>
+          </Reveal>
+
+          <div className="grid gap-16 pt-16 md:pt-20 lg:grid-cols-[0.32fr_1fr] lg:gap-20">
+            <Reveal delay={0.08}>
+              <div className="lg:pt-5">
+                <p className="max-w-[230px] font-sans text-[11px] leading-6 text-[#11100E]/45">
+                  Systems designed to sit quietly beneath the architecture,
+                  with every component selected for the space above it.
+                </p>
+
+                <div className="mt-12 hidden lg:block">
+                  <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#11100E]/25">
+                    Engineered beneath
+                  </span>
+
+                  <div className="mt-4 h-px w-16 bg-[#F2B84B]" />
+                </div>
+              </div>
             </Reveal>
 
-            <div>
-              <Reveal delay={0.08}>
-                <h2 className="max-w-[1000px] font-display text-[clamp(3rem,6vw,7rem)] font-medium leading-[0.86] tracking-[-0.065em]">
-                  The right system
+            <Reveal delay={0.14}>
+              <div>
+                <h2 className="max-w-[1000px] font-serif text-[clamp(4rem,8vw,8.5rem)] font-light leading-[0.80] tracking-[-0.065em] text-[#11100E]">
+                  Every layer
                   <br />
-                  starts with the
-                  <br />
-                  <span className="text-copper-400">
-                    right space.
+                  has a{" "}
+                  <span className="italic text-[#F2B84B]">
+                    purpose.
                   </span>
                 </h2>
-              </Reveal>
 
-              <Reveal delay={0.16}>
-                <div className="mt-12 flex items-start gap-5">
-                  <span className="mt-3 h-px w-14 bg-copper-500" />
-
-                  <p className="max-w-[600px] text-sm leading-7 text-white/40 md:text-base md:leading-8">
-                    Products are only one part of the system. Our team can
-                    help specify the right heating approach for your floor,
-                    room and project.
+                <div className="mt-14 flex flex-col gap-8 border-t border-[#11100E]/[0.10] pt-6 sm:flex-row sm:items-end sm:justify-between">
+                  <p className="max-w-[430px] font-sans text-sm leading-7 text-[#11100E]/45">
+                    From the heating element beneath the floor to the controls
+                    at your fingertips, the system is considered as one
+                    complete piece of architecture.
                   </p>
+
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/30">
+                      Explore
+                    </span>
+
+                    <span className="flex size-9 items-center justify-center rounded-full border border-[#11100E]/15">
+                      <ArrowUpRight
+                        className="size-3.5"
+                        strokeWidth={1.2}
+                      />
+                    </span>
+                  </div>
                 </div>
-              </Reveal>
-
-              <Reveal delay={0.22}>
-                <Link
-                  href="/contact"
-                  className="group mt-12 inline-flex items-center gap-5"
-                >
-                  <span className="text-[9px] font-medium uppercase tracking-[0.24em] text-white/65">
-                    Discuss your project
-                  </span>
-
-                  <span className="flex size-12 items-center justify-center border border-white/15 transition-all duration-500 group-hover:border-copper-500 group-hover:bg-copper-500">
-                    <ArrowUpRight
-                      className="size-4 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                      aria-hidden
-                    />
-                  </span>
-                </Link>
-              </Reveal>
-            </div>
+              </div>
+            </Reveal>
           </div>
+         
         </div>
       </section>
+
+      {/* ================================================================== */}
+      {/* PRODUCT SHOWCASE                                                    */}
+      {/* ================================================================== */}
+
+      {filtered.length > 0 && (
+        <section
+          ref={sectionRef}
+          className="relative"
+          style={{
+            height: `${filtered.length * 100}svh`,
+          }}
+        >
+          <div className="sticky top-0 h-[100svh] overflow-hidden bg-[#11100E]">
+            {/* ------------------------------------------------------------ */}
+            {/* Slides                                                        */}
+            {/* ------------------------------------------------------------ */}
+
+            <div className="absolute inset-0">
+              {filtered.map((product, index) => (
+                <ProductSlide
+                  key={`${product.slug}-${index}`}
+                  product={product}
+                  index={index}
+                  total={filtered.length}
+                  number={String(index + 1).padStart(2, "0")}
+                  progress={scrollYProgress}
+                />
+              ))}
+            </div>
+
+            {/* ------------------------------------------------------------ */}
+            {/* Top technical line                                             */}
+            {/* ------------------------------------------------------------ */}
+
+            <div className="absolute left-0 right-0 top-0 z-40">
+              <div className="mx-auto flex max-w-[1500px] items-center justify-between px-8 py-7 md:px-12 lg:px-16">
+                <div className="flex items-center gap-4">
+                  <span className="font-mono text-[8px] tracking-[0.22em] text-[#F4F1EA]/50">
+                    02
+                  </span>
+
+                  <span className="h-px w-8 bg-[#F2B84B]" />
+
+                  <span className="font-sans text-[8px] uppercase tracking-[0.28em] text-[#F4F1EA]/45">
+                    Product systems
+                  </span>
+                </div>
+
+                <span className="hidden font-mono text-[8px] uppercase tracking-[0.18em] text-[#F4F1EA]/35 md:block">
+                  Scroll to explore
+                </span>
+              </div>
+            </div>
+
+            {/* ------------------------------------------------------------ */}
+            {/* Side vertical label                                           */}
+            {/* ------------------------------------------------------------ */}
+
+            <div className="absolute left-7 top-1/2 z-40 hidden -translate-y-1/2 lg:block">
+              <span
+                className="font-mono text-[8px] uppercase tracking-[0.25em] text-[#F4F1EA]/35"
+                style={{
+                  writingMode: "vertical-rl",
+                }}
+              >
+                Radiant heating / WOWTHERM
+              </span>
+            </div>
+
+            {/* ------------------------------------------------------------ */}
+            {/* Bottom progress                                                */}
+            {/* ------------------------------------------------------------ */}
+
+            <div className="absolute bottom-0 left-0 right-0 z-40">
+              <div className="h-px bg-[#F4F1EA]/15">
+                <motion.div
+                  style={{
+                    scaleX: progressScale,
+                  }}
+                  className="h-full origin-left bg-[#F2B84B]"
+                />
+              </div>
+
+              <div className="mx-auto flex max-w-[1500px] items-center justify-between px-8 py-5 md:px-12 lg:px-16">
+                <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#F4F1EA]/35">
+                  WOWTHERM
+                </span>
+
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-[8px] text-[#F4F1EA]/40">
+                    01
+                  </span>
+
+                  <span className="h-px w-8 bg-[#F4F1EA]/20" />
+
+                  <span className="font-mono text-[8px] text-[#F4F1EA]/40">
+                    {String(filtered.length).padStart(2, "0")}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* ------------------------------------------------------------ */}
+            {/* Scroll cue                                                     */}
+            {/* ------------------------------------------------------------ */}
+
+            <motion.div
+              animate={{
+                y: [0, 6, 0],
+                opacity: [0.45, 0.8, 0.45],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute bottom-20 left-1/2 z-40 hidden -translate-x-1/2 md:block"
+            >
+              <ArrowDownRight className="size-4 text-[#F2B84B]" />
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* ================================================================== */}
+      {/* EMPTY STATE                                                         */}
+      {/* ================================================================== */}
+
+      {filtered.length === 0 && (
+        <section className="flex min-h-[60svh] items-center justify-center bg-[#F4F1EA] px-8">
+          <div className="text-center">
+            <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#B98520]">
+              No systems found
+            </p>
+
+            <p className="mt-5 font-display text-4xl tracking-[-0.04em]">
+              Nothing in this collection yet.
+            </p>
+
+            <button
+              type="button"
+              onClick={() => setActive("all")}
+              className="mt-8 border border-[#11100E] bg-[#11100E] px-6 py-3 font-mono text-[9px] uppercase tracking-[0.18em] text-[#F4F1EA] transition hover:bg-[#F2B84B] hover:text-[#11100E]"
+            >
+              View all products
+            </button>
+          </div>
+        </section>
+      )}
+
+      {/* ================================================================== */}
+      {/* CLOSING                                                             */}
+      {/* ================================================================== */}
+
+      <FinalCta/>
     </main>
   );
 }

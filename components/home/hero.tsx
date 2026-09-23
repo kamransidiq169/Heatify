@@ -1,591 +1,852 @@
 
 
-
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
-import { HERO_WORDMARK, LETTER_CHOREOGRAPHY } from "@/lib/hero-motion";
-import { HeroMeta } from "./hero/hero-meta";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 
-const EASE_SMOOTH = "power3.out";
-const LETTER_COUNT = HERO_WORDMARK.length;
-// "WOW" = first 3 letters, "THERM" = remaining — adjust if your wordmark differs
-const SPLIT_INDEX = 3;
+const WORD = "HEATIFY";
+const PANELS = WORD.length;
 
-const WORDMARK_HOLD = 0.5;
-const WORDMARK_SUPPORT_DELAY = 0.3;
-const WORDMARK_SUPPORT_DUR = 0.8;
+/* =====================================================
+   BRAND COLORS
+===================================================== */
 
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isMobile;
+const CREAM = "#F1E9DD";
+const INK = "#100E0C";
+const YELLOW = "#F2B84B";
+
+interface HeatifyLoaderProps {
+  onComplete?: () => void;
 }
 
-function ScrollIndicator({ visible }: { visible: boolean }) {
-  return (
-    <a
-      href="#next"
-      aria-label="Scroll to explore"
-      className="absolute bottom-10 right-6 z-30 flex flex-col items-center gap-3 text-white/50 transition-colors hover:text-white md:right-10"
-      style={{
-        opacity: visible ? 1 : 0,
-        transition: "opacity 0.8s cubic-bezier(0.22,1,0.36,1)",
-        pointerEvents: visible ? "auto" : "none",
-      }}
-    >
-      <span className="font-sans text-[10px] font-medium tracking-[0.25em] uppercase">
-        Scroll
-      </span>
-      <span className="flex size-8 items-center justify-center rounded-full border border-white/25">
-        <span className="size-1 rounded-full bg-current animate-bounce motion-reduce:animate-none" />
-      </span>
-    </a>
-  );
-}
+export function HeatifyLoader({
+  onComplete,
+}: HeatifyLoaderProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const counterRef = useRef<HTMLSpanElement>(null);
 
-// function HeroCta({ visible }: { visible: boolean }) {
-//   return (
-//     <div
-//       className="pointer-events-auto"
-//       style={{
-//         opacity: visible ? 1 : 0,
-//         transform: visible ? "translateY(0)" : "translateY(10px)",
-//         transition:
-//           "opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s cubic-bezier(0.22,1,0.36,1)",
-//       }}
-//     >
-//       <Link
-//         href="/products"
-//         className="group inline-flex items-center gap-3 border-b border-white/20 pb-1 font-sans text-xs font-medium tracking-[0.15em] text-white/50 uppercase transition-colors hover:border-white/40 hover:text-white/80"
-//       >
-//         EXPLORE HEATING SYSTEMS
-//         <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">
-//           →
-//         </span>
-//       </Link>
-//     </div>
-//   );
-// }
-function HeroCta({ visible }: { visible: boolean }) {
-  return (
-    <div
-      className="pointer-events-auto"
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(10px)",
-        transition:
-          "opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s cubic-bezier(0.22,1,0.36,1)",
-      }}
-    >
-      <Link
-        href="/products"
-        className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-white/20 bg-white/[0.03] px-7 py-3.5 font-sans text-xs font-medium tracking-[0.15em] text-white/80 uppercase backdrop-blur-sm transition-all duration-500 hover:border-copper-400/50 hover:bg-white/[0.06] hover:text-white"
-      >
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-copper-400/15 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
-        />
-        <span className="relative">Explore Heating Systems</span>
-        <span className="relative flex size-5 items-center justify-center rounded-full bg-copper-500/15 transition-all duration-500 group-hover:bg-copper-500 group-hover:text-charcoal-950">
-          <span className="inline-block text-sm leading-none transition-transform duration-300 ease-out group-hover:translate-x-0.5">
-            →
-          </span>
-        </span>
-      </Link>
-    </div>
-  );
-}
+  const panelsRef = useRef<HTMLDivElement[]>([]);
+  const lettersRef = useRef<HTMLSpanElement[]>([]);
 
-export function Hero() {
-  const reducedMotion = usePrefersReducedMotion();
-  const isMobile = useIsMobile();
+  const progressRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const pinnedRef = useRef<HTMLDivElement>(null);
-  const assemblyTlRef = useRef<gsap.core.Timeline | null>(null);
-  const crackTlRef = useRef<gsap.core.Timeline | null>(null);
-
-  const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const wowGroupRef = useRef<HTMLSpanElement>(null);
-  const thermGroupRef = useRef<HTMLSpanElement>(null);
-
-  const bgRef = useRef<HTMLDivElement>(null);
-  const ambientRef = useRef<HTMLDivElement>(null);
-  const wordmarkRef = useRef<HTMLDivElement>(null);
-  const wordmarkSubCopyRef = useRef<HTMLDivElement>(null);
-  const wordmarkCtaRef = useRef<HTMLDivElement>(null);
-  const metaRef = useRef<HTMLDivElement>(null);
-
-  const crackPathRef = useRef<SVGPathElement>(null);
-  const crackGlowRef = useRef<SVGPathElement>(null);
-
-  const [showScroll, setShowScroll] = useState(false);
+  const callbackRef = useRef(onComplete);
 
   useEffect(() => {
-    if (reducedMotion || isMobile) return;
+    callbackRef.current = onComplete;
+  }, [onComplete]);
 
-    const container = containerRef.current;
-    const pinned = pinnedRef.current;
-    if (!container || !pinned) return;
+  useEffect(() => {
+    const root = rootRef.current;
+    const counter = counterRef.current;
+    const progress = progressRef.current;
+    const glow = glowRef.current;
 
-    assemblyTlRef.current?.kill();
-    crackTlRef.current?.kill();
-    ScrollTrigger.getAll().forEach((st) => st.kill());
-
-    /* -------------------------------------------------------------- */
-    /* Initial states                                                  */
-    /* -------------------------------------------------------------- */
-    gsap.set(pinned, { opacity: 1 });
-    gsap.set(bgRef.current, { scale: 1.05, opacity: 0 });
-    gsap.set(ambientRef.current, { opacity: 1 });
-    gsap.set(wordmarkRef.current, { opacity: 1 });
-    gsap.set(wordmarkSubCopyRef.current, { opacity: 0, y: 12 });
-    gsap.set(wordmarkCtaRef.current, { opacity: 0, y: 12 });
-    gsap.set(metaRef.current, { opacity: 0 });
-    gsap.set(wowGroupRef.current, {
-      x: 0,
-      y: 0,
-      rotation: 0,
-      scale: 1,
-      opacity: 1,
-      filter: "blur(0px)",
-    });
-    gsap.set(thermGroupRef.current, {
-      x: 0,
-      y: 0,
-      rotation: 0,
-      scale: 1,
-      opacity: 1,
-      filter: "blur(0px)",
-    });
-
-    if (crackPathRef.current) {
-      const len = crackPathRef.current.getTotalLength();
-      gsap.set(crackPathRef.current, {
-        strokeDasharray: len,
-        strokeDashoffset: len,
-        opacity: 0,
-      });
-    }
-    if (crackGlowRef.current) {
-      const lenGlow = crackGlowRef.current.getTotalLength();
-      gsap.set(crackGlowRef.current, {
-        strokeDasharray: lenGlow,
-        strokeDashoffset: lenGlow,
-        opacity: 0,
-      });
+    if (!root || !counter || !progress || !glow) {
+      return;
     }
 
-    LETTER_CHOREOGRAPHY.forEach((ch, i) => {
-      const el = letterRefs.current[i];
-      if (!el) return;
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      gsap.set(el, {
-        x: ch.enter.x * vw * 0.5,
-        y: ch.enter.y * vh * 0.5,
-        rotation: ch.rotation,
-        scale: ch.scaleFrom,
-        filter: `blur(${ch.blur}px)`,
-        opacity: 0,
-      });
-    });
+    /*
+     * --------------------------------------------------
+     * IMPORTANT
+     *
+     * React callback refs have already populated these.
+     *
+     * DO NOT clear:
+     *
+     * panelsRef.current
+     * lettersRef.current
+     * --------------------------------------------------
+     */
 
-    /* -------------------------------------------------------------- */
-    /* ACT 0: Letter assembly — autoplay, not scroll-driven            */
-    /* -------------------------------------------------------------- */
-    const tl = gsap.timeline({ paused: true });
+    const panels = panelsRef.current.filter(Boolean);
+    const letters = lettersRef.current.filter(Boolean);
 
-    tl.to(bgRef.current, { scale: 1, opacity: 1, duration: 1.6, ease: "power2.out" }, 0);
+    if (!panels.length || !letters.length) {
+      return;
+    }
 
-    LETTER_CHOREOGRAPHY.forEach((ch, i) => {
-      const el = letterRefs.current[i];
-      if (!el) return;
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const driftX = ch.enter.x * vw * 0.5 * ch.drift;
-      const driftY = ch.enter.y * vh * 0.5 * ch.drift;
+    /*
+     * --------------------------------------------------
+     * LOCK PAGE SCROLL DURING INTRO
+     * --------------------------------------------------
+     */
 
-      tl.to(el, {
-        x: driftX,
-        y: driftY,
-        opacity: 0.6,
-        scale: ch.scaleFrom + (1 - ch.scaleFrom) * 0.5,
-        filter: `blur(${ch.blur * 0.5}px)`,
-        duration: ch.duration * 0.2,
-        ease: "power1.in",
-      }, ch.delay);
+    const previousOverflow =
+      document.body.style.overflow;
 
-      tl.to(el, {
-        x: 0,
-        y: 0,
-        rotation: 0,
-        scale: 1,
-        filter: "blur(0px)",
-        opacity: 1,
-        duration: ch.duration * 0.65,
-        ease: "power3.out",
-      }, ch.delay + ch.duration * 0.2);
-    });
+    document.body.style.overflow = "hidden";
 
-    const assemblySettleTime = Math.max(
-      ...LETTER_CHOREOGRAPHY.map((c) => c.delay + c.duration * 0.85),
-    );
-
-    tl.to(wordmarkRef.current, { letterSpacing: "-0.03em", duration: 0.3, ease: "power2.inOut" }, assemblySettleTime);
-    tl.to(wordmarkRef.current, { letterSpacing: "-0.02em", duration: 0.4, ease: "power2.out" }, assemblySettleTime + 0.3);
-
-    const supportStart = assemblySettleTime + WORDMARK_HOLD;
-    tl.to(wordmarkSubCopyRef.current, {
-      opacity: 1, y: 0, duration: WORDMARK_SUPPORT_DUR, ease: EASE_SMOOTH,
-    }, supportStart + WORDMARK_SUPPORT_DELAY);
-    tl.to(wordmarkCtaRef.current, {
-      opacity: 1, y: 0, duration: WORDMARK_SUPPORT_DUR * 0.8, ease: EASE_SMOOTH,
-    }, supportStart + WORDMARK_SUPPORT_DELAY + 0.15);
-    tl.to(metaRef.current, { opacity: 1, duration: 1.0, ease: "power2.out" }, supportStart + 0.2);
-
-    tl.call(() => setShowScroll(true));
-
-    // Lock scroll only while the assembly is playing
-    const assemblyTrigger = ScrollTrigger.create({
-      trigger: container,
-      start: "top top",
-      end: () => `+=${Math.max(tl.duration(), 0.1) * window.innerHeight * 0.35}`,
-      pin: pinned,
-      pinSpacing: false,
-      anticipatePin: 1,
-      id: "assembly-lock",
-    });
-
-    tl.play();
-    assemblyTlRef.current = tl;
-
-    /* -------------------------------------------------------------- */
-    /* ACT 1: Scroll-driven crack + corner-split — created once        */
-    /* ACT 0 ends                                                       */
-    /* -------------------------------------------------------------- */
-    tl.eventCallback("onComplete", () => {
-      assemblyTrigger.kill();
-      gsap.set(pinned, { clearProps: "opacity" });
-
-      const crackTl = gsap.timeline({ paused: true });
-
-      // Stage A (0 → 0.35): crack draws in, wordmark shudders slightly
-      crackTl.to([crackPathRef.current, crackGlowRef.current], {
-        strokeDashoffset: 0,
-        opacity: 1,
-        duration: 0.35,
-        ease: "power1.inOut",
-      }, 0);
-      crackTl.to(wordmarkRef.current, {
-        keyframes: [{ x: -3 }, { x: 3 }, { x: -1.5 }, { x: 0 }],
-        duration: 0.35,
-        ease: "power1.inOut",
-      }, 0);
-
-      // Stage B (0.35 → 1.0): WOW drifts to top-left corner,
-      // THERM drifts to bottom-right corner — premium diagonal split
-      crackTl.to(wowGroupRef.current, {
-        x: -520,
-        y: -260,
-        rotation: -8,
-        scale: 0.75,
-        opacity: 0,
-        filter: "blur(18px)",
-        duration: 0.65,
-        ease: "power2.in",
-      }, 0.35);
-      crackTl.to(thermGroupRef.current, {
-        x: 520,
-        y: 260,
-        rotation: 8,
-        scale: 0.75,
-        opacity: 0,
-        filter: "blur(18px)",
-        duration: 0.65,
-        ease: "power2.in",
-      }, 0.35);
-      crackTl.to([wordmarkSubCopyRef.current, wordmarkCtaRef.current, metaRef.current], {
-        opacity: 0, y: -14, duration: 0.35, ease: "power2.in",
-      }, 0.4);
-      crackTl.to([crackPathRef.current, crackGlowRef.current], {
-        opacity: 0, scaleY: 1.6, duration: 0.4, ease: "power2.in",
-      }, 0.4);
-
-      // Background + ambient orange tint fade out together, finishing
-      // at the exact same moment (progress 1.0) as the letters —
-      // no leftover blank/orange frame after the split completes.
-      crackTl.to([bgRef.current, ambientRef.current], {
-        opacity: 0,
-        duration: 0.5,
-        ease: "power2.in",
-      }, 0.5);
-
-      crackTlRef.current = crackTl;
-
-      ScrollTrigger.create({
-        trigger: container,
-        start: "top top",
-        end: "+=200%",
-        pin: pinned,
-        pinSpacing: true,
-        scrub: 1.2,
-        anticipatePin: 1,
-        id: "crack-split",
-        onUpdate: (self) => {
-          crackTl.progress(self.progress);
-          setShowScroll(self.progress < 0.02);
-        },
-        onEnterBack: () => setShowScroll(true),
-      });
-
-      ScrollTrigger.refresh();
-    });
-
-    return () => {
-      tl.kill();
-      crackTlRef.current?.kill();
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
-  }, [reducedMotion, isMobile]);
-
-  /* ================================================================ */
-  /* Next-section premium reveal — fires when #next scrolls into view */
-  /* ================================================================ */
-  useEffect(() => {
-    if (reducedMotion) return;
-
-    const target = document.querySelector("#next");
-    if (!target) return;
+    /*
+     * --------------------------------------------------
+     * GSAP CONTEXT
+     * --------------------------------------------------
+     */
 
     const ctx = gsap.context(() => {
-      gsap.set(target, { willChange: "transform, filter, opacity" });
-      gsap.fromTo(
-        target,
-        { opacity: 0, y: 70, scale: 0.96, filter: "blur(6px)" },
+      /*
+       * =================================================
+       * INITIAL ROOT STATE
+       * =================================================
+       */
+
+      gsap.set(root, {
+        opacity: 1,
+        visibility: "visible",
+      });
+
+      /*
+       * =================================================
+       * INITIAL PANEL STATE
+       *
+       * Panels start below the viewport.
+       * =================================================
+       */
+
+      gsap.set(panels, {
+        yPercent: 110,
+        force3D: true,
+      });
+
+      /*
+       * =================================================
+       * INITIAL LETTER STATE
+       * =================================================
+       */
+
+      gsap.set(letters, {
+        yPercent: 120,
+        opacity: 0,
+        force3D: true,
+      });
+
+      /*
+       * =================================================
+       * INITIAL PROGRESS STATE
+       * =================================================
+       */
+
+      gsap.set(progress, {
+        scaleX: 0,
+        transformOrigin: "left center",
+      });
+
+      gsap.set(glow, {
+        scaleX: 0,
+        opacity: 0,
+        transformOrigin: "left center",
+      });
+
+      /*
+       * =================================================
+       * COUNTER STATE
+       * =================================================
+       */
+
+      const counterState = {
+        value: 0,
+      };
+
+      counter.textContent = "000%";
+
+      /*
+       * =================================================
+       * MASTER TIMELINE
+       * =================================================
+       */
+
+      const timeline = gsap.timeline({
+        defaults: {
+          overwrite: "auto",
+        },
+
+        onComplete: () => {
+          /*
+           * =================================================
+           * PERMANENT FINAL STATE
+           * =================================================
+           */
+
+          /*
+           * Root remains visible.
+           */
+
+          gsap.set(root, {
+            opacity: 1,
+            visibility: "visible",
+          });
+
+          /*
+           * Panels remain fully raised.
+           */
+
+          gsap.set(panels, {
+            yPercent: 0,
+          });
+
+          /*
+           * Letters remain visible.
+           */
+
+          gsap.set(letters, {
+            yPercent: -2,
+            opacity: 1,
+          });
+
+          /*
+           * Progress remains full.
+           */
+
+          gsap.set(progress, {
+            scaleX: 1,
+          });
+
+          gsap.set(glow, {
+            scaleX: 1,
+            opacity: 0.45,
+          });
+
+          /*
+           * Final counter.
+           */
+
+          counter.textContent = "100%";
+
+          /*
+           * =================================================
+           * UNLOCK PAGE SCROLL
+           *
+           * NO AUTO SCROLL
+           * =================================================
+           */
+
+          document.body.style.overflow =
+            previousOverflow;
+
+          /*
+           * Notify parent if callback exists.
+           */
+
+          callbackRef.current?.();
+        },
+      });
+
+      /*
+       * =================================================
+       * PHASE 01
+       *
+       * 000 → 100
+       * =================================================
+       */
+
+      timeline.to(
+        counterState,
         {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          filter: "blur(0px)",
-          duration: 1.2,
-          ease: "power3.out",
-          clearProps: "willChange,filter,transform",
-          scrollTrigger: {
-            trigger: target,
-            start: "top 92%",
-            toggleActions: "play none none none",
+          value: 100,
+
+          duration: 1.55,
+
+          ease: "power2.inOut",
+
+          onUpdate: () => {
+            const value = Math.round(
+              counterState.value,
+            );
+
+            counter.textContent = `${value
+              .toString()
+              .padStart(3, "0")}%`;
           },
-        }
+        },
+        0,
       );
-    });
 
-    return () => ctx.revert();
-  }, [reducedMotion]);
+      /*
+       * =================================================
+       * PHASE 02
+       *
+       * PROGRESS LINE
+       * =================================================
+       */
 
-  /* ================================================================ */
-  /* Reduced motion / mobile: static settled state, no crack effect   */
-  /* ================================================================ */
-  if (reducedMotion || isMobile) {
-    return (
-      <section className="relative min-h-[100svh] overflow-hidden bg-charcoal-950">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(180deg, #2a2a28 0%, #1c1c1a 40%, #161614 100%)",
-          }}
-        />
-        <div className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-6 pt-24 pb-16 text-center md:px-10 md:pt-28">
-          <div
-            className="mb-8 flex font-display font-medium"
-            style={{
-              fontSize: "clamp(2.8rem, 2rem + 8vw, 5.5rem)",
-              lineHeight: 0.95,
-              letterSpacing: "-0.02em",
-            }}
-          >
-            <span className="text-white">
-              {HERO_WORDMARK.slice(0, SPLIT_INDEX).join("")}
-            </span>
-            <span className="text-copper-400">
-              {HERO_WORDMARK.slice(SPLIT_INDEX).join("")}
-            </span>
-          </div>
-          <div className="mb-8 flex items-center gap-4">
-            <span className="block h-px w-12 bg-copper-500/40" />
-            <p className="max-w-sm font-sans text-sm leading-relaxed text-white/45">
-              Beautiful floors above. Precision engineering beneath.
-            </p>
-            <span className="block h-px w-12 bg-copper-500/40" />
-          </div>
-          <Link
-            href="/products"
-            className="inline-flex items-center gap-3 border-b border-white/20 pb-1 font-sans text-xs font-medium tracking-[0.15em] text-white/50 uppercase transition-colors hover:border-white/40 hover:text-white/80"
-          >
-            EXPLORE HEATING SYSTEMS <span>→</span>
-          </Link>
-        </div>
-        <HeroMeta opacity={0.6} />
-        <ScrollIndicator visible={true} />
-      </section>
-    );
-  }
+      timeline.to(
+        progress,
+        {
+          scaleX: 1,
 
-  /* ================================================================ */
-  /* Desktop: assembly → hold → scroll-driven crack + corner-split     */
-  /* ================================================================ */
+          duration: 1.45,
+
+          ease: "power3.inOut",
+        },
+        0.05,
+      );
+
+      /*
+       * =================================================
+       * PROGRESS GLOW
+       * =================================================
+       */
+
+      timeline.to(
+        glow,
+        {
+          scaleX: 1,
+
+          opacity: 0.85,
+
+          duration: 1.3,
+
+          ease: "power3.inOut",
+        },
+        0.1,
+      );
+
+      /*
+       * =================================================
+       * PHASE 03
+       *
+       * PANELS RISE FROM BOTTOM
+       *
+       * CENTER → OUTWARD
+       * =================================================
+       */
+
+      timeline.to(
+        panels,
+        {
+          yPercent: 0,
+
+          duration: 1.05,
+
+          stagger: {
+            each: 0.075,
+            from: "center",
+          },
+
+          ease: "power4.inOut",
+
+          force3D: true,
+        },
+        1.55,
+      );
+
+      /*
+       * =================================================
+       * PHASE 04
+       *
+       * LETTERS RISE INSIDE PANELS
+       * =================================================
+       */
+
+      timeline.to(
+        letters,
+        {
+          yPercent: 0,
+
+          opacity: 1,
+
+          duration: 0.82,
+
+          stagger: {
+            each: 0.09,
+            from: "center",
+          },
+
+          ease: "power4.out",
+
+          force3D: true,
+        },
+        1.92,
+      );
+
+      /*
+       * =================================================
+       * PHASE 05
+       *
+       * SMALL LETTER SETTLE
+       * =================================================
+       */
+
+      timeline.to(
+        letters,
+        {
+          yPercent: -2,
+
+          duration: 0.3,
+
+          stagger: {
+            each: 0.025,
+          },
+
+          ease: "power2.out",
+        },
+        2.65,
+      );
+
+      /*
+       * =================================================
+       * PHASE 06
+       *
+       * HOLD FINAL STATE
+       * =================================================
+       */
+
+      timeline.to(
+        {},
+        {
+          duration: 0.6,
+        },
+        2.95,
+      );
+
+      /*
+       * --------------------------------------------------
+       * CLEANUP
+       * --------------------------------------------------
+       */
+
+      return () => {
+        timeline.kill();
+      };
+    }, root);
+
+    /*
+     * =================================================
+     * COMPONENT CLEANUP
+     * =================================================
+     */
+
+    return () => {
+      ctx.revert();
+
+      document.body.style.overflow =
+        previousOverflow;
+    };
+  }, []);
+
   return (
-    <section ref={containerRef} className="relative">
+    <section
+      ref={rootRef}
+      className="
+        relative
+        h-[100svh]
+        w-full
+        overflow-hidden
+      "
+      style={{
+        backgroundColor: INK,
+      }}
+      aria-label="Heatify introduction"
+    >
+      {/* =================================================
+          TOP LEFT — COUNTER
+      ================================================= */}
+
       <div
-        ref={pinnedRef}
-        className="relative h-screen w-full overflow-hidden bg-charcoal-950"
+        className="
+          absolute
+          left-6
+          top-6
+          z-[30]
+
+          md:left-10
+          md:top-8
+        "
       >
-        <div ref={bgRef} className="absolute inset-0 will-change-transform">
-          <Image
-            src="/home1.png"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-          <div
-            className="absolute inset-0"
+        <div className="flex items-center gap-3">
+          {/* Yellow indicator */}
+
+          <span
+            className="
+              h-[5px]
+              w-[5px]
+              shrink-0
+              rounded-full
+            "
             style={{
-              background:
-                "linear-gradient(180deg, rgba(26,26,24,0.75) 0%, rgba(20,20,18,0.55) 40%, rgba(16,16,14,0.85) 100%)",
+              backgroundColor: YELLOW,
+
+              boxShadow:
+                `0 0 14px ${YELLOW}`,
             }}
           />
+
+          {/* Counter */}
+
+          <span
+            ref={counterRef}
+            className="
+              font-mono
+              text-[10px]
+              font-medium
+              tracking-[0.14em]
+            "
+            style={{
+              color: CREAM,
+            }}
+          >
+            000%
+          </span>
         </div>
+      </div>
 
-        <div
-          ref={ambientRef}
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 50% 40% at 65% 45%, rgba(193,101,46,0.03) 0%, transparent 70%)",
-          }}
-        />
+      {/* =================================================
+          TOP RIGHT — BRAND
+      ================================================= */}
 
-        <div
-          className="pointer-events-none absolute inset-3 z-20 border border-white/[0.03] md:inset-5"
-          style={{ borderRadius: 1 }}
-        />
+      <div
+        className="
+          absolute
+          right-6
+          top-6
+          z-[30]
 
-        <div
-          ref={wordmarkRef}
-          className="absolute inset-0 z-20 flex flex-col items-center justify-center will-change-transform"
-        >
-          <div className="relative flex items-center justify-center">
+          md:right-10
+          md:top-8
+        "
+      >
+        <div className="flex items-center gap-3">
+          {/* Yellow line */}
+
+          <span
+            className="
+              hidden
+              h-px
+              w-7
+              md:block
+            "
+            style={{
+              backgroundColor: YELLOW,
+              opacity: 0.8,
+            }}
+          />
+
+          {/* Brand */}
+
+          <span
+            className="
+              font-sans
+              text-[9px]
+              font-medium
+              uppercase
+              tracking-[0.28em]
+            "
+            style={{
+              color: CREAM,
+              opacity: 0.8,
+            }}
+          >
+            Heatify
+          </span>
+        </div>
+      </div>
+
+      {/* =================================================
+          PANELS
+      ================================================= */}
+
+      <div
+        className="
+          absolute
+          inset-0
+          z-[10]
+          flex
+        "
+      >
+        {Array.from({
+          length: PANELS,
+        }).map((_, index) => {
+          const letter = WORD[index];
+
+          return (
             <div
-              className="flex items-center font-display font-medium"
+              key={`${letter}-${index}`}
+              ref={(element) => {
+                if (element) {
+                  panelsRef.current[index] =
+                    element;
+                }
+              }}
+              className="
+                relative
+                h-full
+                min-w-0
+                flex-1
+                overflow-hidden
+              "
               style={{
-                fontSize: "clamp(4.5rem, 3rem + 9vw, 11rem)",
-                lineHeight: 0.92,
-                letterSpacing: "-0.02em",
+                backgroundColor: CREAM,
+
+                borderRight:
+                  index !== PANELS - 1
+                    ? "1px solid rgba(16,14,12,0.14)"
+                    : undefined,
               }}
             >
-              <span
-                ref={wowGroupRef}
-                className="inline-flex text-white will-change-transform"
+              {/* =========================================
+                  OUTER LINE
+              ========================================= */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-y-0
+                  left-0
+                  w-px
+                "
+                style={{
+                  backgroundColor:
+                    "rgba(16,14,12,0.10)",
+                }}
+              />
+
+              {/* =========================================
+                  CENTER LINE
+              ========================================= */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-y-0
+                  left-1/2
+                  w-px
+                "
+                style={{
+                  backgroundColor:
+                    "rgba(16,14,12,0.035)",
+                }}
+              />
+
+              {/* =========================================
+                  LETTER
+              ========================================= */}
+
+              <div
+                className="
+                  absolute
+                  inset-0
+                  z-[10]
+                  flex
+                  items-center
+                  justify-center
+                  overflow-hidden
+                "
               >
-                {HERO_WORDMARK.slice(0, SPLIT_INDEX).map((letter, i) => (
-                  <span
-                    key={`${letter}-${i}`}
-                    ref={(el) => { letterRefs.current[i] = el; }}
-                    className="inline-block will-change-transform"
-                  >
-                    {letter}
-                  </span>
-                ))}
-              </span>
+                <span
+                  ref={(element) => {
+                    if (element) {
+                      lettersRef.current[index] =
+                        element;
+                    }
+                  }}
+                  className="
+                    select-none
+                    font-display
+                    leading-none
+                  "
+                  style={{
+                    color: INK,
 
-              {/* Crack — sits in normal flex flow, exactly between the words */}
-              <svg
-                className="pointer-events-none shrink-0 self-stretch"
-                width="52"
-                viewBox="0 0 52 240"
-                preserveAspectRatio="none"
-                fill="none"
-                style={{ margin: "0 clamp(0.75rem, 1.2vw, 1.75rem)" }}
-              >
-                <path
-                  ref={crackGlowRef}
-                  d="M26 0 L18 30 L34 56 L14 86 L32 116 L16 146 L30 176 L20 206 L26 240"
-                  stroke="#d5945e"
-                  strokeWidth="7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  opacity="0"
-                  style={{ filter: "blur(7px)" }}
-                />
-                <path
-                  ref={crackPathRef}
-                  d="M26 0 L18 30 L34 56 L14 86 L32 116 L16 146 L30 176 L20 206 L26 240"
-                  stroke="#fdfcfa"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  opacity="0"
-                />
-              </svg>
+                    fontSize:
+                      "clamp(3.5rem, 8.6vw, 10.5rem)",
 
-              <span
-  ref={thermGroupRef}
-  className="inline-flex text-[#B85F2E] will-change-transform"
->
-  {HERO_WORDMARK.slice(SPLIT_INDEX).map((letter, i) => (
-    <span
-      key={`${letter}-${i + SPLIT_INDEX}`}
-      ref={(el) => {
-        letterRefs.current[i + SPLIT_INDEX] = el;
-      }}
-      className="inline-block will-change-transform"
-    >
-      {letter}
-    </span>
-  ))}
-</span>
-            </div>
-          </div>
+                    lineHeight: 0.82,
 
-          <div className="mt-8 flex flex-col items-center gap-5">
-                        <div ref={wordmarkSubCopyRef} className="will-change-transform text-center">
-              <div className="mb-4 flex items-center justify-center gap-3">
-                <span className="block h-px w-8 bg-copper-500/40" />
-                <span className="font-sans text-[10px] font-medium tracking-[0.3em] text-copper-400/90 uppercase">
-                  Radiant Comfort
+                    fontWeight: 400,
+
+                    letterSpacing:
+                      "-0.06em",
+
+                    willChange:
+                      "transform, opacity",
+                  }}
+                >
+                  {letter}
                 </span>
-                <span className="block h-px w-8 bg-copper-500/40" />
               </div>
-              <p className="max-w-sm font-sans text-sm leading-relaxed text-white/45 md:text-base">
-                Beautiful floors above.{" "}
-                <span className="text-white/70">Precision engineering</span>{" "}
-                beneath.
-              </p>
+
+              {/* =========================================
+                  PANEL NUMBER
+              ========================================= */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  bottom-7
+                  left-1/2
+                  z-[20]
+                  -translate-x-1/2
+                  font-mono
+                  text-[8px]
+                  font-medium
+                  tracking-[0.14em]
+                "
+                style={{
+                  color: INK,
+                  opacity: 0.68,
+                }}
+              >
+                {String(index + 1).padStart(
+                  2,
+                  "0",
+                )}
+              </div>
             </div>
-            <div ref={wordmarkCtaRef} className="will-change-transform">
-              <HeroCta visible={true} />
-            </div>
+          );
+        })}
+      </div>
+
+      {/* =================================================
+          BOTTOM INFORMATION
+      ================================================= */}
+
+      <div
+        className="
+          absolute
+          bottom-7
+          left-6
+          right-6
+          z-[50]
+
+          md:bottom-9
+          md:left-10
+          md:right-10
+        "
+      >
+        <div
+          className="
+            mb-3
+            flex
+            items-end
+            justify-between
+          "
+        >
+          {/* System text */}
+
+          <span
+            className="
+              font-sans
+              text-[8px]
+              font-medium
+              uppercase
+              tracking-[0.25em]
+            "
+            style={{
+              color: INK,
+              opacity: 0.62,
+            }}
+          >
+            System / Initializing
+          </span>
+
+          {/* Counter range */}
+
+          <div
+            className="
+              flex
+              items-center
+              gap-2
+              font-mono
+              text-[8px]
+              font-medium
+              tracking-[0.12em]
+            "
+            style={{
+              color: INK,
+              opacity: 0.68,
+            }}
+          >
+            <span>000</span>
+
+            <span
+              style={{
+                color: YELLOW,
+                opacity: 1,
+              }}
+            >
+              /
+            </span>
+
+            <span>100</span>
           </div>
         </div>
 
-        <div ref={metaRef} className="will-change-transform">
-          <HeroMeta />
-        </div>
+        {/* =================================================
+            PROGRESS TRACK
+        ================================================= */}
 
-        <ScrollIndicator visible={showScroll} />
+        <div
+          className="
+            relative
+            h-px
+            w-full
+          "
+          style={{
+            backgroundColor:
+              "rgba(16,14,12,0.18)",
+          }}
+        >
+          {/* Active progress */}
+
+          <div
+            ref={progressRef}
+            className="
+              absolute
+              inset-y-0
+              left-0
+              w-full
+            "
+            style={{
+              backgroundColor: YELLOW,
+            }}
+          />
+
+          {/* Glow */}
+
+          <div
+            ref={glowRef}
+            className="
+              pointer-events-none
+              absolute
+              -inset-y-[3px]
+              left-0
+              w-full
+            "
+            style={{
+              backgroundColor: YELLOW,
+              filter: "blur(5px)",
+            }}
+          />
+        </div>
       </div>
+
+      {/* =================================================
+          GRAIN
+      ================================================= */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+          z-[40]
+          opacity-[0.035]
+        "
+        style={{
+          mixBlendMode: "overlay",
+
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
+        }}
+      />
     </section>
   );
 }
+
+export default HeatifyLoader;
+

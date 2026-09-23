@@ -1,449 +1,4 @@
 
-
-
-// "use client";
-
-// import Image from "next/image";
-// import Link from "next/link";
-// import { motion, useScroll, useTransform } from "framer-motion";
-// import { ArrowRight, ArrowUpRight } from "lucide-react";
-// import { Reveal } from "@/components/motion/reveal";
-// import { solutions } from "@/lib/site";
-
-// const EASE = [0.22, 1, 0.36, 1] as const;
-
-// export default function SolutionsPage() {
-//   const { scrollYProgress } = useScroll();
-
-//   const heroImageY = useTransform(scrollYProgress, [0, 0.18], [0, 70]);
-//   const heroImageScale = useTransform(
-//     scrollYProgress,
-//     [0, 0.18],
-//     [1.06, 1],
-//   );
-
-//   return (
-//     <main className="overflow-hidden bg-ivory-100">
-//       {/* ================================================================
-//           HERO
-//       ================================================================= */}
-//       <section className="relative isolate min-h-[92svh] overflow-hidden bg-charcoal-950 text-white">
-//         {/* Architectural grid */}
-//         <div
-//           aria-hidden
-//           className="pointer-events-none absolute inset-0 opacity-[0.045]"
-//           style={{
-//             backgroundImage: `
-//               linear-gradient(
-//                 to right,
-//                 rgba(255,255,255,0.9) 1px,
-//                 transparent 1px
-//               ),
-//               linear-gradient(
-//                 to bottom,
-//                 rgba(255,255,255,0.9) 1px,
-//                 transparent 1px
-//               )
-//             `,
-//             backgroundSize: "90px 90px",
-//           }}
-//         />
-
-//         {/* Atmosphere */}
-//         <div
-//           aria-hidden
-//           className="pointer-events-none absolute -right-40 top-1/4 size-[520px] rounded-full bg-copper-500/[0.07] blur-[150px]"
-//         />
-
-//         <div className="container-site relative z-10 flex min-h-[92svh] flex-col">
-//           {/* Top bar */}
-//           <div className="flex items-center justify-between border-b border-white/10 py-5">
-//             <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/40">
-//               WOWTHERM
-//             </span>
-
-//             <span className="text-[10px] uppercase tracking-[0.22em] text-copper-400">
-//               Solutions
-//             </span>
-//           </div>
-
-//           <div className="grid flex-1 items-center gap-14 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:py-20">
-//             {/* Editorial copy */}
-//             <div className="relative z-20 max-w-3xl">
-//               <Reveal>
-//                 <div className="mb-7 flex items-center gap-3">
-//                   <span className="h-px w-10 bg-copper-400" />
-//                   <span className="text-[11px] uppercase tracking-[0.24em] text-copper-400">
-//                     01 / Spaces
-//                   </span>
-//                 </div>
-//               </Reveal>
-
-//               <Reveal delay={0.08}>
-//                 <h1 className="font-display text-[clamp(3.5rem,7vw,7.8rem)] font-medium leading-[0.86] tracking-[-0.06em] text-white">
-//                   Warmth,
-//                   <br />
-//                   <span className="text-copper-400">properly placed.</span>
-//                 </h1>
-//               </Reveal>
-
-//               <Reveal delay={0.16}>
-//                 <div className="mt-9 h-px w-20 bg-copper-400/70" />
-//               </Reveal>
-
-//               <Reveal delay={0.22}>
-//                 <p className="mt-7 max-w-xl text-[1.05rem] leading-8 text-white/50 md:text-[1.15rem]">
-//                   Every space asks something different of a heating system.
-//                   We design the warmth around the architecture, not the other
-//                   way around.
-//                 </p>
-//               </Reveal>
-
-//               <Reveal delay={0.28}>
-//                 <Link
-//                   href="#spaces"
-//                   className="group mt-10 inline-flex items-center gap-3 border-b border-white/20 pb-3 text-xs uppercase tracking-[0.18em] text-white/75 transition-colors hover:border-copper-400 hover:text-white"
-//                 >
-//                   Explore solutions
-//                   <ArrowRight
-//                     className="size-4 text-copper-400 transition-transform duration-300 group-hover:translate-x-1"
-//                     aria-hidden
-//                   />
-//                 </Link>
-//               </Reveal>
-//             </div>
-
-//             {/* Hero visual */}
-//             <motion.div
-//               style={{
-//                 y: heroImageY,
-//                 scale: heroImageScale,
-//               }}
-//               className="relative lg:-mr-[8vw]"
-//             >
-//               <div className="relative aspect-[4/3] overflow-hidden bg-white/[0.03]">
-//                 <Image
-//                   src={solutions[0]?.image ?? "/service.png"}
-//                   alt=""
-//                   fill
-//                   priority
-//                   sizes="(max-width: 1024px) 100vw, 60vw"
-//                   className="object-cover"
-//                 />
-
-//                 <div className="absolute inset-0 bg-gradient-to-tr from-charcoal-950/45 via-transparent to-white/[0.04]" />
-
-//                 <div className="absolute left-5 top-5 border-l border-t border-copper-400/60 p-3">
-//                   <span className="text-[9px] uppercase tracking-[0.2em] text-white/55">
-//                     Engineered comfort
-//                   </span>
-//                 </div>
-
-//                 <div className="absolute bottom-5 right-5 flex items-center gap-2">
-//                   <span className="size-1.5 rounded-full bg-copper-400" />
-//                   <span className="text-[9px] uppercase tracking-[0.2em] text-white/60">
-//                     Application / 01
-//                   </span>
-//                 </div>
-//               </div>
-
-//               <div
-//                 aria-hidden
-//                 className="absolute -bottom-5 -left-5 -z-10 size-28 border-b border-l border-copper-400/35"
-//               />
-//             </motion.div>
-//           </div>
-
-//           {/* Bottom metadata */}
-//           <div className="grid grid-cols-2 border-t border-white/10 py-5 md:grid-cols-4">
-//             {[
-//               ["01", "Residential", "Homes & apartments"],
-//               ["02", "Hospitality", "Hotels & guest spaces"],
-//               ["03", "Wellness", "Bathrooms & retreats"],
-//               ["04", "Commercial", "Work & public spaces"],
-//             ].map(([number, label, value]) => (
-//               <div
-//                 key={number}
-//                 className="border-white/10 py-3 md:border-l md:px-6 md:first:border-l-0"
-//               >
-//                 <p className="text-[9px] uppercase tracking-[0.2em] text-white/25">
-//                   {number} / {label}
-//                 </p>
-//                 <p className="mt-2 text-xs text-white/60">{value}</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* ================================================================
-//           INTRO
-//       ================================================================= */}
-//       <section className="relative bg-ivory-100 py-24 md:py-36">
-//         <div
-//           aria-hidden
-//           className="pointer-events-none absolute right-[10%] top-0 h-full w-px bg-copper-500/[0.08]"
-//         />
-
-//         <div className="container-site">
-//           <div className="grid gap-14 lg:grid-cols-[0.55fr_1.45fr]">
-//             <Reveal>
-//               <div>
-//                 <div className="flex items-center gap-3">
-//                   <span className="h-px w-8 bg-copper-500" />
-//                   <span className="text-[10px] uppercase tracking-[0.24em] text-copper-600">
-//                     02 / The approach
-//                   </span>
-//                 </div>
-
-//                 <p className="mt-8 max-w-[200px] text-sm leading-6 text-charcoal-400">
-//                   Different architecture. Different requirements. One
-//                   considered approach to warmth.
-//                 </p>
-//               </div>
-//             </Reveal>
-
-//             <Reveal delay={0.08}>
-//               <h2 className="max-w-5xl font-display text-[clamp(2.4rem,5vw,5.4rem)] leading-[0.98] tracking-[-0.05em] text-charcoal-950">
-//                 We don't start with a product.
-//                 <br />
-//                 <span className="text-copper-500/70">
-//                   We start with the space.
-//                 </span>
-//               </h2>
-//             </Reveal>
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* ================================================================
-//           SOLUTIONS
-//       ================================================================= */}
-//       <section id="spaces" className="bg-white">
-//         <div className="container-site">
-//           <div className="border-t border-charcoal-900/15">
-//             {solutions.map((solution, index) => {
-//               const reversed = index % 2 === 1;
-
-//               return (
-//                 <motion.article
-//                   key={solution.slug}
-//                   id={solution.slug}
-//                   initial={{ opacity: 0, y: 50 }}
-//                   whileInView={{ opacity: 1, y: 0 }}
-//                   viewport={{ once: true, margin: "-100px" }}
-//                   transition={{
-//                     duration: 0.8,
-//                     ease: EASE,
-//                   }}
-//                   className="grid min-h-[75svh] border-b border-charcoal-900/15 lg:grid-cols-12"
-//                 >
-//                   {/* Image */}
-//                   <div
-//                     className={`relative min-h-[55vh] overflow-hidden lg:col-span-7 ${
-//                       reversed ? "lg:order-2" : "lg:order-1"
-//                     }`}
-//                   >
-//                     <motion.div
-//                       whileHover={{ scale: 1.025 }}
-//                       transition={{ duration: 1, ease: EASE }}
-//                       className="absolute inset-0"
-//                     >
-//                       <Image
-//                         src={solution.image}
-//                         alt={solution.title}
-//                         fill
-//                         sizes="(max-width: 1024px) 100vw, 58vw"
-//                         className="object-cover"
-//                       />
-//                     </motion.div>
-
-//                     {/* Image shade */}
-//                     <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/40 via-transparent to-transparent" />
-
-//                     {/* Image number */}
-//                     <div className="absolute bottom-6 left-6 flex items-center gap-3">
-//                       <span className="text-5xl font-display text-white/75">
-//                         {String(index + 1).padStart(2, "0")}
-//                       </span>
-
-//                       <span className="h-px w-10 bg-copper-400" />
-//                     </div>
-//                   </div>
-
-//                   {/* Content */}
-//                   <div
-//                     className={`flex items-center lg:col-span-5 ${
-//                       reversed ? "lg:order-1" : "lg:order-2"
-//                     }`}
-//                   >
-//                     <div className="w-full px-0 py-16 lg:px-14 lg:py-20 xl:px-20">
-//                       <div className="mb-8 flex items-center gap-3">
-//                         <span className="h-px w-8 bg-copper-500" />
-
-//                         <span className="text-[10px] uppercase tracking-[0.22em] text-copper-600">
-//                           {solution.subtitle}
-//                         </span>
-//                       </div>
-
-//                       <h2 className="max-w-xl font-display text-[clamp(2.6rem,4.5vw,5rem)] leading-[0.92] tracking-[-0.045em] text-charcoal-950">
-//                         {solution.title}
-//                       </h2>
-
-//                       <div className="mt-8 h-px w-14 bg-charcoal-900/15" />
-
-//                       <p className="mt-7 max-w-lg text-base leading-8 text-charcoal-500 md:text-lg">
-//                         {solution.description}
-//                       </p>
-
-//                       <Link
-//                         href="/contact"
-//                         className="group mt-10 inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.18em] text-charcoal-900"
-//                       >
-//                         Discuss your project
-
-//                         <span className="flex size-9 items-center justify-center rounded-full border border-charcoal-900/15 transition-all duration-300 group-hover:border-copper-500 group-hover:bg-copper-500 group-hover:text-white">
-//                           <ArrowUpRight
-//                             className="size-4 text-copper-500 transition-colors group-hover:text-white"
-//                             aria-hidden
-//                           />
-//                         </span>
-//                       </Link>
-//                     </div>
-//                   </div>
-//                 </motion.article>
-//               );
-//             })}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* ================================================================
-//           DESIGN PRINCIPLE
-//       ================================================================= */}
-//       <section className="relative overflow-hidden bg-ivory-100 py-24 md:py-36">
-//         <div
-//           aria-hidden
-//           className="absolute left-1/2 top-0 h-full w-px bg-copper-500/[0.08]"
-//         />
-
-//         <div className="container-site">
-//           <div className="grid gap-14 lg:grid-cols-[0.5fr_1.5fr]">
-//             <Reveal>
-//               <div className="flex items-center gap-3">
-//                 <span className="h-px w-8 bg-copper-500" />
-//                 <span className="text-[10px] uppercase tracking-[0.24em] text-copper-600">
-//                   03 / Design principle
-//                 </span>
-//               </div>
-//             </Reveal>
-
-//             <Reveal delay={0.08}>
-//               <div>
-//                 <p className="font-display text-[clamp(2.5rem,5vw,5.5rem)] leading-[0.98] tracking-[-0.05em] text-charcoal-950">
-//                   The best heating system is the one you{" "}
-//                   <span className="text-copper-500">never have to see.</span>
-//                 </p>
-
-//                 <div className="mt-12 grid gap-8 border-t border-charcoal-900/15 pt-8 md:grid-cols-3">
-//                   {[
-//                     ["01", "Invisible", "Technology beneath the architecture."],
-//                     ["02", "Considered", "Designed around how the space is used."],
-//                     ["03", "Comfortable", "Consistent warmth where it matters."],
-//                   ].map(([number, title, text]) => (
-//                     <div key={number}>
-//                       <span className="text-[10px] tracking-[0.18em] text-copper-500">
-//                         {number}
-//                       </span>
-
-//                       <h3 className="mt-4 font-display text-2xl text-charcoal-950">
-//                         {title}
-//                       </h3>
-
-//                       <p className="mt-3 text-sm leading-6 text-charcoal-500">
-//                         {text}
-//                       </p>
-//                     </div>
-//                   ))}
-//                 </div>
-//               </div>
-//             </Reveal>
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* ================================================================
-//           CTA
-//       ================================================================= */}
-//       <section className="relative isolate overflow-hidden bg-charcoal-950 py-28 text-white md:py-40">
-//         <div
-//           aria-hidden
-//           className="absolute inset-0 opacity-[0.045]"
-//           style={{
-//             backgroundImage: `
-//               linear-gradient(
-//                 to right,
-//                 rgba(255,255,255,0.8) 1px,
-//                 transparent 1px
-//               ),
-//               linear-gradient(
-//                 to bottom,
-//                 rgba(255,255,255,0.8) 1px,
-//                 transparent 1px
-//               )
-//             `,
-//             backgroundSize: "90px 90px",
-//           }}
-//         />
-
-//         <div
-//           aria-hidden
-//           className="absolute left-1/2 top-1/2 size-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-copper-500/[0.055] blur-[130px]"
-//         />
-
-//         <div className="container-site relative z-10 text-center">
-//           <Reveal>
-//             <p className="text-[10px] uppercase tracking-[0.25em] text-copper-400">
-//               04 / Your space
-//             </p>
-//           </Reveal>
-
-//           <Reveal delay={0.08}>
-//             <h2 className="mx-auto mt-7 max-w-5xl font-display text-[clamp(3rem,7vw,7rem)] leading-[0.9] tracking-[-0.055em]">
-//               Tell us about
-//               <br />
-//               <span className="text-copper-400">your space.</span>
-//             </h2>
-//           </Reveal>
-
-//           <Reveal delay={0.16}>
-//             <p className="mx-auto mt-8 max-w-xl text-base leading-7 text-white/45 md:text-lg">
-//               Whether you are building, renovating or simply looking for a
-//               better way to heat a room, we can help you find the right
-//               approach.
-//             </p>
-//           </Reveal>
-
-//           <Reveal delay={0.24}>
-//             <Link
-//               href="/contact"
-//               className="group mt-10 inline-flex h-14 items-center gap-4 bg-copper-500 px-7 text-xs font-medium uppercase tracking-[0.16em] text-white transition-colors duration-300 hover:bg-copper-400"
-//             >
-//               Discuss your project
-//               <ArrowRight
-//                 className="size-4 transition-transform duration-300 group-hover:translate-x-1"
-//                 aria-hidden
-//               />
-//             </Link>
-//           </Reveal>
-//         </div>
-//       </section>
-//     </main>
-//   );
-// }
-
-
-
 "use client";
 
 import Image from "next/image";
@@ -451,7 +6,9 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
 import { Reveal } from "@/components/motion/reveal";
-import { solutions } from "@/lib/site";
+import { cn } from "@/lib/utils";
+import FinalCta from "@/components/home/final-cta";
+
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -563,204 +120,339 @@ export default function SolutionsPage() {
           HERO
       ================================================================ */}
 
-      <section className="relative isolate min-h-[92svh] overflow-hidden bg-charcoal-950 text-white">
-        {/* Architectural grid */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.045]"
-          style={{
-            backgroundImage: `
-              linear-gradient(
-                to right,
-                rgba(255,255,255,0.9) 1px,
-                transparent 1px
-              ),
-              linear-gradient(
-                to bottom,
-                rgba(255,255,255,0.9) 1px,
-                transparent 1px
-              )
-            `,
-            backgroundSize: "90px 90px",
-          }}
-        />
+   <section className="relative isolate min-h-[92svh] overflow-hidden bg-[#11100E] text-[#F4F1EA]">
+  {/* ---------------------------------------------------------------------- */}
+  {/* Hero image                                                              */}
+  {/* ---------------------------------------------------------------------- */}
 
-        {/* Atmosphere */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-40 top-1/4 size-[520px] rounded-full bg-copper-500/[0.07] blur-[150px]"
-        />
+  <div
+    aria-hidden
+    className="pointer-events-none absolute inset-0 z-0"
+  >
+    <Image
+      src="/sol1.png"
+      alt=""
+      fill
+      priority
+      quality={100}
+      sizes="100vw"
+      className="object-cover object-center"
+    />
 
-        <div className="container-site relative z-10 flex min-h-[92svh] flex-col">
-          {/* Top bar */}
-          <div className="flex items-center justify-between border-b border-white/10 py-5">
-            <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/40">
-              WOWTHERM
-            </span>
+    {/* Dark editorial overlay — keeps the typography readable */}
+    <div
+      className="absolute inset-0"
+      style={{
+        background: `
+          linear-gradient(
+            90deg,
+            rgba(17,16,14,0.98) 0%,
+            rgba(17,16,14,0.94) 22%,
+            rgba(17,16,14,0.78) 42%,
+            rgba(17,16,14,0.42) 63%,
+            rgba(17,16,14,0.12) 82%,
+            rgba(17,16,14,0.02) 100%
+          )
+        `,
+      }}
+    />
 
-            <span className="text-[10px] uppercase tracking-[0.22em] text-copper-400">
-              Solutions
-            </span>
-          </div>
+    {/* Bottom fade */}
+    <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#11100E]/70 to-transparent" />
 
-          <div className="grid flex-1 items-center gap-14 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:py-20">
-            {/* Editorial copy */}
-            <div className="relative z-20 max-w-3xl">
-              <Reveal>
-                <div className="mb-7 flex items-center gap-3">
-                  <span className="h-px w-10 bg-copper-400" />
+    {/* Subtle architectural grid */}
+    <div
+      className="absolute inset-0 opacity-[0.035]"
+      style={{
+        backgroundImage: `
+          linear-gradient(
+            to right,
+            rgba(244,241,234,0.8) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(244,241,234,0.8) 1px,
+            transparent 1px
+          )
+        `,
+        backgroundSize: "120px 120px",
+      }}
+    />
 
-                  <span className="text-[11px] uppercase tracking-[0.24em] text-copper-400">
-                    01 / Spaces
-                  </span>
-                </div>
-              </Reveal>
+    {/* Warm atmospheric glow */}
+    <div
+      className="absolute -right-[10%] top-[15%] size-[560px] rounded-full blur-[170px]"
+      style={{
+        background:
+          "radial-gradient(circle, rgba(242,184,75,.10) 0%, transparent 70%)",
+      }}
+    />
+  </div>
 
-              <Reveal delay={0.08}>
-                <h1 className="font-display text-[clamp(3.5rem,7vw,7.8rem)] font-medium leading-[0.86] tracking-[-0.06em] text-white">
-                  Warmth,
-                  <br />
-                  <span className="text-copper-400">
-                    properly placed.
-                  </span>
-                </h1>
-              </Reveal>
+  {/* ---------------------------------------------------------------------- */}
+  {/* Main content                                                            */}
+  {/* ---------------------------------------------------------------------- */}
 
-              <Reveal delay={0.16}>
-                <div className="mt-9 h-px w-20 bg-copper-400/70" />
-              </Reveal>
+  <div className="container-site relative z-10 flex min-h-[92svh] flex-1 items-center py-20 md:py-24 lg:py-28">
+    <div className="w-full max-w-[1100px]">
 
-              <Reveal delay={0.22}>
-                <p className="mt-7 max-w-xl text-[1.05rem] leading-8 text-white/50 md:text-[1.15rem]">
-                  Every space asks something different of a heating system.
-                  We design the warmth around the architecture, not the other
-                  way around.
-                </p>
-              </Reveal>
-
-              <Reveal delay={0.28}>
-                <Link
-                  href="#spaces"
-                  className="group mt-10 inline-flex items-center gap-3 border-b border-white/20 pb-3 text-xs uppercase tracking-[0.18em] text-white/75 transition-colors hover:border-copper-400 hover:text-white"
-                >
-                  Explore solutions
-
-                  <ArrowRight
-                    className="size-4 text-copper-400 transition-transform duration-300 group-hover:translate-x-1"
-                    aria-hidden
-                  />
-                </Link>
-              </Reveal>
-            </div>
-
-            {/* Hero visual */}
-            <motion.div
-              style={{
-                y: heroImageY,
-                scale: heroImageScale,
-              }}
-              className="relative lg:-mr-[8vw]"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-white/[0.03]">
-                <Image
-                  src={solutions[0]?.image ?? "/service.png"}
-                  alt=""
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 60vw"
-                  className="object-cover"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-tr from-charcoal-950/45 via-transparent to-white/[0.04]" />
-
-                <div className="absolute left-5 top-5 border-l border-t border-copper-400/60 p-3">
-                  <span className="text-[9px] uppercase tracking-[0.2em] text-white/55">
-                    Engineered comfort
-                  </span>
-                </div>
-
-                <div className="absolute bottom-5 right-5 flex items-center gap-2">
-                  <span className="size-1.5 rounded-full bg-copper-400" />
-
-                  <span className="text-[9px] uppercase tracking-[0.2em] text-white/60">
-                    Application / 01
-                  </span>
-                </div>
-              </div>
-
-              <div
-                aria-hidden
-                className="absolute -bottom-5 -left-5 -z-10 size-28 border-b border-l border-copper-400/35"
-              />
-            </motion.div>
-          </div>
-
-          {/* Bottom metadata */}
-          <div className="grid grid-cols-2 border-t border-white/10 py-5 md:grid-cols-4">
-            {[
-              ["01", "Residential", "Homes & apartments"],
-              ["02", "Hospitality", "Hotels & guest spaces"],
-              ["03", "Wellness", "Bathrooms & retreats"],
-              ["04", "Commercial", "Work & public spaces"],
-            ].map(([number, label, value]) => (
-              <div
-                key={number}
-                className="border-white/10 py-3 md:border-l md:px-6 md:first:border-l-0"
-              >
-                <p className="text-[9px] uppercase tracking-[0.2em] text-white/25">
-                  {number} / {label}
-                </p>
-
-                <p className="mt-2 text-xs text-white/60">
-                  {value}
-                </p>
-              </div>
-            ))}
-          </div>
+      {/* Eyebrow */}
+      <Reveal delay={0.12}>
+        <div className="mb-8 max-w-[460px]">
+          <p className="font-sans text-[10px] font-medium uppercase tracking-[0.3em] text-[#fffff]/60">
+            Spaces, considered from below.
+          </p>
         </div>
-      </section>
+      </Reveal>
+
+      {/* Main heading */}
+      <Reveal delay={0.18}>
+        <h1 className="font-serif text-[clamp(4.5rem,11vw,10.5rem)] font-light leading-[0.78] tracking-[-0.065em]">
+          <span className="block text-[#F4F1EA]">
+            Warmth
+          </span>
+
+          <span className="ml-[8vw] block text-[#F4F1EA]/95">
+            for
+          </span>
+
+          <span className="ml-[16vw] block italic text-[#F2B84B]">
+            every space.
+          </span>
+        </h1>
+      </Reveal>
+
+      {/* Supporting content */}
+      <Reveal delay={0.28}>
+        <div className="mt-12 grid max-w-[780px] gap-10 lg:ml-[8vw] lg:grid-cols-[1fr_auto] lg:items-end">
+
+          {/* Description */}
+          <div className="max-w-[500px]">
+            <p className="font-sans text-sm leading-7 text-[#fffff]/55 md:text-[15px]">
+              From quiet residential interiors to hospitality, wellness and
+              commercial spaces, every WOWTHERM system is designed around the
+              architecture it serves.
+            </p>
+
+          
+          </div>
+
+         
+        </div>
+      </Reveal>
+    </div>
+
+    {/* -------------------------------------------------------------------- */}
+    {/* Bottom metadata                                                       */}
+    {/* -------------------------------------------------------------------- */}
+
+    <Reveal
+      delay={0.34}
+      className="absolute bottom-12 left-0 hidden lg:block"
+    >
+      <div className="flex items-end gap-5">
+        <div>
+          <p className="font-sans text-[8px] uppercase tracking-[0.3em] text-[#F4F1EA]/40">
+            Applications
+          </p>
+
+          <p className="mt-2 font-serif text-4xl font-light tracking-[-0.04em] text-[#F4F1EA]">
+            04
+          </p>
+        </div>
+
+        <span className="mb-2 h-px w-12 bg-[#F2B84B]/70" />
+
+        <p className="mb-1 font-sans text-[9px] uppercase tracking-[0.22em] text-[#fffff]/50">
+          Residential · Hospitality · Wellness · Commercial
+        </p>
+      </div>
+    </Reveal>
+
+    {/* -------------------------------------------------------------------- */}
+    {/* Right vertical label                                                  */}
+    {/* -------------------------------------------------------------------- */}
+
+    <div className="absolute bottom-12 right-0 hidden lg:block">
+      <span
+        className="font-mono text-[8px] uppercase tracking-[0.28em] text-[#F4F1EA]/35"
+        style={{
+          writingMode: "vertical-rl",
+        }}
+      >
+        WOWTHERM / Spaces
+      </span>
+    </div>
+  </div>
+</section>
+
 
       {/* ================================================================
           INTRO
       ================================================================ */}
 
-      <section className="relative bg-ivory-100 py-24 md:py-36">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute right-[10%] top-0 h-full w-px bg-copper-500/[0.08]"
-        />
+   <section className="relative overflow-hidden bg-[#F4F1EA] py-28 md:py-40 lg:py-48">
+  {/* ---------------------------------------------------------------------- */}
+  {/* Architectural atmosphere                                               */}
+  {/* ---------------------------------------------------------------------- */}
 
-        <div className="container-site">
-          <div className="grid gap-14 lg:grid-cols-[0.55fr_1.45fr]">
-            <Reveal>
-              <div>
-                <div className="flex items-center gap-3">
-                  <span className="h-px w-8 bg-copper-500" />
+  <div
+    aria-hidden
+    className="pointer-events-none absolute inset-0"
+  >
+    {/* Fine vertical grid */}
+    <div
+      className="absolute inset-0 opacity-[0.035]"
+      style={{
+        backgroundImage: `
+          linear-gradient(
+            to right,
+            rgba(17,16,14,0.75) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(17,16,14,0.75) 1px,
+            transparent 1px
+          )
+        `,
+        backgroundSize: "120px 120px",
+      }}
+    />
 
-                  <span className="text-[10px] uppercase tracking-[0.24em] text-copper-600">
-                    02 / The approach
-                  </span>
-                </div>
+    {/* Vertical architectural line */}
+    <div className="absolute right-[14%] top-0 h-full w-px bg-[#11100E]/[0.06]" />
 
-                <p className="mt-8 max-w-[200px] text-sm leading-6 text-charcoal-400">
-                  Different architecture. Different requirements. One
-                  considered approach to warmth.
-                </p>
-              </div>
-            </Reveal>
+    {/* Warm glow */}
+    <div
+      className="absolute -right-[12%] top-[10%] size-[520px] rounded-full blur-[160px]"
+      style={{
+        background:
+          "radial-gradient(circle, rgba(242,184,75,.10) 0%, transparent 70%)",
+      }}
+    />
 
-            <Reveal delay={0.08}>
-              <h2 className="max-w-5xl font-display text-[clamp(2.4rem,5vw,5.4rem)] leading-[0.98] tracking-[-0.05em] text-charcoal-950">
-                We don't start with a product.
-                <br />
-                <span className="text-copper-500/70">
-                  We start with the space.
-                </span>
-              </h2>
-            </Reveal>
+    {/* Small lower glow */}
+    <div
+      className="absolute -left-[12%] bottom-[-20%] size-[420px] rounded-full blur-[150px]"
+      style={{
+        background:
+          "radial-gradient(circle, rgba(185,133,32,.055) 0%, transparent 70%)",
+      }}
+    />
+  </div>
+
+  {/* ---------------------------------------------------------------------- */}
+  {/* Content                                                                 */}
+  {/* ---------------------------------------------------------------------- */}
+
+  <div className="container-site relative z-10">
+    <div className="grid gap-16 lg:grid-cols-[0.32fr_1fr] lg:gap-20">
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Left editorial marker                                               */}
+      {/* ------------------------------------------------------------------ */}
+
+      <Reveal>
+        <div className="relative pt-2 lg:sticky lg:top-32 lg:self-start">
+          <div className="flex items-center gap-3">
+            <span className="h-px w-10 bg-[#F2B84B]" />
+
+            <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-[#B98520]">
+              02 / Approach
+            </span>
+          </div>
+
+          <div className="mt-8 hidden lg:block">
+            <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#11100E]/25">
+              WOWTHERM
+            </span>
+
+            <div className="mt-5 h-16 w-px bg-[#11100E]/10" />
+
+            <p className="mt-5 max-w-[150px] font-sans text-[11px] leading-6 text-[#11100E]/40">
+              Every system begins with the architecture, not the equipment.
+            </p>
           </div>
         </div>
-      </section>
+      </Reveal>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Main statement                                                      */}
+      {/* ------------------------------------------------------------------ */}
+
+      <div>
+        <Reveal delay={0.08}>
+          <p className="max-w-[620px] font-sans text-[11px] uppercase tracking-[0.28em] text-[#11100E]/40">
+            A considered approach to radiant warmth
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.14}>
+          <h2 className="mt-8 max-w-[1050px] font-display text-[clamp(3.6rem,7vw,7.8rem)] font-normal leading-[0.86] tracking-[-0.065em] text-[#11100E]">
+            We don't start
+            <br />
+            with a{" "}
+            <span className="italic text-[#F2B84B]">
+              product.
+            </span>
+          </h2>
+        </Reveal>
+
+        <Reveal delay={0.20}>
+          <div className="mt-4 lg:ml-[9vw]">
+            <h3 className="max-w-[900px] font-display text-[clamp(3.2rem,6vw,6.8rem)] font-normal leading-[0.88] tracking-[-0.06em] text-[#11100E]/90">
+              We start with
+              <br />
+              <span className="italic text-[#B98520]">
+                the space.
+              </span>
+            </h3>
+          </div>
+        </Reveal>
+
+        {/* ---------------------------------------------------------------- */}
+        {/* Supporting detail                                                 */}
+        {/* ---------------------------------------------------------------- */}
+
+        <Reveal delay={0.28}>
+          <div className="mt-16 grid gap-10 border-t border-[#11100E]/10 pt-8 md:grid-cols-[1fr_auto] lg:ml-[9vw] lg:max-w-[820px]">
+            <p className="max-w-[500px] font-sans text-sm leading-7 text-[#11100E]/50 md:text-[15px]">
+              Every room has its own proportions, materials, insulation and
+              way of being used. We consider those details first, then
+              engineer the heating system around them.
+            </p>
+
+            <div className="hidden md:block">
+              <p className="font-mono text-[8px] uppercase tracking-[0.25em] text-[#11100E]/30">
+                Principle
+              </p>
+
+              <p className="mt-3 font-display text-2xl tracking-[-0.03em] text-[#11100E]">
+                Space first.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* ---------------------------------------------------------------- */}
+        {/* Bottom technical line                                             */}
+        {/* ---------------------------------------------------------------- */}
+
+        <Reveal delay={0.34}>
+          <div className="mt-16 flex items-center gap-4 lg:ml-[9vw]">
+            <span className="h-px w-14 bg-[#F2B84B]" />
+
+            <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-[#11100E]/30">
+              Architecture → Design → System
+            </span>
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* ================================================================
           SOLUTIONS
@@ -772,319 +464,477 @@ export default function SolutionsPage() {
           FEATURED APPLICATIONS / LOCATIONS
       ================================================================ */}
 
-      <section className="relative overflow-hidden bg-charcoal-950 py-24 text-white md:py-36">
-        {/* Architectural grid */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage: `
-              linear-gradient(
-                to right,
-                rgba(255,255,255,0.9) 1px,
-                transparent 1px
-              ),
-              linear-gradient(
-                to bottom,
-                rgba(255,255,255,0.9) 1px,
-                transparent 1px
-              )
-            `,
-            backgroundSize: "90px 90px",
+     <section
+  id="spaces"
+  className="relative overflow-hidden bg-[#F4F1EA] py-28 md:py-40 lg:py-48"
+>
+  {/* ---------------------------------------------------------------------- */}
+  {/* Architectural atmosphere                                               */}
+  {/* ---------------------------------------------------------------------- */}
+
+  <div
+    aria-hidden
+    className="pointer-events-none absolute inset-0"
+  >
+    {/* Fine grid */}
+    <div
+      className="absolute inset-0 opacity-[0.035]"
+      style={{
+        backgroundImage: `
+          linear-gradient(
+            to right,
+            rgba(17,16,14,0.75) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(17,16,14,0.75) 1px,
+            transparent 1px
+          )
+        `,
+        backgroundSize: "120px 120px",
+      }}
+    />
+
+    {/* Architectural vertical line */}
+    <div className="absolute left-[18%] top-0 h-full w-px bg-[#11100E]/[0.055]" />
+
+    <div className="absolute right-[14%] top-0 h-full w-px bg-[#11100E]/[0.04]" />
+
+    {/* Warm glow */}
+    <div
+      className="absolute -right-[15%] top-[18%] size-[600px] rounded-full blur-[180px]"
+      style={{
+        background:
+          "radial-gradient(circle, rgba(242,184,75,.10) 0%, transparent 70%)",
+      }}
+    />
+  </div>
+
+  <div className="container-site relative z-10">
+
+    {/* ==================================================================== */}
+    {/* SECTION INTRO                                                         */}
+    {/* ==================================================================== */}
+
+    <div className="grid gap-14 lg:grid-cols-[0.32fr_1fr] lg:gap-20">
+      {/* Left marker */}
+
+      <Reveal>
+        <div className="pt-2">
+          <div className="flex items-center gap-3">
+            <span className="h-px w-10 bg-[#F2B84B]" />
+
+            <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-[#B98520]">
+              03 / Spaces
+            </span>
+          </div>
+
+          <div className="mt-8 hidden lg:block">
+            <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#11100E]/25">
+              WOWTHERM
+            </span>
+
+            <div className="mt-5 h-20 w-px bg-[#11100E]/10" />
+
+            <p className="mt-5 max-w-[160px] font-sans text-[11px] leading-6 text-[#11100E]/40">
+              Different spaces. Different demands. One engineered approach to
+              warmth.
+            </p>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* Main heading */}
+
+      <Reveal delay={0.08}>
+        <div>
+          <p className="font-sans text-[10px] uppercase tracking-[0.28em] text-[#11100E]/35">
+            Where warmth belongs
+          </p>
+
+          <h2 className="mt-8 max-w-[1000px] font-display text-[clamp(3.8rem,7vw,8rem)] font-normal leading-[0.84] tracking-[-0.065em] text-[#11100E]">
+            Made for
+            <br />
+            <span className="italic text-[#F2B84B]">
+              the way
+            </span>
+            <br />
+            spaces live.
+          </h2>
+        </div>
+      </Reveal>
+    </div>
+
+    {/* ==================================================================== */}
+    {/* PROJECT INDEX                                                         */}
+    {/* ==================================================================== */}
+
+    <div className="mt-24 md:mt-32 lg:mt-40">
+      {applications.map((project, index) => (
+        <motion.article
+          key={project.slug}
+          initial={{
+            opacity: 0,
+            y: 45,
           }}
-        />
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            margin: "-100px",
+          }}
+          transition={{
+            duration: 0.8,
+            delay: Math.min(index * 0.04, 0.2),
+            ease: EASE,
+          }}
+          className="group relative border-t border-[#11100E]/10 py-8 md:py-10 lg:py-12"
+        >
+          <Link
+            href={`/projects/${project.slug}`}
+            className="block"
+          >
+            <div className="grid items-center gap-8 lg:grid-cols-[90px_1fr_0.75fr_120px] lg:gap-10">
 
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-40 top-1/3 size-[500px] rounded-full bg-copper-500/[0.06] blur-[150px]"
-        />
+              {/* ---------------------------------------------------------- */}
+              {/* Number                                                      */}
+              {/* ---------------------------------------------------------- */}
 
-        <div className="container-site relative z-10">
-          {/* Section heading */}
-          <div className="grid gap-12 lg:grid-cols-[0.45fr_1.55fr]">
-            <Reveal>
-              <div>
-                <div className="flex items-center gap-3">
-                  <span className="h-px w-8 bg-copper-400" />
-
-                  <span className="text-[10px] uppercase tracking-[0.24em] text-copper-400">
-                    03 / Where we work
-                  </span>
-                </div>
-
-                <p className="mt-8 max-w-[220px] text-sm leading-6 text-white/35">
-                  From mountain residences to coastal villas, our systems are
-                  designed around the character and demands of each space.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.08}>
-              <h2 className="max-w-5xl font-display text-[clamp(2.7rem,5.5vw,6rem)] leading-[0.92] tracking-[-0.055em]">
-                Solutions for
-                <br />
-                <span className="text-copper-400">
-                  every kind of space.
+              <div className="hidden lg:block">
+                <span className="font-mono text-[9px] tracking-[0.18em] text-[#11100E]/25">
+                  {String(index + 1).padStart(2, "0")}
                 </span>
-              </h2>
-            </Reveal>
-          </div>
+              </div>
 
-          {/* Applications */}
-          <div className="mt-20 border-t border-white/10">
-            {applications.map((project, index) => (
-              <motion.article
-                key={project.slug}
-                initial={{ opacity: 0, y: 35 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{
-                  once: true,
-                  margin: "-80px",
-                }}
-                transition={{
-                  duration: 0.7,
-                  delay: Math.min(index * 0.03, 0.2),
-                  ease: EASE,
-                }}
-                className="group grid border-b border-white/10 py-8 md:grid-cols-[80px_1fr_1.2fr_180px] md:items-center md:gap-8 md:py-9"
-              >
-                {/* Number */}
-                <div className="mb-5 md:mb-0">
-                  <span className="font-display text-3xl text-copper-400/70">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
+              {/* ---------------------------------------------------------- */}
+              {/* Project identity                                            */}
+              {/* ---------------------------------------------------------- */}
+
+              <div className="flex items-center gap-6">
+                {/* Image */}
+
+                <div className="relative size-[86px] shrink-0 overflow-hidden bg-[#11100E] md:size-[105px]">
+                  <Image
+                    src={project.image}
+                    alt=""
+                    fill
+                    sizes="105px"
+                    className="object-cover grayscale-[35%] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 group-hover:grayscale-0"
+                  />
+
+                  {/* Image wash */}
+
+                  <div className="absolute inset-0 bg-[#11100E]/10 transition-opacity duration-500 group-hover:opacity-0" />
                 </div>
 
-                {/* Image + title */}
-                <div className="flex items-center gap-5">
-                  <div className="relative hidden size-20 shrink-0 overflow-hidden md:block">
-                    <Image
-                      src={project.image}
-                      alt=""
-                      fill
-                      sizes="80px"
-                      className="object-cover grayscale transition-all duration-700 group-hover:scale-110 group-hover:grayscale-0"
-                    />
-                  </div>
+                <div>
+                  <p className="font-mono text-[8px] uppercase tracking-[0.25em] text-[#B98520]">
+                    {project.type}
+                  </p>
 
-                  <div>
-                    <p className="text-[9px] uppercase tracking-[0.2em] text-copper-400/70">
-                      {project.type}
-                    </p>
+                  <h3 className="mt-2 max-w-[400px] font-display text-[clamp(1.8rem,3vw,3rem)] leading-[0.92] tracking-[-0.045em] text-[#11100E] transition-transform duration-500 group-hover:translate-x-1">
+                    {project.title}
+                  </h3>
+                </div>
+              </div>
 
-                    <h3 className="mt-2 font-display text-2xl leading-tight text-white transition-colors duration-300 group-hover:text-copper-300 md:text-3xl">
-                      {project.title}
-                    </h3>
-                  </div>
+              {/* ---------------------------------------------------------- */}
+              {/* Project information                                          */}
+              {/* ---------------------------------------------------------- */}
+
+              <div className="grid grid-cols-2 gap-6 lg:grid-cols-1 lg:gap-4">
+                <div>
+                  <p className="font-mono text-[7px] uppercase tracking-[0.24em] text-[#11100E]/25">
+                    Location
+                  </p>
+
+                  <p className="mt-2 font-sans text-[12px] text-[#11100E]/55 md:text-sm">
+                    {project.location}
+                  </p>
                 </div>
 
-                {/* Location + system */}
-                <div className="mt-6 grid gap-4 sm:grid-cols-2 md:mt-0">
-                  <div>
-                    <div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.18em] text-white/25">
-                      <MapPin className="size-3" aria-hidden />
-                      Location
-                    </div>
+                <div>
+                  <p className="font-mono text-[7px] uppercase tracking-[0.24em] text-[#11100E]/25">
+                    System
+                  </p>
 
-                    <p className="mt-2 text-sm text-white/60">
-                      {project.location}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-[9px] uppercase tracking-[0.18em] text-white/25">
-                      System
-                    </p>
-
-                    <p className="mt-2 text-sm text-white/60">
-                      {project.solution}
-                    </p>
-                  </div>
+                  <p className="mt-2 font-sans text-[12px] text-[#11100E]/55 md:text-sm">
+                    {project.solution}
+                  </p>
                 </div>
+              </div>
 
-                {/* Year / CTA */}
-                <div className="mt-6 flex items-center justify-between md:mt-0 md:justify-end md:gap-6">
-                  <span className="text-[10px] uppercase tracking-[0.18em] text-white/25">
-                    {project.year}
-                  </span>
+              {/* ---------------------------------------------------------- */}
+              {/* Year + arrow                                                */}
+              {/* ---------------------------------------------------------- */}
 
-                  <span className="flex size-9 items-center justify-center rounded-full border border-white/10 transition-all duration-300 group-hover:border-copper-400 group-hover:bg-copper-400">
-                    <ArrowUpRight
-                      className="size-4 text-copper-400 transition-colors group-hover:text-white"
-                      aria-hidden
-                    />
-                  </span>
-                </div>
-              </motion.article>
-            ))}
-          </div>
+              <div className="flex items-center justify-between lg:justify-end lg:gap-6">
+                <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
+                  {project.year}
+                </span>
 
-          {/* Bottom statement */}
-          <Reveal>
-            <div className="mt-14 flex flex-col gap-5 border-t border-white/10 pt-8 md:flex-row md:items-center md:justify-between">
-              <p className="max-w-xl text-sm leading-6 text-white/35">
-                Residential, hospitality and commercial environments require
-                different approaches. We engineer the system accordingly.
-              </p>
-
-              <Link
-                href="/contact"
-                className="group inline-flex shrink-0 items-center gap-3 text-xs uppercase tracking-[0.18em] text-white/70"
-              >
-                Talk to our team
-
-                <span className="flex size-9 items-center justify-center rounded-full border border-white/15 transition-all duration-300 group-hover:border-copper-400 group-hover:bg-copper-400">
+                <span
+                  className={cn(
+                    "flex size-11 shrink-0 items-center justify-center",
+                    "border border-[#11100E]/10",
+                    "transition-all duration-500",
+                    "group-hover:border-[#F2B84B]",
+                    "group-hover:bg-[#F2B84B]",
+                  )}
+                >
                   <ArrowUpRight
-                    className="size-4 text-copper-400 transition-colors group-hover:text-white"
+                    className="size-4 text-[#11100E]/50 transition-all duration-500 group-hover:text-[#11100E] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    strokeWidth={1.3}
                     aria-hidden
                   />
                 </span>
-              </Link>
+              </div>
             </div>
-          </Reveal>
-        </div>
-      </section>
+          </Link>
+        </motion.article>
+      ))}
 
+      {/* Closing border */}
+      <div className="border-t border-[#11100E]/10" />
+    </div>
+
+    {/* ==================================================================== */}
+    {/* CLOSING STATEMENT                                                     */}
+    {/* ==================================================================== */}
+
+    <Reveal>
+      <div className="mt-14 grid gap-8 border-t border-[#11100E]/10 pt-8 md:grid-cols-[1fr_auto] md:items-end">
+        <div>
+          <p className="max-w-[620px] font-sans text-sm leading-7 text-[#11100E]/45 md:text-[15px]">
+            From private residences to hospitality and commercial spaces,
+            every installation begins with an understanding of how the room
+            should feel, perform and endure.
+          </p>
+        </div>
+
+        <Link
+          href="/contact"
+          className="group inline-flex items-center gap-4 font-sans text-[9px] font-medium uppercase tracking-[0.24em] text-[#11100E]/65"
+        >
+          Discuss your space
+
+          <span className="flex size-9 items-center justify-center border border-[#11100E]/15 transition-all duration-400 group-hover:border-[#F2B84B] group-hover:bg-[#F2B84B]">
+            <ArrowUpRight
+              className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              strokeWidth={1.3}
+              aria-hidden
+            />
+          </span>
+        </Link>
+      </div>
+    </Reveal>
+  </div>
+</section>
       {/* ================================================================
           DESIGN PRINCIPLE
       ================================================================ */}
 
-      <section className="relative overflow-hidden bg-ivory-100 py-24 md:py-36">
-        <div
-          aria-hidden
-          className="absolute left-1/2 top-0 h-full w-px bg-copper-500/[0.08]"
-        />
+     <section className="relative overflow-hidden bg-[#F4F1EA] py-28 md:py-40 lg:py-48">
+  {/* ---------------------------------------------------------------------- */}
+  {/* Architectural atmosphere                                               */}
+  {/* ---------------------------------------------------------------------- */}
 
-        <div className="container-site">
-          <div className="grid gap-14 lg:grid-cols-[0.5fr_1.5fr]">
-            <Reveal>
-              <div className="flex items-center gap-3">
-                <span className="h-px w-8 bg-copper-500" />
+  <div
+    aria-hidden
+    className="pointer-events-none absolute inset-0"
+  >
+    {/* Fine grid */}
+    <div
+      className="absolute inset-0 opacity-[0.035]"
+      style={{
+        backgroundImage: `
+          linear-gradient(
+            to right,
+            rgba(17,16,14,0.75) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(17,16,14,0.75) 1px,
+            transparent 1px
+          )
+        `,
+        backgroundSize: "120px 120px",
+      }}
+    />
 
-                <span className="text-[10px] uppercase tracking-[0.24em] text-copper-600">
-                  04 / Design principle
-                </span>
-              </div>
-            </Reveal>
+    {/* Main architectural axis */}
+    <div className="absolute left-[18%] top-0 h-full w-px bg-[#11100E]/[0.055]" />
 
-            <Reveal delay={0.08}>
-              <div>
-                <p className="font-display text-[clamp(2.5rem,5vw,5.5rem)] leading-[0.98] tracking-[-0.05em] text-charcoal-950">
-                  The best heating system is the one you{" "}
-                  <span className="text-copper-500">
-                    never have to see.
-                  </span>
-                </p>
+    <div className="absolute right-[18%] top-0 h-full w-px bg-[#11100E]/[0.04]" />
 
-                <div className="mt-12 grid gap-8 border-t border-charcoal-900/15 pt-8 md:grid-cols-3">
-                  {[
-                    [
-                      "01",
-                      "Invisible",
-                      "Technology beneath the architecture.",
-                    ],
-                    [
-                      "02",
-                      "Considered",
-                      "Designed around how the space is used.",
-                    ],
-                    [
-                      "03",
-                      "Comfortable",
-                      "Consistent warmth where it matters.",
-                    ],
-                  ].map(([number, title, text]) => (
-                    <div key={number}>
-                      <span className="text-[10px] tracking-[0.18em] text-copper-500">
-                        {number}
-                      </span>
+    {/* Warm atmosphere */}
+    <div
+      className="absolute -left-[12%] top-[18%] size-[500px] rounded-full blur-[170px]"
+      style={{
+        background:
+          "radial-gradient(circle, rgba(242,184,75,.10) 0%, transparent 70%)",
+      }}
+    />
 
-                      <h3 className="mt-4 font-display text-2xl text-charcoal-950">
-                        {title}
-                      </h3>
+    <div
+      className="absolute -right-[15%] bottom-[-10%] size-[520px] rounded-full blur-[180px]"
+      style={{
+        background:
+          "radial-gradient(circle, rgba(185,133,32,.055) 0%, transparent 70%)",
+      }}
+    />
+  </div>
 
-                      <p className="mt-3 text-sm leading-6 text-charcoal-500">
-                        {text}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
+  <div className="container-site relative z-10">
+
+    {/* ==================================================================== */}
+    {/* HEADER                                                                */}
+    {/* ==================================================================== */}
+
+    <div className="grid gap-14 lg:grid-cols-[0.32fr_1fr] lg:gap-20">
+
+      {/* Section marker */}
+
+      <Reveal>
+        <div className="pt-2">
+          <div className="flex items-center gap-3">
+            <span className="h-px w-10 bg-[#F2B84B]" />
+
+            <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-[#B98520]">
+              04 / Design principle
+            </span>
+          </div>
+
+          <div className="mt-8 hidden lg:block">
+            <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#11100E]/25">
+              THE WOWTHERM APPROACH
+            </span>
+
+            <div className="mt-5 h-20 w-px bg-[#11100E]/10" />
+
+            <p className="mt-5 max-w-[155px] font-sans text-[11px] leading-6 text-[#11100E]/40">
+              Good engineering should become part of the architecture, not
+              compete with it.
+            </p>
           </div>
         </div>
-      </section>
+      </Reveal>
+
+      {/* Main statement */}
+
+      <Reveal delay={0.08}>
+        <div>
+          <p className="font-sans text-[10px] uppercase tracking-[0.28em] text-[#11100E]/35">
+            Designed to disappear
+          </p>
+
+          <h2 className="mt-8 max-w-[1050px] font-display text-[clamp(3.7rem,7vw,8rem)] font-normal leading-[0.84] tracking-[-0.065em] text-[#11100E]">
+            The best heating
+            <br />
+            system is the one
+            <br />
+            you{" "}
+            <span className="italic text-[#F2B84B]">
+              never see.
+            </span>
+          </h2>
+        </div>
+      </Reveal>
+    </div>
+
+    {/* ==================================================================== */}
+    {/* PRINCIPLES                                                            */}
+    {/* ==================================================================== */}
+
+    <div className="mt-24 lg:mt-32 lg:ml-[26%]">
+      {[
+        {
+          number: "01",
+          title: "Invisible",
+          text: "Technology beneath the architecture. The system works quietly below the finished surface, leaving the room free to be itself.",
+        },
+        {
+          number: "02",
+          title: "Considered",
+          text: "Every installation begins with the space — its proportions, materials, insulation and the way people move through it.",
+        },
+        {
+          number: "03",
+          title: "Comfortable",
+          text: "Consistent radiant warmth, carefully distributed to create a more natural feeling of comfort throughout the room.",
+        },
+      ].map((item, index) => (
+        <Reveal
+          key={item.number}
+          delay={0.1 + index * 0.08}
+        >
+          <div className="group border-t border-[#11100E]/10 py-8 md:py-10">
+            <div className="grid gap-6 md:grid-cols-[80px_0.7fr_1fr] md:items-start md:gap-10">
+
+              {/* Number */}
+
+              <div>
+                <span className="font-mono text-[9px] tracking-[0.2em] text-[#B98520]">
+                  {item.number}
+                </span>
+              </div>
+
+              {/* Title */}
+
+              <div>
+                <h3 className="font-display text-[clamp(2rem,3vw,3.2rem)] leading-[0.9] tracking-[-0.045em] text-[#11100E] transition-transform duration-500 group-hover:translate-x-1">
+                  {item.title}
+                </h3>
+              </div>
+
+              {/* Description */}
+
+              <div className="md:max-w-[430px]">
+                <p className="font-sans text-sm leading-7 text-[#11100E]/45 md:text-[15px]">
+                  {item.text}
+                </p>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      ))}
+
+      {/* Final border */}
+
+      <div className="border-t border-[#11100E]/10" />
+    </div>
+
+    {/* ==================================================================== */}
+    {/* CLOSING DETAIL                                                        */}
+    {/* ==================================================================== */}
+
+    <Reveal delay={0.36}>
+      <div className="mt-10 flex items-center justify-between lg:ml-[26%]">
+        <div className="flex items-center gap-4">
+          <span className="h-px w-12 bg-[#F2B84B]" />
+
+          <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-[#11100E]/30">
+            Engineering → Architecture → Comfort
+          </span>
+        </div>
+
+        <span className="hidden font-mono text-[8px] uppercase tracking-[0.22em] text-[#11100E]/20 md:block">
+          04 / 04
+        </span>
+      </div>
+    </Reveal>
+  </div>
+</section>
 
       {/* ================================================================
           CTA
       ================================================================ */}
 
-      <section className="relative isolate overflow-hidden bg-charcoal-950 py-28 text-white md:py-40">
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.045]"
-          style={{
-            backgroundImage: `
-              linear-gradient(
-                to right,
-                rgba(255,255,255,0.8) 1px,
-                transparent 1px
-              ),
-              linear-gradient(
-                to bottom,
-                rgba(255,255,255,0.8) 1px,
-                transparent 1px
-              )
-            `,
-            backgroundSize: "90px 90px",
-          }}
-        />
-
-        <div
-          aria-hidden
-          className="absolute left-1/2 top-1/2 size-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-copper-500/[0.055] blur-[130px]"
-        />
-
-        <div className="container-site relative z-10 text-center">
-          <Reveal>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-copper-400">
-              05 / Your space
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.08}>
-            <h2 className="mx-auto mt-7 max-w-5xl font-display text-[clamp(3rem,7vw,7rem)] leading-[0.9] tracking-[-0.055em]">
-              Tell us about
-              <br />
-              <span className="text-copper-400">
-                your space.
-              </span>
-            </h2>
-          </Reveal>
-
-          <Reveal delay={0.16}>
-            <p className="mx-auto mt-8 max-w-xl text-base leading-7 text-white/45 md:text-lg">
-              Whether you are building, renovating or simply looking for a
-              better way to heat a room, we can help you find the right
-              approach.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.24}>
-            <Link
-              href="/contact"
-              className="group mt-10 inline-flex h-14 items-center gap-4 bg-copper-500 px-7 text-xs font-medium uppercase tracking-[0.16em] text-white transition-colors duration-300 hover:bg-copper-400"
-            >
-              Discuss your project
-
-              <ArrowRight
-                className="size-4 transition-transform duration-300 group-hover:translate-x-1"
-                aria-hidden
-              />
-            </Link>
-          </Reveal>
-        </div>
-      </section>
+    <FinalCta/>
     </main>
   );
 }
