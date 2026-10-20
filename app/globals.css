@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Wipe Tailwind's default palette — WowTherm uses its own tokens only. */
+  /* Wipe Tailwind's default palette — Heatify uses its own tokens only. */
   --color-*: initial;
 
   --color-transparent: transparent;

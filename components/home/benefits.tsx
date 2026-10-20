@@ -63,7 +63,7 @@
 
 // // ---- Scroll choreography (0 -> 1 across the whole pinned section) ----
 // const WORD_FILL_END = 0.16; // characters finish filling by here
-// const WORD_RECEDE_START = 0.14; // "Why" + WOWTHERM start receding together
+// const WORD_RECEDE_START = 0.14; // "Why" + HEATIFY start receding together
 // const WORD_RECEDE_END = 0.24; // fully settled as a faint watermark
 // const CARDS_START = 0.26; // first card starts entering
 // const CARDS_END = 1.0; // last card fully settled
@@ -83,7 +83,7 @@
 
 // /* ------------------------------------------------------------------ */
 // /* Letter-fill sound — a short ascending chime per letter, forming a   */
-// /* pleasant rising scale as WOWTHERM fills in while scrolling.         */
+// /* pleasant rising scale as HEATIFY fills in while scrolling.         */
 // /* ------------------------------------------------------------------ */
 // let sharedAudioCtx: AudioContext | null = null;
 
@@ -103,7 +103,7 @@
 //   return sharedAudioCtx;
 // }
 
-// // A pleasant ascending pentatonic run — one note per letter of WOWTHERM.
+// // A pleasant ascending pentatonic run — one note per letter of HEATIFY.
 // const CHIME_SCALE = [
 //   523.25, // C5
 //   587.33, // D5
@@ -185,7 +185,7 @@
 // function ScrollFillHeading({ progress }: { progress: MotionValue<number> }) {
 //   const chars = WORD.split("");
 
-//   // "Why" + WOWTHERM recede together into a faint background watermark —
+//   // "Why" + HEATIFY recede together into a faint background watermark —
 //   // never fully disappearing, just stepping out of focus.
 //   const opacity = useTransform(
 //     progress,
@@ -447,8 +447,8 @@ const benefits = [
   },
 ];
 
-// "WOW" fills white, "THERM" fills orange.
-const WORD = "WOWTHERM";
+// "HEA" fills white, "TIFY" fills orange.
+const WORD = "HEATIFY";
 const WOW_LENGTH = 3;
 const DIM_COLOR = "rgba(255, 255, 255, 0.12)";
 const WHITE_COLOR = "#FFFFFF";
@@ -456,7 +456,7 @@ const ORANGE_COLOR = "#F97316"; // swap for your exact copper/orange token if di
 
 // ---- Scroll choreography (0 -> 1 across the whole pinned section) ----
 const WORD_FILL_END = 0.16; // characters finish filling by here
-const WORD_RECEDE_START = 0.14; // "Why" + WOWTHERM start receding together
+const WORD_RECEDE_START = 0.14; // "Why" + HEATIFY start receding together
 const WORD_RECEDE_END = 0.24; // fully settled as a faint watermark
 const CARDS_START = 0.26; // first card starts entering
 const CARDS_END = 1.0; // last card fully settled
@@ -476,7 +476,7 @@ function getCharRange(index: number, total: number): [number, number] {
 
 /* ------------------------------------------------------------------ */
 /* Letter-fill sound — a short ascending chime per letter, forming a   */
-/* pleasant rising scale as WOWTHERM fills in while scrolling.         */
+/* pleasant rising scale as HEATIFY fills in while scrolling.         */
 /* ------------------------------------------------------------------ */
 let sharedAudioCtx: AudioContext | null = null;
 
@@ -496,7 +496,7 @@ function getAudioContext(): AudioContext | null {
   return sharedAudioCtx;
 }
 
-// A pleasant ascending pentatonic run — one note per letter of WOWTHERM.
+// A pleasant ascending pentatonic run — one note per letter of HEATIFY.
 const CHIME_SCALE = [
   523.25, // C5
   587.33, // D5
@@ -578,7 +578,7 @@ function ScrollFillChar({
 function ScrollFillHeading({ progress }: { progress: MotionValue<number> }) {
   const chars = WORD.split("");
 
-  // "Why" + WOWTHERM recede together into a faint background watermark —
+  // "Why" + HEATIFY recede together into a faint background watermark —
   // never fully disappearing, just stepping out of focus.
   const opacity = useTransform(
     progress,

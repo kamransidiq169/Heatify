@@ -18,49 +18,8 @@ import { Reveal } from "@/components/motion/reveal";
  * All content is placeholder — flagged with [PLACEHOLDER].
  */
 
-const MILESTONES = [
-  {
-    year: "[YEAR]",
-    title: "Founded",
-    description:
-      "[PLACEHOLDER — WowTherm founding story. Replace with real copy.]",
-    layer: "finish",
-  },
-  {
-    year: "[YEAR]",
-    title: "[Milestone title]",
-    description:
-      "[PLACEHOLDER — First major milestone. Replace with real copy.]",
-    layer: "mat",
-  },
-  {
-    year: "[YEAR]",
-    title: "[Milestone title]",
-    description:
-      "[PLACEHOLDER — Growth milestone. Replace with real copy.]",
-    layer: "insulation",
-  },
-  {
-    year: "[YEAR]",
-    title: "[Milestone title]",
-    description:
-      "[PLACEHOLDER — Expansion milestone. Replace with real copy.]",
-    layer: "subfloor",
-  },
-  {
-    year: "[YEAR]",
-    title: "[Milestone title]",
-    description:
-      "[PLACEHOLDER — Recent milestone. Replace with real copy.]",
-    layer: "finish",
-  },
-  {
-    year: "[YEAR]",
-    title: "Today",
-    description:
-      "[PLACEHOLDER — Current state of WowTherm. Replace with real copy.]",
-    layer: "mat",
-  },
+const MILESTONES = [] as const;
+
 ];
 
 const LAYER_COLORS = {
@@ -135,6 +94,7 @@ export function Timeline() {
     MILESTONES.length - 1,
     Math.floor(progress * MILESTONES.length),
   );
+  const hasMilestones = MILESTONES.length > 0;
 
   return (
     <section ref={containerRef} className="relative bg-charcoal-950 py-24 md:py-32 lg:py-40">
@@ -173,8 +133,9 @@ export function Timeline() {
           </div>
 
           {/* Right: Milestone cards */}
-          <div className="space-y-8 md:space-y-12">
-            {MILESTONES.map((milestone, i) => {
+          {hasMilestones && (
+            <div className="space-y-8 md:space-y-12">
+              {MILESTONES.map((milestone, i) => {
               const cardProgress = Math.max(
                 0,
                 Math.min(1, (progress - i * 0.15) * 4),
@@ -201,7 +162,8 @@ export function Timeline() {
                 </motion.div>
               );
             })}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -51,7 +51,7 @@ export function FinalCta() {
         >
           <defs>
             <pattern
-              id="wowtherm-final-grid"
+              id="heatify-final-grid"
               width="38"
               height="38"
               patternUnits="userSpaceOnUse"
@@ -68,7 +68,7 @@ export function FinalCta() {
           <rect
             width="100%"
             height="100%"
-            fill="url(#wowtherm-final-grid)"
+            fill="url(#heatify-final-grid)"
           />
         </svg>
 
@@ -313,7 +313,7 @@ export function FinalCta() {
               sm:block
             "
           >
-            WOWTHERM / 05
+            HEATIFY / 05
           </span>
         </div>
       </div>
@@ -713,7 +713,7 @@ export function FinalCta() {
                   text-white/20
                 "
               >
-                WOWTHERM
+                HEATIFY
               </span>
 
               <span

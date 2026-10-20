@@ -124,12 +124,12 @@ const steps = [
   },
   {
     title: "Commissioning & handover",
-    text: "Thermostats programmed, first-heat ramp scheduled, and a handover pack with test logs, cable photographs and your registered warranty.",
+    text: "Thermostats programmed, first-heat ramp scheduled, and a handover pack with test logs and installation photographs.",
     duration: "Half a day",
   },
   {
     title: "Aftercare for the long haul",
-    text: "10 years on electric systems, 25 on hydronic pipework — with our Mumbai engineering team on the phone, and annual health checks for hydronic homes.",
+    text: "Long-term support for the systems we install, with our engineering team available and annual health checks for hydronic homes.",
     duration: "Years 1–25",
   },
 ];

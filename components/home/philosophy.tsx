@@ -22,7 +22,7 @@ export function Philosophy() {
         <Reveal delay={0.2}>
           <div className="mt-8 max-w-2xl">
             <p className="text-body-lg text-charcoal-500 leading-relaxed">
-              WowTherm creates discreet heating systems that disappear into the
+              Heatify creates discreet heating systems that disappear into the
               architecture while delivering precise, comfortable heat. Every system
               is designed to be invisible — felt, never seen.
             </p>

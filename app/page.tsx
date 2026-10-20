@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "Premium Heating Technology — Comfort, engineered into every surface",
 
   description:
-    "WOWTHERM designs and installs premium heating systems for modern homes, hospitality spaces and architectural interiors. Invisible warmth, precise control.",
+    "Heatify designs and installs premium heating systems for modern homes, hospitality spaces and architectural interiors. Invisible warmth, precise control.",
 };
 
 export default function HomePage() {

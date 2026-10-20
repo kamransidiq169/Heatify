@@ -27,7 +27,7 @@ export function AboutHero() {
       <div className="relative z-10 flex min-h-[100svh] flex-col justify-end pb-20 md:pb-28">
         <div className="container-site">
           <Reveal>
-            <p className="text-eyebrow text-copper-400 mb-4">About WowTherm</p>
+            <p className="text-eyebrow text-copper-400 mb-4">About Heatify</p>
           </Reveal>
           <Reveal delay={0.1}>
             <h1 className="text-display-xl text-white max-w-3xl">
@@ -38,8 +38,7 @@ export function AboutHero() {
           </Reveal>
           <Reveal delay={0.2}>
             <p className="text-body-lg text-white/50 mt-6 max-w-xl">
-              {/* [PLACEHOLDER — replace with WowTherm's actual founding story] */}
-              WowTherm was born from a simple conviction: warmth should never
+              {/* Heatify was born from a simple conviction: warmth should never
               compromise architecture. We design invisible heating systems that
               perform beneath the surfaces you already love.
             </p>

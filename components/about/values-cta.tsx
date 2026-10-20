@@ -72,7 +72,7 @@ export function ValuesCta() {
         <div className="container-site text-center">
           <Reveal>
             <h2 className="text-display-md text-white mb-6">
-              {/* [PLACEHOLDER — replace with WowTherm's actual CTA copy] */}
+              {/* [PLACEHOLDER — replace with Heatify's actual CTA copy] */}
               Ready to work with us?
             </h2>
           </Reveal>

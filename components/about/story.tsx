@@ -7,29 +7,29 @@ import { Parallax } from "@/components/motion/parallax";
 /**
  * Story section — asymmetric editorial image grid with parallax.
  *
- * Placeholder images in public/images/about/ — replace with real WowTherm photos.
+ * Placeholder images in public/images/about/ — replace with real Heatify photos.
  * All copy below is placeholder — flagged with [PLACEHOLDER].
  */
 
 const STORY_IMAGES = [
   {
     src: "/images/about/story-1.jpg",
-    alt: "[PLACEHOLDER — Replace with real WowTherm photo]",
+    alt: "[PLACEHOLDER — Replace with real Heatify photo]",
     caption: "[PLACEHOLDER — Photo caption]",
   },
   {
     src: "/images/about/story-2.jpg",
-    alt: "[PLACEHOLDER — Replace with real WowTherm photo]",
+    alt: "[PLACEHOLDER — Replace with real Heatify photo]",
     caption: "[PLACEHOLDER — Photo caption]",
   },
   {
     src: "/images/about/story-3.jpg",
-    alt: "[PLACEHOLDER — Replace with real WowTherm photo]",
+    alt: "[PLACEHOLDER — Replace with real Heatify photo]",
     caption: "[PLACEHOLDER — Photo caption]",
   },
   {
     src: "/images/about/story-4.jpg",
-    alt: "[PLACEHOLDER — Replace with real WowTherm photo]",
+    alt: "[PLACEHOLDER — Replace with real Heatify photo]",
     caption: "[PLACEHOLDER — Photo caption]",
   },
 ];
@@ -48,7 +48,7 @@ export function Story() {
               </h2>
               <div className="space-y-4">
                 <p className="text-body-lg text-charcoal-600">
-                  {/* [PLACEHOLDER — replace with WowTherm's actual founding story] */}
+                  {/* [PLACEHOLDER — replace with Heatify's actual founding story] */}
                   In [YEAR], we noticed a gap: premium underfloor heating was
                   available, but the expertise to design and install it properly
                   wasn&apos;t.

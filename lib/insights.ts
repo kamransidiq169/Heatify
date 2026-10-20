@@ -31,7 +31,7 @@ export function getAllInsights(): Insight[] {
         title: data.title ?? slug,
         description: data.description ?? "",
         date: data.date ?? new Date().toISOString(),
-        author: data.author ?? "WowTherm Team",
+        author: data.author ?? "Heatify Team",
         category: data.category ?? "General",
         readingTime: data.readingTime ?? "5 min read",
         image: data.image ?? "",

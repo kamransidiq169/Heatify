@@ -37,36 +37,43 @@ export function Footer() {
             aria-label={`${siteConfig.name} home`}
           >
             <span className="font-display text-xl font-semibold tracking-tight">
-              WOW<span className="text-copper-400">THERM</span>
+              HEA<span className="text-copper-400">TIFY</span>
             </span>
           </Link>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/50">
-            {siteConfig.tagline} Premium heating systems designed for modern
-            homes, hospitality spaces and architectural interiors.
+                  <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/50">
+            {siteConfig.tagline && siteConfig.tagline.trim()
+              ? `${siteConfig.tagline} — premium heating systems designed for modern homes, hospitality spaces and architectural interiors.`
+              : "Premium heating systems designed for modern homes, hospitality spaces and architectural interiors."}
           </p>
           <ul className="mt-5 space-y-2.5 text-sm text-white/60">
-            <li className="flex items-start gap-3">
-              <MapPin className="mt-0.5 size-4 shrink-0 text-copper-400" aria-hidden />
-              {siteConfig.address}
-            </li>
-            <li className="flex items-center gap-3">
-              <Phone className="size-4 shrink-0 text-copper-400" aria-hidden />
-              <a
-                href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
-                className="hover:text-white transition-colors"
-              >
-                {siteConfig.phone}
-              </a>
-            </li>
-            <li className="flex items-center gap-3">
-              <Mail className="size-4 shrink-0 text-copper-400" aria-hidden />
-              <a
-                href={`mailto:${siteConfig.email}`}
-                className="hover:text-white transition-colors"
-              >
-                {siteConfig.email}
-              </a>
-            </li>
+            {siteConfig.address && (
+              <li className="flex items-start gap-3">
+                <MapPin className="mt-0.5 size-4 shrink-0 text-copper-400" aria-hidden />
+                {siteConfig.address}
+              </li>
+            )}
+            {siteConfig.phone && (
+              <li className="flex items-center gap-3">
+                <Phone className="size-4 shrink-0 text-copper-400" aria-hidden />
+                <a
+                  href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
+                  className="hover:text-white transition-colors"
+                >
+                  {siteConfig.phone}
+                </a>
+              </li>
+            )}
+            {siteConfig.email && (
+              <li className="flex items-center gap-3">
+                <Mail className="size-4 shrink-0 text-copper-400" aria-hidden />
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="hover:text-white transition-colors"
+                >
+                  {siteConfig.email}
+                </a>
+              </li>
+            )}
           </ul>
         </div>
 
@@ -131,7 +138,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container-site flex flex-col items-center justify-between gap-2 py-5 text-xs text-white/40 sm:flex-row">
           <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
-          <p>10-year warranty on every heating system we install.</p>
+          <p>Warranty terms on every heating system we install.</p>
         </div>
       </div>
     </footer>

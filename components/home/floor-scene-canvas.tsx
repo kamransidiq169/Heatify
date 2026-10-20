@@ -7,8 +7,7 @@ import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import * as THREE from "three";
 
 /**
- * FloorSceneCanvas
- * A literal 3D cross-section of the WowTherm floor build-up:
+ * FloorSceneCanvas  * A literal 3D cross-section of the Heatify floor build-up:
  * subfloor -> insulation -> heating mat (glowing coil) -> finish surface.
  *
  * `progress` (0-1) drives a single orchestrated moment: stacked -> exploded,

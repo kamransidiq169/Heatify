@@ -274,7 +274,7 @@ function ProductSlide({
                 <span className="h-px w-12 bg-[#F2B84B]" />
 
                 <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#F4F1EA]/60">
-                  WOWTHERM / {number}
+                  HEATIFY / {number}
                 </span>
               </div>
 
@@ -307,7 +307,7 @@ function ProductSlide({
                 </span>
 
                 <span className="font-mono text-[8px] uppercase tracking-[0.15em] text-[#F4F1EA]/70">
-                  WOWTHERM
+                  HEATIFY
                 </span>
               </div>
 
@@ -403,7 +403,7 @@ export default function ProductsPage() {
         <div className="absolute inset-0">
           <Image
             src="/pro1.png"
-            alt="WOWTHERM heating systems"
+            alt="HEATIFY heating systems"
             fill
             priority
             quality={100}
@@ -621,7 +621,7 @@ export default function ProductsPage() {
                   writingMode: "vertical-rl",
                 }}
               >
-                Radiant heating / WOWTHERM
+                Radiant heating / HEATIFY
               </span>
             </div>
 
@@ -641,7 +641,7 @@ export default function ProductsPage() {
 
               <div className="mx-auto flex max-w-[1500px] items-center justify-between px-8 py-5 md:px-12 lg:px-16">
                 <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#F4F1EA]/35">
-                  WOWTHERM
+                  HEATIFY
                 </span>
 
                 <div className="flex items-center gap-3">

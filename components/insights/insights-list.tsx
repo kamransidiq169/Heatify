@@ -23,7 +23,7 @@ export function InsightsList({
             description:
               "Everything you need to know about underfloor heating systems.",
             date: "2024-11-15",
-            author: "WowTherm Engineering Team",
+            author: "Heatify Engineering Team",
             category: "Technology",
             readingTime: "8 min read",
             image:
@@ -35,7 +35,7 @@ export function InsightsList({
             description:
               "How heated floors transform the wellness experience in spas and treatment rooms.",
             date: "2024-10-28",
-            author: "WowTherm Team",
+            author: "Heatify Team",
             category: "Wellness",
             readingTime: "6 min read",
             image:
@@ -47,7 +47,7 @@ export function InsightsList({
             description:
               "Beyond the marketing — the features that genuinely improve comfort and reduce costs.",
             date: "2024-09-12",
-            author: "WowTherm Team",
+            author: "Heatify Team",
             category: "Technology",
             readingTime: "5 min read",
             image:

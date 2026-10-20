@@ -52,7 +52,7 @@ const applications = [
     title: "Hillside Chalet",
     location: "Shimla, Himachal Pradesh",
     type: "Residential",
-    solution: "WowTherm ClimaBoard",
+    solution: "Heatify ClimaBoard",
     year: "2023",
     image:
       "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1800&q=85",
@@ -231,7 +231,7 @@ export default function SolutionsPage() {
           <div className="max-w-[500px]">
             <p className="font-sans text-sm leading-7 text-[#fffff]/55 md:text-[15px]">
               From quiet residential interiors to hospitality, wellness and
-              commercial spaces, every WOWTHERM system is designed around the
+              commercial spaces, every HEATIFY system is designed around the
               architecture it serves.
             </p>
 
@@ -280,8 +280,7 @@ export default function SolutionsPage() {
         style={{
           writingMode: "vertical-rl",
         }}
-      >
-        WOWTHERM / Spaces
+      >                HEATIFY / Spaces
       </span>
     </div>
   </div>
@@ -366,7 +365,7 @@ export default function SolutionsPage() {
 
           <div className="mt-8 hidden lg:block">
             <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#11100E]/25">
-              WOWTHERM
+              HEATIFY
             </span>
 
             <div className="mt-5 h-16 w-px bg-[#11100E]/10" />
@@ -532,7 +531,7 @@ export default function SolutionsPage() {
 
           <div className="mt-8 hidden lg:block">
             <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#11100E]/25">
-              WOWTHERM
+              HEATIFY
             </span>
 
             <div className="mt-5 h-20 w-px bg-[#11100E]/10" />
@@ -811,7 +810,7 @@ export default function SolutionsPage() {
 
           <div className="mt-8 hidden lg:block">
             <span className="font-mono text-[8px] uppercase tracking-[0.22em] text-[#11100E]/25">
-              THE WOWTHERM APPROACH
+            THE HEATIFY APPROACH
             </span>
 
             <div className="mt-5 h-20 w-px bg-[#11100E]/10" />

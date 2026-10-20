@@ -10,8 +10,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 
-/* ================================================================
-   WOWTHERM — ENGINEERING PROCESS
+/* ================================================================    HEATIFY — ENGINEERING PROCESS
    Premium Editorial / Architectural / Technical
    ================================================================ */
 
@@ -1103,8 +1102,7 @@ function ProcessCard({
 
       <div className="mt-5 flex items-end justify-between">
         <div>
-          <span className="block font-mono text-[7px] uppercase tracking-[0.2em] text-white/25">
-            WOWTHERM
+          <span className="block font-mono text-[7px] uppercase tracking-[0.2em] text-white/25">             HEATIFY
           </span>
 
           <span className="mt-1 block font-mono text-[7px] uppercase tracking-[0.2em] text-white/20">
@@ -1687,7 +1685,7 @@ export function Process() {
               <span className="h-1.5 w-1.5 rounded-full bg-[#F2B84B]" />
 
               <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-white/45">
-                WOWTHERM / 05 STAGES
+                HEATIFY / 05 STAGES
               </span>
             </div>
 

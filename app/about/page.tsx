@@ -53,42 +53,42 @@ const values = [
 
 /* =========================================================
    JOURNEY
-========================================================= */
-
-const milestones = [
+========================================================= */const milestones = [
   {
-    year: "2011",
+    year: "",
+
+
     title: "THE FIRST FLOOR",
     description:
-      "Founded by heating engineers in Srinagar, chasing a warmth that survives the hardest winter.",
+      "Founded by heating engineers chasing a warmth that survives the hardest winter.",
     location: "SRINAGAR · KASHMIR",
   },
   {
-    year: "2015",
+    year: "",
     title: "HAMAM, DONE RIGHT",
     description:
-      "Introduced wet-area-certified electric hamam systems for the Kashmiri home.",
+      "Introduced wet-area-certified electric hamam systems for the home.",
     location: "KASHMIR",
   },
   {
-    year: "2019",
+    year: "",
     title: "BEYOND THE VALLEY",
     description:
       "Extended supply and installation to homes and projects across the region.",
     location: "INDIA · REGIONAL",
   },
   {
-    year: "2023",
+    year: "",
     title: "A NEW SCALE",
     description:
-      "Expanded into a major underfloor heating supplier and installer across India.",
+      "Expanded into a supplier and installer of underfloor heating across India.",
     location: "INDIA",
   },
   {
-    year: "TODAY",
+    year: "",
     title: "WARMER, EVERY WINTER",
     description:
-      "Thousands of floors later, still building for the coldest day, not the average one.",
+      "Still building for the coldest day, not the average one.",
     location: "BEYOND BORDERS",
   },
 ];

@@ -1,5 +1,5 @@
 /**
- * Centralized motion configuration for the WOWTHERM hero intro.
+ * Centralized motion configuration for the Heatify hero intro.
  *
  * Single source of truth for the load-time cinematic: the letter
  * choreography, its timings, and the shared easing vocabulary.
@@ -16,7 +16,7 @@
  * `power2.out` — confident deceleration, no bounce, no overshoot.
  * Used everywhere in the intro for one coherent motion language.
  */
-export const HERO_EASE = "wowtherm";
+export const HERO_EASE = "heatify";
 
 /** GSAP CustomEase path equivalent of cubic-bezier(0.22, 1, 0.36, 1). */
 export const HERO_EASE_PATH = "M0,0 C0.22,0.61 0.36,1 1,1";
@@ -32,7 +32,7 @@ export const EASE_OUT_QUART = "power2.out";
 /* ------------------------------------------------------------------ */
 
 /** The wordmark, letter by letter. Exactly eight entries — keep it that way. */
-export const HERO_WORDMARK = ["W", "O", "W", "T", "H", "E", "R", "M"] as const;
+export const HERO_WORDMARK = ["H", "E", "A", "T", "I", "F", "Y"] as const;
 
 /* ------------------------------------------------------------------ */
 /* Letter choreography                                                 */
@@ -147,7 +147,7 @@ export const PARALLAX_LERP = 0.06;
  */
 export const LOADER = {
   /** Wordmark shown in the loader. */
-  wordmark: "WOWTHERM",
+  wordmark: "HEATIFY",
   /** Accent color of the loader mark (copper-500). */
   accent: "#d97a3f",
   /** Ivory field behind the mark. */

@@ -57,7 +57,7 @@ export function ProductDetail({ product }: { product: Product }) {
           {/* Top technical bar */}
           <div className="flex items-center justify-between border-b border-white/10 py-5">
             <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-white/45">
-              WOWTHERM
+              HEATIFY
             </span>
 
             <span className="text-[10px] uppercase tracking-[0.22em] text-copper-400">
@@ -158,7 +158,7 @@ export function ProductDetail({ product }: { product: Product }) {
           <div className="grid grid-cols-2 border-t border-white/10 py-5 md:grid-cols-4">
             {[
               ["01", "Product category", product.category],
-              ["02", "Product range", "WOWTHERM"],
+              ["02", "Product range", "HEATIFY"],
               ["03", "Application", "Underfloor heating"],
               ["04", "Enquiry", "Project specific"],
             ].map(([number, label, value]) => (

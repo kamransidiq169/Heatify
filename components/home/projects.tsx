@@ -53,7 +53,7 @@ const projects: Project[] = [
     title: "Hillside Chalet",
     location: "Shimla, Himachal Pradesh",
     type: "Residential",
-    solution: "WowTherm ClimaBoard",
+    solution: "Heatify ClimaBoard",
     year: "2023",
     image:
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&auto=format&fit=crop&q=85",

@@ -613,8 +613,7 @@ export function ProductShowcase() {
           <div
             ref={eyebrowRef}
             className="font-sans text-[9px] font-semibold uppercase tracking-[0.28em] sm:text-[10px]"
-          >
-            WOWTHERM / SYSTEMS
+          >            HEATIFY / SYSTEMS
           </div>
 
           <div className="hidden text-right font-sans text-[8px] uppercase leading-[1.5] tracking-[0.18em] opacity-60 sm:block">

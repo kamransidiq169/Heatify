@@ -13,8 +13,7 @@ import gsap from "gsap";
  * Assembles from a stacked state on load (GSAP timeline),
  * then idles with a very slow ambient rotation.
  * Uses frameloop="demand" — only re-renders when explicitly invalidated.
- *
- * Colors match WowTherm's cream/black/copper palette.
+ *  * Colors match Heatify's cream/black/copper palette.
  */
 
 /* ------------------------------------------------------------------ */

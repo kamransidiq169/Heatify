@@ -68,7 +68,7 @@ export function HeatingMatVisual({
       const path = svgRef.current.querySelector<SVGPathElement>("#hm-cable");
       if (path) {
         const len = path.getTotalLength();
-        if (len > 0) console.log("[WowTherm] Heating mat cable length:", Math.ceil(len));
+        if (len > 0) console.log("[Heatify] Heating mat cable length:", Math.ceil(len));
       }
     }
   }, []);

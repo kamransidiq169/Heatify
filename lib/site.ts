@@ -1,18 +1,18 @@
 export const siteConfig = {
-  name: "WowTherm",
-  url: "https://wowtherm.com",
-  tagline: "Comfort, engineered into every surface.",
+  name: "Heatify",
+  url: "https://heatify.in",
+  tagline: "",
   description:
-    "WowTherm designs and installs premium heating systems for modern homes, hospitality spaces and architectural interiors. Invisible warmth, precise control, architectural integrity.",
-  email: "hello@wowtherm.com",
-  phone: "+91 98110 40040",
-  address: "Design District, Lower Parel, Mumbai 400013",
-  mapQuery: "Design District, Lower Parel, Mumbai",
+    "Heatify designs and installs premium heating systems for modern homes, hospitality spaces and architectural interiors. Invisible warmth, precise control, architectural integrity.",
+  email: "",
+  phone: "",
+  address: "",
+  mapQuery: "",
   social: {
-    instagram: "https://instagram.com/wowtherm",
-    facebook: "https://facebook.com/wowtherm",
-    linkedin: "https://linkedin.com/company/wowtherm",
-    youtube: "https://youtube.com/@wowtherm",
+    instagram: "",
+    facebook: "",
+    linkedin: "",
+    youtube: "",
   },
 } as const;
 
@@ -24,61 +24,11 @@ export const navLinks = [
   // { href: "/insights", label: "Insights" },
 ] as const;
 
-export const stats = [
-  { value: 12500, suffix: "+", label: "Installations", note: "Homes, villas and hotels" },
-  { value: 320000, suffix: "+", label: "Sq ft warmed", note: "From Kashmir chalets to Mumbai penthouses" },
-  { value: 40, suffix: "%", label: "Lower running costs", note: "Versus conventional space heating" },
-  { value: 98, suffix: "%", label: "Recommend us", note: "Post-installation survey, 2025" },
-] as const;
+export const stats = [] as const;
 
-export const partners = [
-  "Prestige Group",
-  "Sobha Realty",
-  "DLF Homes",
-  "Godrej Properties",
-  "Brigade Group",
-  "Oberoi Realty",
-  "Tata Housing",
-  "L&T Realty",
-] as const;
+export const partners = [] as const;
 
-export const testimonials = [
-  {
-    quote:
-      "The warmth is immediate and even — no cold spots, no noise, no visible hardware. Our architect specified WowTherm and it transformed the entire living experience.",
-    name: "Meera Chandran",
-    role: "Homeowner, New Delhi",
-    project: "Luxury Residence",
-  },
-  {
-    quote:
-      "As an architect, I specify radiant floors on most premium projects now. WowTherm submits full heat-loss calculations and CAD layouts before installation begins. Their precision is unmatched.",
-    name: "Kabir Sethi",
-    role: "Principal Architect, Studio Terra",
-    project: "Commercial Complex, Bengaluru",
-  },
-  {
-    quote:
-      "Our boutique hotel runs WowTherm across 22 rooms. Guests notice the warmth the moment they walk in barefoot — no radiators, no noise, no dry air. Two winters in, zero callouts.",
-    name: "Anjali Thakur",
-    role: "Owner, Cedar House",
-    project: "Hospitality, Manali",
-  },
-  {
-    quote:
-      "The smart thermostat schedule means the bathroom floor is warm at 6 a.m. and off by 9. Installation was tidy, the crew explained everything, and support actually picks up the phone.",
-    name: "Rohit Banerjee",
-    role: "Homeowner, Gurugram",
-    project: "Residential Villa",
-  },
-  {
-    quote:
-      "We retrofitted heating under engineered oak in a 40-year-old home. WowTherm's low-profile system added barely 18mm. The whole family lives on the floor again in winter.",
-    name: "Farah Wani",
-    role: "Homeowner, Srinagar",
-    project: "Heritage Renovation",
-  },
-] as const;
+export const testimonials = [] as const;
 
 export const solutions = [
   {

@@ -44,7 +44,8 @@ export default function ContactPage() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    // TODO: Integrate with backend/email service
+    // TODO: wire a real handler (route + email provider) before shipping.
+    // See OPEN_QUESTIONS.md for the proposed minimal implementation.
     console.log("Form submitted:", data);
     setSubmitted(true);
   };
@@ -85,32 +86,38 @@ export default function ContactPage() {
                 </p>
 
                 <div className="space-y-6">
-                  <div>
-                    <p className="text-eyebrow text-charcoal-400 mb-2">Email</p>
-                    <a
-                      href={`mailto:${siteConfig.email}`}
-                      className="text-body-md text-charcoal-900 hover:text-copper-500 transition-colors"
-                    >
-                      {siteConfig.email}
-                    </a>
-                  </div>
-                  <div>
-                    <p className="text-eyebrow text-charcoal-400 mb-2">Phone</p>
-                    <a
-                      href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
-                      className="text-body-md text-charcoal-900 hover:text-copper-500 transition-colors"
-                    >
-                      {siteConfig.phone}
-                    </a>
-                  </div>
-                  <div>
-                    <p className="text-eyebrow text-charcoal-400 mb-2">
-                      Office
-                    </p>
-                    <p className="text-body-md text-charcoal-900">
-                      {siteConfig.address}
-                    </p>
-                  </div>
+                  {siteConfig.email && (
+                    <div>
+                      <p className="text-eyebrow text-charcoal-400 mb-2">Email</p>
+                      <a
+                        href={`mailto:${siteConfig.email}`}
+                        className="text-body-md text-charcoal-900 hover:text-copper-500 transition-colors"
+                      >
+                        {siteConfig.email}
+                      </a>
+                    </div>
+                  )}
+                  {siteConfig.phone && (
+                    <div>
+                      <p className="text-eyebrow text-charcoal-400 mb-2">Phone</p>
+                      <a
+                        href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
+                        className="text-body-md text-charcoal-900 hover:text-copper-500 transition-colors"
+                      >
+                        {siteConfig.phone}
+                      </a>
+                    </div>
+                  )}
+                  {siteConfig.address && (
+                    <div>
+                      <p className="text-eyebrow text-charcoal-400 mb-2">
+                        Office
+                      </p>
+                      <p className="text-body-md text-charcoal-900">
+                        {siteConfig.address}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </Reveal>
@@ -127,11 +134,12 @@ export default function ContactPage() {
                     <Check className="size-8" />
                   </div>
                   <h3 className="text-heading-xl text-charcoal-900 mb-4">
-                    Message sent
+                    Message received
                   </h3>
                   <p className="text-body-md text-charcoal-500">
-                    Thank you for reaching out. Our team will review your inquiry
-                    and get back to you within 24 hours.
+                    Thank you for reaching out. Your message is held locally for now —
+                    we have not yet wired a real handler, so nothing has been sent.
+                    We will follow up once the form is connected.
                   </p>
                 </motion.div>
               ) : (                  <form
@@ -157,7 +165,7 @@ export default function ContactPage() {
                       <Input
                         label="Phone"
                         type="tel"
-                        placeholder="+91 98110 40040"
+                        placeholder="+91 00000 00000"
                         error={errors.phone?.message}
                         {...register("phone")}
                       />

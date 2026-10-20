@@ -9,8 +9,13 @@ import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
+import { navLinks } from "@/lib/site";
 
-import { navLinks, siteConfig } from "@/lib/site";
+import { siteConfig } from "@/lib/site";
+
+function navBrandLabel(label: string, _index: number): string {
+  return label;
+}
 import { cn } from "@/lib/utils";
 
 const isActive = (href: string, pathname: string) =>
@@ -109,8 +114,8 @@ export function Navbar() {
           className="group relative z-20 flex shrink-0 items-center"
         >
           <Image
-            src="/logo1.png"
-            alt="WOWTHERM"
+            src="/logo.png"
+            alt="Heatify"
             width={180}
             height={52}
             priority
@@ -350,7 +355,7 @@ export function Navbar() {
                       <div className="relative flex flex-1 flex-col px-6 pt-10 sm:px-8">
                         <div className="mb-8 flex items-center justify-between">
                           <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-[#11100E]/25">
-                            WOWTHERM
+                            HEATIFY
                           </span>
 
                           <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#B98520]">
@@ -388,8 +393,7 @@ export function Navbar() {
                                       active
                                         ? "text-[#B98520]"
                                         : "text-[#11100E]/65 hover:text-[#11100E]",
-                                    )}
-                                  >
+                                    )}                          >
                                     <div className="flex items-center gap-5">
                                       <span className="font-mono text-[8px] text-[#11100E]/20">
                                         {String(index + 1).padStart(2, "0")}
@@ -404,15 +408,15 @@ export function Navbar() {
                                           "group-hover:translate-x-1",
                                         )}
                                       >
-                                        {link.label}
+                                        {navBrandLabel(link.label, index)}
                                       </span>
-                                    </div>
+                                </div>
 
-                                    <span
-                                      className={cn(
-                                        "flex size-8 items-center justify-center",
-                                        "border border-[#11100E]/10",
-                                        "transition-all duration-300",
+                                <span
+                                  className={cn(
+                                    "flex size-8 items-center justify-center",
+                                    "border border-[#11100E]/10",
+                                    "transition-all duration-300",
 
                                         active
                                           ? "border-[#F2B84B] bg-[#F2B84B] text-[#11100E]"
@@ -459,7 +463,7 @@ export function Navbar() {
                             </span>
 
                             <span className="font-sans text-[10px] text-[#11100E]/45">
-                              {siteConfig.phone}
+                              {renderText(siteConfig.phone)}
                             </span>
                           </div>
                         </div>
