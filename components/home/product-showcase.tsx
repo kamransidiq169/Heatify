@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import {
@@ -157,8 +156,8 @@ export function ProductShowcase() {
            * INITIAL STATE
            * --------------------------------------------------------
            *
-           * All four cards begin from EXACTLY the same visual area.
-           * The slight rotation creates the stacked/deck feeling.
+           * On mobile, use a simpler stacked animation instead of
+           * the full fan-out effect which doesn't work well on small screens.
            */
           gsap.set(heading, {
             opacity: 0,
@@ -184,39 +183,107 @@ export function ProductShowcase() {
             });
           }
 
-          gsap.set(cards, {
-            xPercent: -50,
-            yPercent: -50,
-            x: 0,
-            y: desktop ? 130 : 80,
-            scale: desktop ? 0.72 : 0.68,
-            rotation: 0,
-            rotationY: 0,
-            transformPerspective: 1400,
-            opacity: 1,
-            zIndex: (index) => 20 - index,
-          });
+          // Mobile: one complete, readable card at a time.
 
-          /*
-           * Each card gets a tiny independent rotation.
-           * This is what makes the initial deck feel physical.
-           */
-          cards.forEach((card, index) => {
-            gsap.set(card, {
-              rotation:
-                index === 0
-                  ? -8
-                  : index === 1
-                    ? -3
-                    : index === 2
-                      ? 4
-                      : 9,
-              x: index * 1.5,
-              y: desktop
-                ? 150 + index * 3
-                : 100 + index * 3,
+
+          // Do not squeeze four cards into a horizontal strip.
+
+
+          if (mobile) {
+
+
+            gsap.set(cards, {
+
+
+              xPercent: -50,
+
+
+              yPercent: -50,
+
+
+              x: 0,
+
+
+              y: 0,
+
+
+              scale: 1,
+
+
+              rotation: 0,
+
+
+              rotationY: 0,
+
+
+              transformPerspective: 900,
+
+
+              opacity: 0,
+
+
+              zIndex: (index) => 20 + index,
+
+
             });
-          });
+
+
+
+            gsap.set(cards[0], {
+
+
+              opacity: 1,
+
+
+              y: 0,
+
+
+              scale: 1,
+
+
+              zIndex: 30,
+
+
+            });
+
+
+          } else {
+
+
+            gsap.set(cards, {
+              xPercent: -50,
+              yPercent: -50,
+              x: 0,
+              y: desktop ? 130 : 80,
+              scale: desktop ? 0.72 : 0.68,
+              rotation: 0,
+              rotationY: 0,
+              transformPerspective: 1400,
+              opacity: 1,
+              zIndex: (index) => 20 - index,
+            });
+
+            /*
+             * Each card gets a tiny independent rotation.
+             * This is what makes the initial deck feel physical.
+             */
+            cards.forEach((card, index) => {
+              gsap.set(card, {
+                rotation:
+                  index === 0
+                    ? -8
+                    : index === 1
+                      ? -3
+                      : index === 2
+                        ? 4
+                        : 9,
+                x: index * 1.5,
+                y: desktop
+                  ? 150 + index * 3
+                  : 100 + index * 3,
+              });
+            });
+          }
 
           /*
            * Responsive final positions.
@@ -284,9 +351,9 @@ export function ProductShowcase() {
                 ? "+=1800"
                 : tablet
                   ? "+=1500"
-                  : "+=1250",
+                  : "+=1800",
               pin: true,
-              scrub: 1.15,
+              scrub: mobile ? 0.8 : 1.15,
               anticipatePin: 1,
               invalidateOnRefresh: true,
               pinSpacing: true,
@@ -343,59 +410,98 @@ export function ProductShowcase() {
           );
 
           /*
-           * Fan phase.
+           * Fan phase - simplified on mobile
            */
-          cards.forEach((card, index) => {
-            const finalRotation =
-              index === 0
-                ? -2.2
-                : index === 1
-                  ? -0.8
-                  : index === 2
-                    ? 0.8
-                    : 2.2;
+          if (mobile) {
+            // Mobile: cycle through full cards. Every card keeps its complete
+            // content visible before the next card takes over.
+            cards.forEach((card, index) => {
+              const startAt = 0.22 + index * 0.17;
 
-            timeline.to(
-              card,
-              {
-                x: spread[index],
-                rotation: finalRotation,
-                scale: desktop
-                  ? 1
-                  : mobile
-                    ? 0.84
+              if (index > 0) {
+                timeline.to(
+                  cards[index - 1],
+                  {
+                    opacity: 0,
+                    y: -18,
+                    scale: 0.97,
+                    duration: 0.10,
+                    ease: "power2.inOut",
+                  },
+                  startAt,
+                );
+              }
+
+              timeline.fromTo(
+                card,
+                {
+                  opacity: 0,
+                  y: 28,
+                  scale: 0.97,
+                },
+                {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  duration: 0.15,
+                  ease: "power3.out",
+                },
+                startAt + 0.01,
+              );
+            });
+          } else {
+            cards.forEach((card, index) => {
+              const finalRotation =
+                index === 0
+                  ? -2.2
+                  : index === 1
+                    ? -0.8
+                    : index === 2
+                      ? 0.8
+                      : 2.2;
+
+              timeline.to(
+                card,
+                {
+                  x: spread[index],
+                  rotation: finalRotation,
+                  scale: desktop
+                    ? 1
                     : 0.9,
-                duration: 0.46,
-                ease: "power3.out",
-              },
-              0.28,
-            );
-          });
+                  duration: 0.46,
+                  ease: "power3.out",
+                },
+                0.28,
+              );
+            });
+          }
 
           /*
            * Slight vertical differentiation gives the cards a
            * physical editorial layout instead of a perfectly flat row.
            */
-          cards.forEach((card, index) => {
-            timeline.to(
-              card,
-              {
-                y:
-                  index === 0
-                    ? desktop
-                      ? 4
-                      : 0
-                    : index === 1
-                      ? 0
-                      : index === 2
-                        ? 2
-                        : 5,
-                duration: 0.22,
-                ease: "power2.out",
-              },
-              0.63,
-            );
-          });
+          if (!mobile) {
+            cards.forEach((card, index) => {
+              timeline.to(
+                card,
+                {
+                  y:
+                    index === 0
+                      ? desktop
+                        ? 4
+                        : 0
+                      : index === 1
+                        ? 0
+                        : index === 2
+                          ? 2
+                          : 5,
+                  duration: 0.22,
+                  ease: "power2.out",
+                },
+                0.63,
+              );
+            });
+          }
 
           timeline.to(
             sideInfo,
@@ -446,7 +552,7 @@ export function ProductShowcase() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[100svh] min-h-[760px] w-full overflow-hidden bg-[#F2C46D] text-[#171512]"
+      className="relative min-h-[100svh] w-full overflow-hidden bg-[#F2C46D] text-[#171512]"
       aria-label="Area of expertise"
     >
       {/* =========================================================
@@ -502,16 +608,16 @@ export function ProductShowcase() {
           TOP EDITORIAL HEADER
           ========================================================= */}
 
-      <div className="absolute left-0 top-0 z-30 w-full px-6 pt-7 sm:px-8 lg:px-12 lg:pt-9">
+      <div className="absolute left-0 top-0 z-30 w-full px-4 pt-5 sm:px-6 sm:pt-6 lg:px-12 lg:pt-9">
         <div className="flex items-start justify-between">
           <div
             ref={eyebrowRef}
-            className="font-sans text-[10px] font-semibold uppercase tracking-[0.28em] sm:text-xs"
+            className="font-sans text-[9px] font-semibold uppercase tracking-[0.28em] sm:text-[10px]"
           >
             WOWTHERM / SYSTEMS
           </div>
 
-          <div className="hidden text-right font-sans text-[9px] uppercase leading-[1.5] tracking-[0.18em] opacity-60 sm:block">
+          <div className="hidden text-right font-sans text-[8px] uppercase leading-[1.5] tracking-[0.18em] opacity-60 sm:block">
             <span className="block">ENGINEERED FLOOR</span>
             <span className="block">HEATING TECHNOLOGY</span>
           </div>
@@ -528,23 +634,23 @@ export function ProductShowcase() {
       >
         {/* Giant editorial title */}
 
-        <div className="pointer-events-none absolute left-0 top-[11%] z-10 w-full px-5 sm:top-[9%] sm:px-8 lg:px-12">
+        <div className="pointer-events-none absolute left-0 top-[11%] z-10 w-full px-4 sm:top-[9%] sm:px-6 lg:px-12">
           <h2
             ref={headingRef}
             className="
               font-display
-              text-[19vw]
               font-normal
               uppercase
               leading-[0.78]
               tracking-[-0.065em]
-              sm:text-[15vw]
-              lg:text-[13vw]
             "
+            style={{
+              fontSize: 'clamp(2.5rem, 15vw, 19vw)',
+            }}
           >
             <span className="block">AREA OF</span>
 
-            <span className="ml-[17vw] block sm:ml-[25vw]">
+            <span className="ml-[10%] block sm:ml-[15%] lg:ml-[17%]">
               EXPERTISE
             </span>
           </h2>
@@ -554,7 +660,7 @@ export function ProductShowcase() {
             CARD DECK
             ======================================================= */}
 
-        <div className="absolute left-1/2 top-[57%] z-20 h-[390px] w-full -translate-x-1/2 -translate-y-1/2 sm:top-[58%] sm:h-[430px] lg:top-[61%] lg:h-[450px]">
+        <div className="absolute left-1/2 top-[56%] z-20 h-[365px] w-full -translate-x-1/2 -translate-y-1/2 sm:top-[58%] sm:h-[390px] lg:top-[61%] lg:h-[420px]">
           {EXPERTISE.map((item, index) => (
             <div
               key={item.number}
@@ -565,17 +671,17 @@ export function ProductShowcase() {
                 absolute
                 left-1/2
                 top-1/2
-                h-[350px]
-                w-[245px]
+                h-[clamp(320px,78vw,380px)]
+                w-[min(100%,360px)]
                 origin-center
                 overflow-hidden
                 rounded-[12px]
                 bg-[#FFFDF8]
                 p-5
-                shadow-[0_28px_70px_rgba(40,28,10,.16)]
-                sm:h-[390px]
-                sm:w-[275px]
-                sm:p-6
+                shadow-[0_24px_60px_rgba(40,28,10,.16)]
+                sm:h-[350px]
+                sm:w-[240px]
+                sm:p-5
                 lg:h-[420px]
                 lg:w-[295px]
                 lg:p-7
@@ -600,27 +706,27 @@ export function ProductShowcase() {
 
               {/* card title */}
 
-              <div className="pt-5">
-                <h3 className="font-display text-[29px] font-normal leading-[0.95] tracking-[-0.04em] sm:text-[32px] lg:text-[35px]">
+              <div className="pt-4">
+                <h3 className="font-display text-[clamp(24px,7.2vw,30px)] font-normal leading-[0.95] tracking-[-0.04em] sm:text-[28px] lg:text-[35px]">
                   {item.title}
                 </h3>
               </div>
 
               {/* technical description */}
 
-              <p className="mt-5 font-sans text-[11px] leading-[1.55] text-black/65 sm:text-xs">
+              <p className="mt-4 font-sans text-[11px] leading-[1.55] text-black/65 sm:mt-4 sm:text-xs">
                 {item.description}
               </p>
 
               {/* service list */}
 
-              <div className="mt-5 border-t border-black/10">
+              <div className="mt-4 border-t border-black/10 sm:mt-4">
                 {item.items.map((service) => (
                   <div
                     key={service}
-                    className="flex items-center justify-between border-b border-dotted border-black/15 py-[9px]"
+                    className="flex min-h-[27px] items-center justify-between border-b border-dotted border-black/15 py-[7px] sm:py-[7px]"
                   >
-                    <span className="font-sans text-[10px] leading-none sm:text-[11px]">
+                    <span className="pr-2 font-sans text-[10px] leading-[1.2] sm:text-[11px]">
                       {service}
                     </span>
 
@@ -634,8 +740,8 @@ export function ProductShowcase() {
 
               {/* bottom category — reference-inspired rotated label */}
 
-              <div className="absolute bottom-7 right-6 origin-bottom-right rotate-180 [writing-mode:vertical-rl]">
-                <span className="font-sans text-[9px] font-semibold uppercase tracking-[0.2em] opacity-40">
+              <div className="absolute bottom-5 right-4 origin-bottom-right rotate-180 [writing-mode:vertical-rl]">
+                <span className="font-sans text-[8px] font-semibold uppercase tracking-[0.2em] opacity-40">
                   {item.category}
                 </span>
               </div>
@@ -646,11 +752,11 @@ export function ProductShowcase() {
                 href={item.href}
                 className="
                   absolute
-                  bottom-6
-                  right-5
+                  bottom-4
+                  right-3
                   flex
-                  h-9
-                  w-9
+                  h-8
+                  w-8
                   items-center
                   justify-center
                   rounded-full
@@ -664,7 +770,7 @@ export function ProductShowcase() {
                 aria-label={`Explore ${item.title}`}
               >
                 <ArrowUpRight
-                  size={14}
+                  size={12}
                   strokeWidth={1.6}
                 />
               </Link>
@@ -680,31 +786,33 @@ export function ProductShowcase() {
           ref={sideInfoRef}
           className="
             absolute
-            bottom-[5%]
-            left-6
+            bottom-[3.5%]
+            left-4
             z-30
-            max-w-[220px]
-            sm:left-8
+            max-w-[145px]
+            sm:bottom-[5%]
+            sm:left-6
+            sm:max-w-[200px]
             lg:left-12
           "
         >
- <p className="font-sans text-[10px] uppercase leading-[1.5] tracking-[0.14em]">
+<p className="font-sans text-[8px] uppercase leading-[1.45] tracking-[0.12em] sm:text-[9px] sm:tracking-[0.14em]">
   From the heating element beneath the floor
   to the control at your fingertips — every
   system begins with the right foundation.
 </p>
         </div>
 
-        <div className="absolute bottom-[5%] right-6 z-30 sm:right-8 lg:right-12">
+        <div className="absolute bottom-[3.5%] right-4 z-30 sm:bottom-[5%] sm:right-6 lg:right-12">
           <Link
             href="/products"
             className="
               group
               flex
               items-center
-              gap-3
+              gap-2
               font-sans
-              text-[10px]
+              text-[9px]
               font-semibold
               uppercase
               tracking-[0.18em]
@@ -712,9 +820,9 @@ export function ProductShowcase() {
           >
             <span>Explore systems</span>
 
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white transition-transform duration-300 group-hover:rotate-45">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white transition-transform duration-300 group-hover:rotate-45">
               <ArrowUpRight
-                size={13}
+                size={11}
                 strokeWidth={1.7}
               />
             </span>

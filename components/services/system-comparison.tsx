@@ -467,27 +467,26 @@ export function SystemComparison() {
 
               <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
                 <p className="max-w-[720px] font-display text-[clamp(1.5rem,2.5vw,2.3rem)] leading-[1.25] tracking-[-0.025em] text-[#11100E]/70">
-                  The right system isn't about choosing the most powerful
-                  option. It's about matching the heating architecture to
+                  The right system isn&apos;t about choosing the most powerful
+                  option. It&apos;s about matching the heating architecture to
                   the building, the room and the way you live in it.
                 </p>
 
-                <div className="hidden text-right md:block">
-                  <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
-                    Survey
-                  </span>
+                <div className="hidden text-right md:block">                    <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
+                        Survey
+                      </span>
 
-                  <br />
+                      <br />
 
-                  <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
-                    → Design
-                  </span>
+                      <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
+                        &rarr; Design
+                      </span>
 
-                  <br />
+                      <br />
 
-                  <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
-                    → Install
-                  </span>
+                      <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[#11100E]/25">
+                        &rarr; Install
+                      </span>
                 </div>
               </div>
             </div>

@@ -577,24 +577,22 @@ function EditorialHeading({
           <span className="font-sans text-[9px] font-medium uppercase tracking-[0.28em] text-[#F2B84B] sm:text-[10px]">
             HOW WE BUILD WARMTH
           </span>
-        </div>
-
-        <h2
-          className="
-            mt-5
-            flex
-            max-w-[1250px]
-            flex-wrap
-            font-display
-            text-[14vw]
-            font-normal
-            uppercase
-            leading-[0.78]
-            tracking-[-0.065em]
-            sm:text-[12vw]
-            lg:text-[9.5vw]
-          "
-        >
+        </div>            <h2
+              className="
+                mt-5
+                flex
+                max-w-[1250px]
+                flex-wrap
+                font-display
+                font-normal
+                uppercase
+                leading-[0.78]
+                tracking-[-0.065em]
+              "
+              style={{
+                fontSize: 'clamp(3rem, 12vw, 14vw)',
+              }}
+            >
           {chars.map(
             (char, index) => (
               <HeadingChar
@@ -659,11 +657,11 @@ function FloorBlueprint({
         left-1/2
         top-[57%]
         z-[3]
-        h-[390px]
+        h-[320px]
         w-[min(90vw,760px)]
         -translate-x-1/2
         -translate-y-1/2
-        sm:h-[470px]
+        sm:h-[380px]
         lg:top-[54%]
         lg:h-[590px]
       "
@@ -991,17 +989,17 @@ function ProcessCard({
         left-1/2
         top-[57%]
         z-30
-        w-[min(88vw,390px)]
+        w-[min(88vw,340px)]
         -translate-x-1/2
         -translate-y-1/2
         border
         border-white/[0.11]
         bg-[#171512]/95
-        p-5
+        p-4
         shadow-[0_30px_100px_rgba(0,0,0,.35)]
         backdrop-blur-xl
         sm:w-[370px]
-        sm:p-6
+        sm:p-5
         lg:top-[55%]
         lg:w-[390px]
       "
@@ -1046,14 +1044,16 @@ function ProcessCard({
           className="
             relative
             mt-3
-            max-w-[290px]
+            max-w-[260px]
             font-display
-            text-[34px]
+            text-[28px]
             font-normal
             leading-[0.94]
             tracking-[-0.035em]
             text-white
-            sm:text-[38px]
+            sm:text-[32px]
+            sm:max-w-[290px]
+            md:text-[34px]
           "
         >
           {step.title}
@@ -1062,7 +1062,7 @@ function ProcessCard({
 
       {/* description */}
 
-      <p className="mt-6 max-w-[330px] font-sans text-[11px] leading-[1.65] text-white/50 sm:text-xs">
+      <p className="mt-5 max-w-[300px] font-sans text-[11px] leading-[1.65] text-white/50 sm:text-xs">
         {step.description}
       </p>
 
@@ -1752,7 +1752,7 @@ export function Process() {
             bottom-[14%]
             left-1/2
             z-40
-            w-[90vw]
+            w-[92vw]
             -translate-x-1/2
             text-center
           "
@@ -1767,11 +1767,12 @@ export function Process() {
               mt-3
               max-w-[720px]
               font-display
-              text-[25px]
+              text-[22px]
               leading-[1.05]
               tracking-[-0.025em]
               text-white
-              sm:text-[34px]
+              sm:text-[28px]
+              md:text-[34px]
               lg:text-[42px]
             "
           >
@@ -1841,7 +1842,7 @@ export function Process() {
             MOBILE PROGRESS
            ====================================================== */}
 
-        <div className="absolute bottom-5 left-5 right-5 z-50 md:hidden">
+        <div className="absolute bottom-4 left-4 right-4 z-50 md:hidden">
           <div className="mb-2 flex items-center justify-between">
             <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-white/25">
               PROCESS

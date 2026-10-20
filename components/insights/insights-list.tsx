@@ -88,11 +88,11 @@ export function InsightsList({
       </section>
 
       {/* Filter + Grid */}
-      <section className="bg-ivory-100 py-16 md:py-24">
+      <section className="bg-ivory-100 py-12 md:py-16 lg:py-24">
         <div className="container-site">
           {/* Category filter */}
           <Reveal>
-            <div className="flex flex-wrap gap-2 mb-12">
+            <div className="flex flex-wrap gap-2 mb-8 md:mb-12">
               <button
                 onClick={() => setActive("all")}
                 className={cn(

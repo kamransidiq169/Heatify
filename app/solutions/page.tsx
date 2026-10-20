@@ -120,7 +120,7 @@ export default function SolutionsPage() {
           HERO
       ================================================================ */}
 
-   <section className="relative isolate min-h-[92svh] overflow-hidden bg-[#11100E] text-[#F4F1EA]">
+   <section className="relative isolate min-h-[85svh] overflow-hidden bg-[#11100E] text-[#F4F1EA]">
   {/* ---------------------------------------------------------------------- */}
   {/* Hero image                                                              */}
   {/* ---------------------------------------------------------------------- */}
@@ -194,7 +194,7 @@ export default function SolutionsPage() {
   {/* Main content                                                            */}
   {/* ---------------------------------------------------------------------- */}
 
-  <div className="container-site relative z-10 flex min-h-[92svh] flex-1 items-center py-20 md:py-24 lg:py-28">
+  <div className="container-site relative z-10 flex min-h-[85svh] flex-1 items-center py-16 md:py-20 lg:py-24 lg:py-28">
     <div className="w-full max-w-[1100px]">
 
       {/* Eyebrow */}
@@ -208,7 +208,7 @@ export default function SolutionsPage() {
 
       {/* Main heading */}
       <Reveal delay={0.18}>
-        <h1 className="font-serif text-[clamp(4.5rem,11vw,10.5rem)] font-light leading-[0.78] tracking-[-0.065em]">
+        <h1 className="font-serif text-[clamp(3.5rem,7vw,10.5rem)] font-light leading-[0.78] tracking-[-0.065em]">
           <span className="block text-[#F4F1EA]">
             Warmth
           </span>
@@ -391,7 +391,7 @@ export default function SolutionsPage() {
 
         <Reveal delay={0.14}>
           <h2 className="mt-8 max-w-[1050px] font-display text-[clamp(3.6rem,7vw,7.8rem)] font-normal leading-[0.86] tracking-[-0.065em] text-[#11100E]">
-            We don't start
+            We don&apos;t start
             <br />
             with a{" "}
             <span className="italic text-[#F2B84B]">
@@ -406,7 +406,7 @@ export default function SolutionsPage() {
               We start with
               <br />
               <span className="italic text-[#B98520]">
-                the space.
+                the space.&apos;
               </span>
             </h3>
           </div>

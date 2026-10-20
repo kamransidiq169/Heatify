@@ -210,7 +210,7 @@ function AboutHero() {
             HERO CONTENT
         ==================================================== */}
 
-        <div className="relative flex flex-1 items-center py-20 md:py-24 lg:py-28">
+        <div className="relative flex flex-1 items-center py-16 md:py-20 lg:py-24 lg:py-28">
           <div className="w-full max-w-[1100px]">
             {/* Intro */}
 
@@ -228,11 +228,13 @@ function AboutHero() {
               <h1
                 className="
                   font-serif
-                  text-[clamp(4.5rem,11vw,10.5rem)]
                   font-light
                   leading-[0.78]
                   tracking-[-0.065em]
                 "
+                style={{
+                  fontSize: 'clamp(3rem,7vw,10.5rem)',
+                }}
               >
                 <span className="block text-[#F4F1EA]">
                   Warmth

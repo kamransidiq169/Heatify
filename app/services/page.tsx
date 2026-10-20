@@ -93,7 +93,7 @@ export default function ServicesPage() {
   return (
     <>
 
-      <section className="relative isolate min-h-[92svh] overflow-hidden bg-charcoal-950 text-white">
+      <section className="relative isolate min-h-[85svh] overflow-hidden bg-charcoal-950 text-white">
   {/* =========================================================
       BACKGROUND IMAGE
   ========================================================= */}
@@ -133,9 +133,7 @@ export default function ServicesPage() {
       aria-hidden
       className="absolute left-[28%] top-[45%] size-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-copper-500/[0.055] blur-[150px]"
     />
-  </div>
-
-  {/* =========================================================
+  </div>      {/* =========================================================
       ARCHITECTURAL GRID
   ========================================================= */}
   <div
@@ -161,7 +159,7 @@ export default function ServicesPage() {
   {/* =========================================================
       MAIN CONTAINER
   ========================================================= */}
-  <div className="container-site relative z-10 flex min-h-[92svh] flex-col justify-between py-8 md:py-10">
+  <div className="container-site relative z-10 flex min-h-[85svh] flex-col justify-between py-6 md:py-8">
     {/* =======================================================
         TOP BAR
     ======================================================= */}
@@ -200,7 +198,7 @@ export default function ServicesPage() {
       <h1
         className="
           font-serif
-          text-[clamp(4.5rem,11vw,10.5rem)]
+          text-[clamp(3.5rem,8vw,10.5rem)]
           font-light
           leading-[0.78]
           tracking-[-0.065em]
@@ -251,7 +249,7 @@ export default function ServicesPage() {
         BOTTOM FEATURE STRIP
     ======================================================= */}
     <div className="border-t border-white/10">
-      <div className="grid grid-cols-2 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-0 md:grid-cols-4">
         {[
           {
             icon: Ruler,

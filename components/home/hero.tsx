@@ -447,10 +447,12 @@ export function HeatifyLoader({
       <div
         className="
           absolute
-          left-6
-          top-6
+          left-4
+          top-4
           z-[30]
 
+          sm:left-6
+          sm:top-6
           md:left-10
           md:top-8
         "
@@ -499,10 +501,12 @@ export function HeatifyLoader({
       <div
         className="
           absolute
-          right-6
-          top-6
+          right-4
+          top-4
           z-[30]
 
+          sm:right-6
+          sm:top-6
           md:right-10
           md:top-8
         "
@@ -708,11 +712,14 @@ export function HeatifyLoader({
       <div
         className="
           absolute
-          bottom-7
-          left-6
-          right-6
+          bottom-5
+          left-4
+          right-4
           z-[50]
 
+          sm:bottom-7
+          sm:left-6
+          sm:right-6
           md:bottom-9
           md:left-10
           md:right-10

@@ -399,7 +399,7 @@ export default function ProductsPage() {
       {/* HERO                                                               */}
       {/* ================================================================== */}
 
-      <section className="relative isolate min-h-[88svh] overflow-hidden bg-[#11100E] text-[#F4F1EA]">
+      <section className="relative isolate min-h-[80svh] overflow-hidden bg-[#11100E] text-[#F4F1EA]">
         <div className="absolute inset-0">
           <Image
             src="/pro1.png"
@@ -416,7 +416,7 @@ export default function ProductsPage() {
           <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#11100E]/70 to-transparent" />
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[88svh] max-w-[1400px] items-center px-8 py-24 md:px-12 lg:px-16">
+        <div className="relative z-10 mx-auto flex min-h-[80svh] max-w-[1400px] items-center px-5 py-20 md:px-8 lg:px-12 lg:py-24">
           <div className="w-full">
             <Reveal delay={0.1}>
               <p className="mb-8 font-sans text-[10px] font-medium uppercase tracking-[0.3em] text-[#F4F1EA]/60">
@@ -425,7 +425,7 @@ export default function ProductsPage() {
             </Reveal>
 
             <Reveal delay={0.16}>
-              <h1 className="max-w-[1100px] font-serif text-[clamp(4.5rem,11vw,10.5rem)] font-light leading-[0.78] tracking-[-0.065em]">
+              <h1 className="max-w-[1100px] font-serif text-[clamp(3.5rem,8vw,10.5rem)] font-light leading-[0.78] tracking-[-0.065em]">
                 <span className="block">Products</span>
 
                 <span className="ml-[7vw] block text-[#F4F1EA]/90">
@@ -558,17 +558,17 @@ export default function ProductsPage() {
 
       {/* ================================================================== */}
       {/* PRODUCT SHOWCASE                                                    */}
-      {/* ================================================================== */}
-
-      {filtered.length > 0 && (
+      {/* ================================================================== */}      {filtered.length > 0 && (
         <section
           ref={sectionRef}
           className="relative"
-          style={{
-            height: `${filtered.length * 100}svh`,
-          }}
+          style={
+            {
+              height: `${filtered.length * 100}svh`,
+            }
+          }
         >
-          <div className="sticky top-0 h-[100svh] overflow-hidden bg-[#11100E]">
+          <div className="sticky top-0 h-[100svh] overflow-hidden bg-[#11100E] md:h-[100svh]">
             {/* ------------------------------------------------------------ */}
             {/* Slides                                                        */}
             {/* ------------------------------------------------------------ */}

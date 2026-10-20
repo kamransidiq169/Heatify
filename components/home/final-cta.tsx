@@ -328,15 +328,18 @@ export function FinalCta() {
           z-10
           mx-auto
           flex
-          min-h-[760px]
+          min-h-[600px]
           w-full
           max-w-[1500px]
           flex-col
           justify-center
-          px-8
-          py-32
-          sm:px-12
-          lg:px-20
+          px-5
+          py-24
+          sm:px-8
+          sm:py-28
+          md:px-10
+          lg:px-12
+          lg:py-32
         "
       >
         {/* ========================================================
@@ -399,14 +402,14 @@ export function FinalCta() {
           className="
             max-w-[1050px]
             font-display
-            text-[12vw]
             font-normal
             leading-[0.84]
             tracking-[-0.065em]
             text-white
-            sm:text-[9vw]
-            lg:text-[7vw]
           "
+          style={{
+            fontSize: 'clamp(2rem, 10vw, 12vw)',
+          }}
         >
           Let&apos;s design
           <br />
@@ -445,10 +448,10 @@ export function FinalCta() {
             ease: EASE,
           }}
           className="
-            mt-10
+            mt-8
             grid
             max-w-[1000px]
-            gap-10
+            gap-6
             lg:grid-cols-[minmax(0,420px)_1fr]
             lg:items-end
           "
@@ -462,7 +465,6 @@ export function FinalCta() {
               text-sm
               leading-[1.75]
               text-white/45
-              sm:text-base
             "
           >
             Tell us about the room, the floor and
@@ -481,14 +483,14 @@ export function FinalCta() {
               className="
                 group
                 inline-flex
-                h-14
+                h-12
                 items-center
-                gap-8
+                gap-6
                 rounded-full
                 bg-[#F2B84B]
-                px-7
+                px-6
                 font-sans
-                text-[11px]
+                text-[10px]
                 font-medium
                 uppercase
                 tracking-[0.12em]
@@ -496,6 +498,8 @@ export function FinalCta() {
                 transition-all
                 duration-500
                 hover:bg-[#FFD477]
+                sm:h-14
+                sm:px-7
               "
             >
               <span>
@@ -505,7 +509,7 @@ export function FinalCta() {
               <span
                 className="
                   flex
-                  size-7
+                  size-6
                   items-center
                   justify-center
                   rounded-full
@@ -517,7 +521,7 @@ export function FinalCta() {
                 "
               >
                 <ArrowRight
-                  className="size-3.5"
+                  className="size-3"
                 />
               </span>
             </Link>
@@ -529,16 +533,16 @@ export function FinalCta() {
               className="
                 group
                 inline-flex
-                h-14
+                h-12
                 items-center
-                gap-5
+                gap-4
                 rounded-full
                 border
                 border-white/[0.14]
                 bg-white/[0.025]
-                px-7
+                px-6
                 font-sans
-                text-[11px]
+                text-[10px]
                 font-medium
                 uppercase
                 tracking-[0.12em]
@@ -549,6 +553,8 @@ export function FinalCta() {
                 hover:border-[#F2B84B]/50
                 hover:bg-white/[0.06]
                 hover:text-white
+                sm:h-14
+                sm:px-7
               "
             >
               <span>
@@ -557,7 +563,7 @@ export function FinalCta() {
 
               <ArrowUpRight
                 className="
-                  size-4
+                  size-3.5
                   text-white/40
                   transition-all
                   duration-500
@@ -591,18 +597,19 @@ export function FinalCta() {
             ease: EASE,
           }}
           className="
-            mt-20
+            mt-14
             border-t
             border-white/[0.08]
-            pt-5
-            lg:mt-28
+            pt-4
+            sm:mt-16
+            lg:mt-24
           "
         >
           <div
             className="
               grid
-              gap-6
-              sm:grid-cols-3
+              gap-4
+              sm:grid-cols-2
               lg:grid-cols-4
             "
           >
@@ -736,10 +743,12 @@ export function FinalCta() {
           absolute
           bottom-0
           left-1/2
-          h-[190px]
+          h-[140px]
           w-[min(1000px,90vw)]
           -translate-x-1/2
           opacity-30
+          sm:h-[160px]
+          lg:h-[190px]
         "
       >
         {/* horizontal floor lines */}

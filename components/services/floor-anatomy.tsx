@@ -80,7 +80,7 @@ export function FloorAnatomy() {
               <span className="h-px w-10 bg-[#B98520]" />
 
               <span className="font-sans text-[9px] font-medium uppercase tracking-[0.3em] text-[#11100E]/50">
-                What's under the tile
+                What&apos;s under the tile
               </span>
             </div>
 

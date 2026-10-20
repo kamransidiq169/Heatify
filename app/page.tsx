@@ -34,9 +34,11 @@ export default function HomePage() {
       ========================================================= */}
 
       <div className="relative z-10 w-full">
-        <Projects />
 
         <ProductShowcase />
+        <Projects />
+
+        
 
         <Process />
 

@@ -68,9 +68,9 @@ export default function ContactPage() {
       </section>
 
       {/* Form */}
-      <section className="bg-ivory-100 py-20 md:py-28">
+      <section className="bg-ivory-100 py-16 md:py-20 lg:py-28">
         <div className="container-site">
-          <div className="grid gap-16 lg:grid-cols-2">
+          <div className="grid gap-12 lg:grid-cols-2">
             {/* Left — info */}
             <Reveal>
               <div>
@@ -134,10 +134,9 @@ export default function ContactPage() {
                     and get back to you within 24 hours.
                   </p>
                 </motion.div>
-              ) : (
-                <form
+              ) : (                  <form
                   onSubmit={handleSubmit(onSubmit)}
-                  className="rounded-[var(--radius-card)] bg-white p-8 shadow-[var(--shadow-card)] md:p-10"
+                  className="rounded-[var(--radius-card)] bg-white p-6 shadow-[var(--shadow-card)] md:p-8 lg:p-10"
                 >
                   <div className="space-y-6">
                     <Input

@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import Image from "next/image";
@@ -7,11 +8,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  Menu,
-  X,
-} from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 
 import { navLinks, siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -26,6 +23,18 @@ export function Navbar() {
 
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+
+  /* ---------------------------------------------------------------------- */
+  /* Close mobile navigation on route change                                */
+  /* (FIX: ab yeh sirf pathname badalne par chalta hai, `open` par nahi.    */
+  /*  Pehle wala useEffect open=true hote hi usse false kar deta tha.)      */
+  /* ---------------------------------------------------------------------- */
+
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setOpen(false);
+  }
 
   /* ---------------------------------------------------------------------- */
   /* Scroll state                                                           */
@@ -38,22 +47,12 @@ export function Navbar() {
 
     handleScroll();
 
-    window.addEventListener("scroll", handleScroll, {
-      passive: true,
-    });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  /* ---------------------------------------------------------------------- */
-  /* Close mobile navigation on route change                                */
-  /* ---------------------------------------------------------------------- */
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   /* ---------------------------------------------------------------------- */
   /* Lock page scroll while mobile drawer is open                           */
@@ -83,31 +82,21 @@ export function Navbar() {
         aria-label="Main navigation"
         className={cn(
           "pointer-events-auto relative mx-auto",
-          "flex h-[78px] items-center",
+          "flex h-[72px] items-center",
           "border-b border-black/[0.10]",
-          "px-5 sm:px-7 md:px-9 lg:px-11",
+          "px-4 sm:px-6 md:px-8 lg:px-10",
           "transition-all duration-500",
           "ease-[cubic-bezier(0.22,1,0.36,1)]",
 
-          /* -------------------------------------------------------------- */
-          /* Always-visible premium surface                                  */
-          /* -------------------------------------------------------------- */
-
           "bg-[#F4F1EA]/[0.94]",
           "backdrop-blur-xl",
-
-          /* -------------------------------------------------------------- */
-          /* Slight elevation after scroll                                  */
-          /* -------------------------------------------------------------- */
 
           scrolled
             ? [
                 "shadow-[0_12px_40px_rgba(17,16,14,0.08)]",
                 "bg-[#F4F1EA]/[0.97]",
               ]
-            : [
-                "shadow-[0_4px_25px_rgba(17,16,14,0.025)]",
-              ],
+            : ["shadow-[0_4px_25px_rgba(17,16,14,0.025)]"],
         )}
       >
         {/* ================================================================== */}
@@ -126,10 +115,11 @@ export function Navbar() {
             height={52}
             priority
             className={cn(
-              "h-auto w-[124px] object-contain",
+              "h-auto w-[110px] object-contain",
               "transition-all duration-500",
               "group-hover:scale-[1.015]",
-              "sm:w-[132px]",
+              "sm:w-[120px]",
+              "md:w-[130px]",
               "lg:w-[142px]",
             )}
           />
@@ -145,10 +135,7 @@ export function Navbar() {
               const active = isActive(link.href, pathname);
 
               return (
-                <li
-                  key={link.href}
-                  className="group relative"
-                >
+                <li key={link.href} className="group relative">
                   <Link
                     href={link.href}
                     aria-current={active ? "page" : undefined}
@@ -166,10 +153,6 @@ export function Navbar() {
                   >
                     {link.label}
 
-                    {/* ---------------------------------------------------- */}
-                    {/* Editorial active indicator                           */}
-                    {/* ---------------------------------------------------- */}
-
                     <span
                       aria-hidden
                       className={cn(
@@ -180,9 +163,7 @@ export function Navbar() {
                         "transition-all duration-500",
                         "ease-[cubic-bezier(0.22,1,0.36,1)]",
 
-                        active
-                          ? "w-full"
-                          : "w-0 group-hover:w-full",
+                        active ? "w-full" : "w-0 group-hover:w-full",
                       )}
                     />
                   </Link>
@@ -197,9 +178,7 @@ export function Navbar() {
         {/* ================================================================== */}
 
         <div className="ml-auto flex items-center">
-          {/* ---------------------------------------------------------------- */}
-          {/* Desktop CTA                                                      */}
-          {/* ---------------------------------------------------------------- */}
+          {/* Desktop CTA */}
 
           <Link
             href="/contact"
@@ -244,20 +223,15 @@ export function Navbar() {
             </span>
           </Link>
 
-          {/* ---------------------------------------------------------------- */}
-          {/* Mobile menu                                                      */}
-          {/* ---------------------------------------------------------------- */}
+          {/* Mobile menu */}
 
-          <Dialog.Root
-            open={open}
-            onOpenChange={setOpen}
-          >
+          <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger asChild>
               <button
                 type="button"
                 aria-label="Open navigation menu"
                 className={cn(
-                  "group flex size-10 items-center justify-center",
+                  "group flex size-11 items-center justify-center",
                   "border border-[#11100E]/15",
                   "text-[#11100E]/75",
                   "transition-all duration-300",
@@ -267,7 +241,7 @@ export function Navbar() {
                 )}
               >
                 <Menu
-                  className="size-[17px] transition-transform duration-300 group-hover:scale-90"
+                  className="size-[18px] transition-transform duration-300 group-hover:scale-90"
                   strokeWidth={1.35}
                   aria-hidden
                 />
@@ -277,9 +251,7 @@ export function Navbar() {
             <AnimatePresence>
               {open && (
                 <Dialog.Portal forceMount>
-                  {/* ====================================================== */}
-                  {/* OVERLAY                                                 */}
-                  {/* ====================================================== */}
+                  {/* OVERLAY */}
 
                   <Dialog.Overlay asChild forceMount>
                     <motion.div
@@ -291,9 +263,7 @@ export function Navbar() {
                     />
                   </Dialog.Overlay>
 
-                  {/* ====================================================== */}
-                  {/* DRAWER                                                  */}
-                  {/* ====================================================== */}
+                  {/* DRAWER */}
 
                   <Dialog.Content
                     asChild
@@ -315,11 +285,10 @@ export function Navbar() {
                         "bg-[#F4F1EA]",
                         "text-[#11100E]",
                         "shadow-[-30px_0_80px_-35px_rgba(0,0,0,0.35)]",
+                        "pb-safe",
                       )}
                     >
-                      {/* ================================================== */}
-                      {/* DRAWER ATMOSPHERE                                   */}
-                      {/* ================================================== */}
+                      {/* DRAWER ATMOSPHERE */}
 
                       <div
                         aria-hidden
@@ -350,9 +319,7 @@ export function Navbar() {
                         }}
                       />
 
-                      {/* ================================================== */}
-                      {/* DRAWER HEADER                                       */}
-                      {/* ================================================== */}
+                      {/* DRAWER HEADER */}
 
                       <div className="relative flex h-[78px] shrink-0 items-center justify-between border-b border-[#11100E]/10 px-6 sm:px-8">
                         <div className="flex items-center gap-3">
@@ -378,13 +345,9 @@ export function Navbar() {
                         </Dialog.Close>
                       </div>
 
-                      {/* ================================================== */}
-                      {/* MOBILE CONTENT                                      */}
-                      {/* ================================================== */}
+                      {/* MOBILE CONTENT */}
 
                       <div className="relative flex flex-1 flex-col px-6 pt-10 sm:px-8">
-                        {/* Small header */}
-
                         <div className="mb-8 flex items-center justify-between">
                           <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-[#11100E]/25">
                             WOWTHERM
@@ -395,29 +358,18 @@ export function Navbar() {
                           </span>
                         </div>
 
-                        {/* ------------------------------------------------ */}
-                        {/* Links                                             */}
-                        {/* ------------------------------------------------ */}
+                        {/* Links */}
 
                         <nav aria-label="Mobile navigation">
                           <ul>
                             {navLinks.map((link, index) => {
-                              const active = isActive(
-                                link.href,
-                                pathname,
-                              );
+                              const active = isActive(link.href, pathname);
 
                               return (
                                 <motion.li
                                   key={link.href}
-                                  initial={{
-                                    opacity: 0,
-                                    x: 24,
-                                  }}
-                                  animate={{
-                                    opacity: 1,
-                                    x: 0,
-                                  }}
+                                  initial={{ opacity: 0, x: 24 }}
+                                  animate={{ opacity: 1, x: 0 }}
                                   transition={{
                                     delay: 0.08 + index * 0.06,
                                     duration: 0.45,
@@ -440,10 +392,7 @@ export function Navbar() {
                                   >
                                     <div className="flex items-center gap-5">
                                       <span className="font-mono text-[8px] text-[#11100E]/20">
-                                        {String(index + 1).padStart(
-                                          2,
-                                          "0",
-                                        )}
+                                        {String(index + 1).padStart(2, "0")}
                                       </span>
 
                                       <span
@@ -483,9 +432,7 @@ export function Navbar() {
                           </ul>
                         </nav>
 
-                        {/* ================================================== */}
-                        {/* BOTTOM CTA                                         */}
-                        {/* ================================================== */}
+                        {/* BOTTOM CTA */}
 
                         <div className="relative mt-auto pb-7 pt-10">
                           <Link
@@ -518,9 +465,7 @@ export function Navbar() {
                         </div>
                       </div>
 
-                      {/* ================================================== */}
-                      {/* CORNER DETAIL                                       */}
-                      {/* ================================================== */}
+                      {/* CORNER DETAIL */}
 
                       <div
                         aria-hidden

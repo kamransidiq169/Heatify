@@ -28,7 +28,7 @@ const socials = [
 export function Footer() {
   return (
     <footer className="bg-charcoal-950 text-white">
-      <div className="container-site grid gap-12 py-16 md:py-20 lg:grid-cols-12 lg:gap-8">
+      <div className="container-site grid gap-10 py-12 md:py-16 lg:grid-cols-12 lg:gap-8">
         {/* Brand */}
         <div className="lg:col-span-4">
           <Link
@@ -40,11 +40,11 @@ export function Footer() {
               WOW<span className="text-copper-400">THERM</span>
             </span>
           </Link>
-          <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/50">
+          <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/50">
             {siteConfig.tagline} Premium heating systems designed for modern
             homes, hospitality spaces and architectural interiors.
           </p>
-          <ul className="mt-6 space-y-3 text-sm text-white/60">
+          <ul className="mt-5 space-y-2.5 text-sm text-white/60">
             <li className="flex items-start gap-3">
               <MapPin className="mt-0.5 size-4 shrink-0 text-copper-400" aria-hidden />
               {siteConfig.address}
@@ -107,10 +107,10 @@ export function Footer() {
         {/* Connect */}
         <div className="lg:col-span-3">
           <h2 className="text-eyebrow text-white/40">Connect</h2>
-          <p className="mt-5 text-sm text-white/50">
+          <p className="mt-4 text-sm text-white/50">
             Project inquiries, partnerships, and press.
           </p>
-          <ul className="mt-4 flex gap-3">
+          <ul className="mt-3 flex gap-2.5">
             {socials.map(({ href, label }) => (
               <li key={label}>
                 <a
@@ -118,7 +118,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="grid size-10 place-items-center rounded-full border border-white/15 text-white/50 transition-colors hover:border-copper-400 hover:text-copper-400"
+                  className="grid size-9 place-items-center rounded-full border border-white/15 text-white/50 transition-colors hover:border-copper-400 hover:text-copper-400"
                 >
                   <span className="text-xs font-medium">{label.slice(0, 2)}</span>
                 </a>
@@ -129,7 +129,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-site flex flex-col items-center justify-between gap-3 py-6 text-xs text-white/40 sm:flex-row">
+        <div className="container-site flex flex-col items-center justify-between gap-2 py-5 text-xs text-white/40 sm:flex-row">
           <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
           <p>10-year warranty on every heating system we install.</p>
         </div>
