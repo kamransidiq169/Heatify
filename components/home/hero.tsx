@@ -39,6 +39,15 @@ export function HeatifyLoader({
   }, [onComplete]);
 
   useEffect(() => {
+    /*
+     * --------------------------------------------------
+     * PREVIOUS OVERFLOW STATE
+     * --------------------------------------------------
+     */
+
+    const previousOverflow =
+      document.body.style.overflow;
+
     const root = rootRef.current;
     const counter = counterRef.current;
     const progress = progressRef.current;
@@ -70,20 +79,60 @@ export function HeatifyLoader({
 
     /*
      * --------------------------------------------------
+     * REDUCED MOTION CHECK
+     * --------------------------------------------------
+     */
+
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reducedMotion = reducedMotionQuery.matches;
+
+    if (reducedMotion) {
+      /*
+       * Show the final state immediately and unlock scroll.
+       * --------------------------------------------------
+       */
+
+      gsap.set(root, {
+        opacity: 1,
+        visibility: "visible",
+      });
+
+      gsap.set(panels, {
+        yPercent: 0,
+      });
+
+      gsap.set(letters, {
+        yPercent: -2,
+        opacity: 1,
+      });
+
+      gsap.set(progress, {
+        scaleX: 1,
+      });
+
+      gsap.set(glow, {
+        scaleX: 1,
+        opacity: 0.45,
+      });
+
+      counter.textContent = "100%";
+
+      document.body.style.overflow = previousOverflow;
+
+      reducedMotionQuery.addEventListener("change", () => {
+        window.location.reload();
+      });
+
+      return;
+    }
+
+    /*
+     * --------------------------------------------------
      * LOCK PAGE SCROLL DURING INTRO
      * --------------------------------------------------
      */
 
-    const previousOverflow =
-      document.body.style.overflow;
-
     document.body.style.overflow = "hidden";
-
-    /*
-     * --------------------------------------------------
-     * GSAP CONTEXT
-     * --------------------------------------------------
-     */
 
     const ctx = gsap.context(() => {
       /*

@@ -152,6 +152,21 @@
       scroll-behavior: auto !important;
     }
   }
+
+
+/* Hover gating: only apply :hover effects when device supports hover */
+@media (hover: hover) {
+  :root {
+    --has-hover: 1;
+  }
+}
+
+@media (hover: none) {
+  :root {
+    --has-hover: 0;
+  }
+}
+
 }
 
 /* Container utility */

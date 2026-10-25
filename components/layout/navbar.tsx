@@ -213,7 +213,7 @@ export function Navbar() {
 
             <span
               className={cn(
-                "flex size-5 items-center justify-center",
+                "flex min-w-[44px] min-h-[44px] items-center justify-center",
                 "text-[#11100E]/65",
                 "transition-all duration-300",
                 "group-hover:translate-x-0.5",
@@ -235,8 +235,10 @@ export function Navbar() {
               <button
                 type="button"
                 aria-label="Open navigation menu"
+                aria-expanded={open}
+                aria-controls="mobile-navigation"
                 className={cn(
-                  "group flex size-11 items-center justify-center",
+                  "group flex min-w-[44px] min-h-[44px] items-center justify-center",
                   "border border-[#11100E]/15",
                   "text-[#11100E]/75",
                   "transition-all duration-300",
@@ -339,7 +341,7 @@ export function Navbar() {
                           <button
                             type="button"
                             aria-label="Close navigation menu"
-                            className="group flex size-10 items-center justify-center border border-[#11100E]/10 transition-all duration-300 hover:border-[#B98520]"
+                            className="group flex min-w-[44px] min-h-[44px] items-center justify-center border border-[#11100E]/10 transition-all duration-300 hover:border-[#B98520]"
                           >
                             <X
                               className="size-[17px] text-[#11100E]/55 transition-all duration-300 group-hover:rotate-90 group-hover:text-[#11100E]"
@@ -424,7 +426,7 @@ export function Navbar() {
                                       )}
                                     >
                                       <ArrowUpRight
-                                        className="size-3.5"
+                                        className="size-[40px]"
                                         strokeWidth={1.35}
                                         aria-hidden
                                       />
@@ -448,9 +450,9 @@ export function Navbar() {
                               Start a Project
                             </span>
 
-                            <span className="flex size-7 items-center justify-center border border-white/15 transition-transform duration-300 group-hover:translate-x-1 group-hover:border-[#11100E]/20">
+                            <span className="flex min-w-[44px] min-h-[44px] items-center justify-center border border-white/15 transition-transform duration-300 group-hover:translate-x-1 group-hover:border-[#11100E]/20">
                               <ArrowUpRight
-                                className="size-3.5"
+                                className="size-[40px]"
                                 strokeWidth={1.35}
                                 aria-hidden
                               />
