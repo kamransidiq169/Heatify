@@ -1,18 +1,18 @@
 export const siteConfig = {
   name: "Heatify",
   url: "https://heatify.in",
-  tagline: "",
+  tagline: "" as string,
   description:
     "Heatify designs and installs premium heating systems for modern homes, hospitality spaces and architectural interiors. Invisible warmth, precise control, architectural integrity.",
-  email: "",
-  phone: "",
-  address: "",
-  mapQuery: "",
+  email: "" as string,
+  phone: "" as string,
+  address: "" as string,
+  mapQuery: "" as string,
   social: {
-    instagram: "",
-    facebook: "",
-    linkedin: "",
-    youtube: "",
+    instagram: "" as string,
+    facebook: "" as string,
+    linkedin: "" as string,
+    youtube: "" as string,
   },
 } as const;
 
