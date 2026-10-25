@@ -16,12 +16,13 @@ import { Reveal } from "@/components/motion/reveal";
  * "explode" on scroll, with milestone cards appearing alongside.
  *
  * All content is placeholder — flagged with [PLACEHOLDER].
- */
+ */interface Milestone {
+  year: string;
+  title: string;
+  description: string;
+}
 
-const MILESTONES = [] as const;
-
-];
-
+const MILESTONES: Milestone[] = [];
 const LAYER_COLORS = {
   subfloor: "#6B6153",
   insulation: "#D9CDBB",

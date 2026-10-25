@@ -463,7 +463,7 @@ export function Navbar() {
                             </span>
 
                             <span className="font-sans text-[10px] text-[#11100E]/45">
-                              {renderText(siteConfig.phone)}
+                              siteConfig.phone
                             </span>
                           </div>
                         </div>

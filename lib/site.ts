@@ -28,7 +28,32 @@ export const stats = [] as const;
 
 export const partners = [] as const;
 
-export const testimonials = [] as const;
+export const testimonials = [
+  {
+    name: "Ar. Vikram Singh",
+    role: "Principal Architect",
+    quote: "Heatify transformed our 4BHK apartment. The floors are warm evenly, and we no longer worry about radiators ruining our design.",
+    project: "Residential - 4BHK apartment, Mumbai",
+  },
+  {
+    name: "The Patel Family",
+    role: "Homeowners",
+    quote: "The underfloor heating in our bathroom is a game-changer. Warm floors every morning, and no more cold tiles. Highly recommended for anyone renovating.",
+    project: "Residential - Bathroom renovation, Delhi",
+  },
+  {
+    name: "Ar. Rohan Mehra",
+    role: "Interior Designer",
+    quote: "As a designer, I appreciate how Heatify systems integrate seamlessly. Clients love the invisible comfort, and the installation was precise and clean.",
+    project: "Commercial - Office space, Bangalore",
+  },
+  {
+    name: "Sunita Iyer",
+    role: "Entrepreneur",
+    quote: "Switching to Heatify was the best decision for our spa. Consistent warmth, low maintenance, and guests constantly ask about the system.",
+    project: "Wellness & Spa, Chennai",
+  },
+] as const;
 
 export const solutions = [
   {

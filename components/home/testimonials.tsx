@@ -497,9 +497,9 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, BadgeCheck, Quote } from "lucide-react";
+import { ArrowUpRight, BadgeCheck, Quote ,  } from "lucide-react";
 import { testimonials } from "@/lib/site";
-import { navLinks } from "@/lib/site";
+
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const AUTOPLAY_DELAY = 8500;

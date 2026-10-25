@@ -41,6 +41,7 @@ export function AboutHero() {
               {/* Heatify was born from a simple conviction: warmth should never
               compromise architecture. We design invisible heating systems that
               perform beneath the surfaces you already love.
+              */}
             </p>
           </Reveal>
         </div>
